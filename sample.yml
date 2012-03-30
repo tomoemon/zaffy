@@ -1,0 +1,83 @@
+filetype: scenario
+require: common/set_time
+
+- action: sql.select
+  sql: "select * from advertisement;"
+
+- action: sql.update
+  # 共通のルールとして hoge パラメータがある場合に、
+  # hoge_list という名前で指定された場合は複数回繰り返すようにする
+  sql_list: [
+    "truncate advertisement",
+    "truncate affiliate"
+  ]
+
+- action: sql.source
+  filename: "truncate_all.sql"
+
+- action: http.get
+  # 共通のパラメータで何度もアクセスする場合などに、読み込む方法を考える """
+  url: http://foo.co.jp/login
+  params:
+    user: hoge
+    pass: fuga
+
+- action: http.get
+  url: http://foo.co.jp/
+  headers:
+    none: none
+  params:
+    hoge: fuga
+    # パラメータ部分はjinja2テンプレートでカスタマイズできるようにする
+    # http://jinja.pocoo.org/docs/api/#custom-filters
+    # 変数については、全体で共通のものと、それぞれのアクションで注入したものを
+    # 使えるようにする
+    # どのパラメータの値を展開するかは action 定義に教えてもらう
+    # これによって設定ファイルに定義した定数を埋め込むこともできる
+    joinDate: "{{global.now|dateformat('%d-%m-%Y')}}"
+
+    # actionごとにレスポンスの値を取り出す方法を提供する
+    # http であれば status, response_time, cookie や header, body など
+    # それをパースする方法については filter として共通で提供する
+    # xPath, XML, json値など
+    sessionId: "{{actions[3].body|jsonpath('/sessionId')}}" # actionsで任意の位置のactionにアクセス。last_actionで直前のアクションにアクセス
+  .report: hoge
+
+- action: http.get
+  url: http://foo.co.jp/
+  assert:
+    ["{{this.body|length}}", <=, 100]
+
+- action: http.get
+  url: http://foo.co.jp/
+  assert_list: [
+    ["{{this.status}}", ==, 200],
+    ["{{this.status}}", !=, 200],
+    ["{{this.body|split(',')}}", ==, [hoge, fuga, piyo]],
+    ["{{this.body}}", in, [hoge, fuga, piyo]], # not in
+    ["{{this.length}}", <=, 100],
+    ["{{this.body|jsonpath('/age')}}", between, 20, 30],
+    ["hoge(piyo|fuga)", regex in, "{{this.body}}"], # regex not in (プログラムで s/ /_/ に変換してメソッド呼び出しする)
+    ["{{this.body}}", json equal, '{"isSuceeded":true, "price": 980}'],
+    [["{{this.body|split(',')}}", ==, [hoge, fuga, piyo]],
+     or,
+     ["{[this.status}}", ==, 400]]
+  ]
+
+- action: if # endif で囲まれる箇所を実行する
+  assert: ["{{this.status}}", ==, 200]
+
+- action: http.get
+  url: http://bar.com/
+
+- action: endif
+
+- action: for
+  values: "{{range(10)}}"
+  assert: ["{{last_action.status}}", ==, 200] # なくても良い
+
+- action: http.get
+  url: "http://example.co.jp/?index={{loop.value}}" # loop.index, loop.lengthなどが使える
+
+- action: endfor
+
