@@ -52,32 +52,52 @@ require: common/set_time
   url: http://foo.co.jp/
   assert_list: [
     ["{{this.status}}", ==, 200],
+    # 省略記法。先頭が $ で始まる文字列は {{～}}と内部で解釈する。略記は最小限にしてまとめたい
+    # $. で始まる場合は現在のコンテキストで取得できる値 $.status など。global に取得したい場合は $global.～と書く
+    [$this.status, ==, 200],
     ["{{this.status}}", !=, 200],
-    ["{{this.body|split(',')}}", ==, [hoge, fuga, piyo]],
+    ["{{this.body}}", ==, "hoge,fuga,piyo"],
     ["{{this.body}}", in, [hoge, fuga, piyo]], # not in
     ["{{this.length}}", <=, 100],
     ["{{this.body|jsonpath('/age')}}", between, 20, 30],
-    ["hoge(piyo|fuga)", regex in, "{{this.body}}"], # regex not in (プログラムで s/ /_/ に変換してメソッド呼び出しする)
-    ["{{this.body}}", json equal, '{"isSuceeded":true, "price": 980}'],
-    [["{{this.body|split(',')}}", ==, [hoge, fuga, piyo]],
+    ["hoge(piyo|fuga)", regex in, "{{this.body}}"], # regex not in
+    ["{{this.body}}", json equal, '{"isSuceeded":true, "price": 980}'], # json not equal
+    [["{{this.body}}", ==, "hoge,fuga,piyo"],
      or,
      ["{[this.status}}", ==, 400]]
   ]
 
-- action: if # endif で囲まれる箇所を実行する
+- control: if # endif で囲まれる箇所を実行する
   assert: ["{{this.status}}", ==, 200]
 
 - action: http.get
   url: http://bar.com/
 
-- action: endif
+- control: endif
 
-- action: for
+- control: if # 別の書き方
+  assert: ["{{this.status}}", ==, 200]
+  action_list:
+   - action: http.get
+     url: http://bar.com/
+
+- control: for
   values: "{{range(10)}}"
   assert: ["{{last_action.status}}", ==, 200] # なくても良い
 
 - action: http.get
   url: "http://example.co.jp/?index={{loop.value}}" # loop.index, loop.lengthなどが使える
 
-- action: endfor
+- control: endfor
 
+# 設計メモ
+# - response_time などどのアクションでも共通っぽいものは共通で返す
+# - アクションの結果などにアクセスする省略記法はできるだけ多くならないように整理する
+#   先頭が $ で始まるものは jinja2 テンプレートとして処理するか
+# - sql に関してはドライバ(mysql, sqlite, postgres)に関わらず共通インターフェースで使えるようにする
+#   どのドライバを使うかはDBのユーザ名、パスワード等を書く設定ファイルで指定する
+# - action について共通のパラメータを使う場合などの書き方
+# - シナリオ全体で別のシナリオを参照する書き方
+# - http action で必要なパラメータがセットされているかチェックする書き方
+# - jinja テンプレートの開始・終了記号を <<, >> にしよう
+#
