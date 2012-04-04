@@ -1,0 +1,16 @@
+filetype: setting
+
+test_db:
+  driver: mysql
+  host: sintest-db01
+  db_name: sintral_test
+  port: 3306
+  user:
+  password:
+user:
+  driver: mysql
+  host: sintest-db01
+  db_name: user_test
+  user:
+  password:
+

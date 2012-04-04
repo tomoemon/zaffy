@@ -2,18 +2,27 @@ filetype: scenario
 require: common/set_time
 
 - action: sql.select
-  sql: "select * from advertisement;"
+  db: test_db
+  sql: select * from advertisement
 
 - action: sql.update
+  db: test_db
   # 共通のルールとして hoge パラメータがある場合に、
   # hoge_list という名前で指定された場合は複数回繰り返すようにする
   sql_list: [
-    "truncate advertisement",
-    "truncate affiliate"
+    truncate advertisement,
+    truncate affiliate
   ]
 
 - action: sql.source
+  db: test_db
   filename: "truncate_all.sql"
+
+- action: shell.run # copyfile, movefile, removefile
+  cmd: "cp ~/hoge.txt <<global.pwd>>"
+
+- action: system.set_date
+  date: "2012-10-10 05:20:25"
 
 - action: http.get
   # 共通のパラメータで何度もアクセスする場合などに、読み込む方法を考える """
@@ -34,41 +43,43 @@ require: common/set_time
     # 使えるようにする
     # どのパラメータの値を展開するかは action 定義に教えてもらう
     # これによって設定ファイルに定義した定数を埋め込むこともできる
-    joinDate: "{{global.now|dateformat('%d-%m-%Y')}}"
+    joinDate: <<global.now|dateformat('%d-%m-%Y')>>
 
     # actionごとにレスポンスの値を取り出す方法を提供する
     # http であれば status, response_time, cookie や header, body など
     # それをパースする方法については filter として共通で提供する
     # xPath, XML, json値など
-    sessionId: "{{actions[3].body|jsonpath('/sessionId')}}" # actionsで任意の位置のactionにアクセス。last_actionで直前のアクションにアクセス
+    sessionId: <<actions[3].body|jsonpath('/sessionId')>> # actionsで任意の位置のactionにアクセス。
   .report: hoge
 
 - action: http.get
-  url: http://foo.co.jp/
+  url: http://<<http.const.HOST>>/session/landing
   assert:
-    ["{{this.body|length}}", <=, 100]
+    [<<this.body|length>>, <=, 100]
 
 - action: http.get
   url: http://foo.co.jp/
   assert_list: [
-    ["{{this.status}}", ==, 200],
-    # 省略記法。先頭が $ で始まる文字列は {{～}}と内部で解釈する。略記は最小限にしてまとめたい
-    # $. で始まる場合は現在のコンテキストで取得できる値 $.status など。global に取得したい場合は $global.～と書く
-    [$this.status, ==, 200],
-    ["{{this.status}}", !=, 200],
-    ["{{this.body}}", ==, "hoge,fuga,piyo"],
-    ["{{this.body}}", in, [hoge, fuga, piyo]], # not in
-    ["{{this.length}}", <=, 100],
-    ["{{this.body|jsonpath('/age')}}", between, 20, 30],
-    ["hoge(piyo|fuga)", regex in, "{{this.body}}"], # regex not in
-    ["{{this.body}}", json equal, '{"isSuceeded":true, "price": 980}'], # json not equal
-    [["{{this.body}}", ==, "hoge,fuga,piyo"],
+    [<<this.status>>, ==, 200],
+    # 省略記法。先頭が @ で始まる文字列は <<this.～>> に置換してからjinjaに渡す。略記は最小限にしてまとめたい
+    [@status, ==, 200],
+    [<<this.status>>, !=, 200],
+    [<<this.body>>, ==, "hoge,fuga,piyo"],
+    [<<this.body>>, ==, "<<global.readfile(global.pwd, test1.txt)>>"], # ファイルから読み込んで比較する
+    [<<this.body>>, in, [hoge, fuga, piyo]], # not in
+    [piyo, in, @body],
+    [<<this.length>>, <=, 100],
+    [<<this.body|jsonpath('/age')>>, between, 20, 30],
+    [hoge(piyo|fuga), regex in, <<this.body>>], # regex not in, regex equal
+    [<<this.body>>, json equal, '{"isSuceeded":true, "price": 980}'], # json not equal
+    [[<<this.body>>, ==, "hoge,fuga,piyo"],
      or,
-     ["{[this.status}}", ==, 400]]
+     [<<this.status>>, ==, 400]],
   ]
 
 - control: if # endif で囲まれる箇所を実行する
-  assert: ["{{this.status}}", ==, 200]
+  # 直前の status で分岐
+  assert: [<<actions[-1].status>>, ==, 200]
 
 - action: http.get
   url: http://bar.com/
@@ -76,17 +87,20 @@ require: common/set_time
 - control: endif
 
 - control: if # 別の書き方
-  assert: ["{{this.status}}", ==, 200]
+  assert: [<<this.status>>, ==, 200]
   action_list:
    - action: http.get
      url: http://bar.com/
 
 - control: for
-  values: "{{range(10)}}"
-  assert: ["{{last_action.status}}", ==, 200] # なくても良い
+  values: [hoge, fuga, piyo] # 数値の範囲を指定したい場合は ruby 風に 0..10
+  # if と同じように action_list にまとめてもいい
 
 - action: http.get
-  url: "http://example.co.jp/?index={{loop.value}}" # loop.index, loop.lengthなどが使える
+  url: http://example.co.jp/?index=<<loop.value>> # loop.index, loop.lengthなどが使える
+
+- control: break
+  assert: [<<last_action.status>>, ==, 200] # この条件を満たしたときに break
 
 - control: endfor
 
@@ -100,4 +114,6 @@ require: common/set_time
 # - シナリオ全体で別のシナリオを参照する書き方
 # - http action で必要なパラメータがセットされているかチェックする書き方
 # - jinja テンプレートの開始・終了記号を <<, >> にしよう
-#
+# - assert のときの型変換どうする？片方が文字列、片方が数値の場合
+#   →演算子ごとに挙動を変える ==, <=, >= については片方が数値の場合はもう片方も数値に変換する
+# 期待値がでかいデータだったりバイナリであるときに、期待値ファイルを用意しといてそれと比較できるようにしたい
