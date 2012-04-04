@@ -1,5 +1,20 @@
 filetype: scenario
-require: common/set_time
+
+- import: action
+  # test_scenario ディレクトリから絶対パスで探索する
+  # .insert と書けばこのファイルの同じディレクトリから探索する
+  # 拡張子は指定しない
+  path: init.db.insert
+  .name: prepare
+
+- control: if
+  # import アクションの結果を参照する場合はまずこのファイル内の位置を指定して、
+  # さらにimportファイル内の位置を指定する
+  # "<<actions.prepare[-1].status>>" のように名前指定も可
+  assert: ["<<actions[-1][-1].status>>", ==, 200]
+  action_list:
+    - action: http.get
+      url: http://hoge.com/
 
 - action: sql.select
   db: test_db
