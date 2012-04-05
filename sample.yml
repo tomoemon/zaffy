@@ -10,8 +10,8 @@ filetype: scenario
 - control: if
   # import アクションの結果を参照する場合はまずこのファイル内の位置を指定して、
   # さらにimportファイル内の位置を指定する
-  # "<<actions.prepare[-1].status>>" のように名前指定も可
-  assert: ["<<actions[-1][-1].status>>", ==, 200]
+  # "<<actions.prepare(-1).status>>" のように名前指定も可
+  assert: [$actions(-1)(-1).status, ==, 200]
   action_list:
     - action: http.get
       url: http://hoge.com/
@@ -58,43 +58,43 @@ filetype: scenario
     # 使えるようにする
     # どのパラメータの値を展開するかは action 定義に教えてもらう
     # これによって設定ファイルに定義した定数を埋め込むこともできる
-    joinDate: <<global.now|dateformat('%d-%m-%Y')>>
+    joinDate: $time.now|dateformat('%d-%m-%Y')
 
     # actionごとにレスポンスの値を取り出す方法を提供する
     # http であれば status, response_time, cookie や header, body など
     # それをパースする方法については filter として共通で提供する
     # xPath, XML, json値など
-    sessionId: <<actions[3].body|jsonpath('/sessionId')>> # actionsで任意の位置のactionにアクセス。
+    sessionId: $actions(3).body|jsonpath('/sessionId') # actionsで任意の位置のactionにアクセス。
   .report: hoge
 
 - action: http.get
   url: http://<<http.const.HOST>>/session/landing
   assert:
-    [<<this.body|length>>, <=, 100]
+    [$.body|length, =<, 100]
 
 - action: http.get
   url: http://foo.co.jp/
   assert_list: [
     [<<this.status>>, ==, 200],
-    # 省略記法。先頭が @ で始まる文字列は <<this.～>> に置換してからjinjaに渡す。略記は最小限にしてまとめたい
-    [@status, ==, 200],
-    [<<this.status>>, !=, 200],
-    [<<this.body>>, ==, "hoge,fuga,piyo"],
-    [<<this.body>>, ==, "<<global.readfile(global.pwd, test1.txt)>>"], # ファイルから読み込んで比較する
-    [<<this.body>>, in, [hoge, fuga, piyo]], # not in
-    [piyo, in, @body],
-    [<<this.length>>, <=, 100],
-    [<<this.body|jsonpath('/age')>>, between, 20, 30],
+    # 省略記法。先頭が $. で始まる文字列は <<this.～>> に置換してからjinjaに渡す。略記は最小限にしてまとめたい
+    [$.status, ==, 200], # eq, (=)
+    [$.status, <>, 200], # ne, (!=) とかかっこでくくるのも1案か。だったら "" でくくればいいじゃん…
+    [$.body, ==, "hoge,fuga,piyo"],
+    [$.body, ==, "<<file.read(global.pwd, test1.txt)>>"], # ファイルから読み込んで比較する
+    [$.body, in, [hoge, fuga, piyo]], # not in
+    [piyo, in, $.body],
+    [$.length, >=, 100], # >= は ">" が予約語でダメ. gt, ge, lt, le を使うか……
+    [$.body|jsonpath('/age'), between, 20, 30],
     [hoge(piyo|fuga), regex in, <<this.body>>], # regex not in, regex equal
-    [<<this.body>>, json equal, '{"isSuceeded":true, "price": 980}'], # json not equal
-    [[<<this.body>>, ==, "hoge,fuga,piyo"],
+    [$.body, json equal, '{"isSuceeded":true, "price": 980}'], # json not equal
+    [[$.body, ==, "hoge,fuga,piyo"],
      or,
-     [<<this.status>>, ==, 400]],
+     [$.status, ==, 400]],
   ]
 
 - control: if # endif で囲まれる箇所を実行する
   # 直前の status で分岐
-  assert: [<<actions[-1].status>>, ==, 200]
+  assert: [$actions(-1).status, ==, 200]
 
 - action: http.get
   url: http://bar.com/
@@ -102,7 +102,7 @@ filetype: scenario
 - control: endif
 
 - control: if # 別の書き方
-  assert: [<<this.status>>, ==, 200]
+  assert: [$last.status, ==, 200]
   action_list:
    - action: http.get
      url: http://bar.com/
@@ -115,7 +115,7 @@ filetype: scenario
   url: http://example.co.jp/?index=<<loop.value>> # loop.index, loop.lengthなどが使える
 
 - control: break
-  assert: [<<last_action.status>>, ==, 200] # この条件を満たしたときに break
+  assert: [$last.status, ==, 200] # この条件を満たしたときに break
 
 - control: endfor
 
@@ -132,3 +132,16 @@ filetype: scenario
 # - assert のときの型変換どうする？片方が文字列、片方が数値の場合
 #   →演算子ごとに挙動を変える ==, <=, >= については片方が数値の場合はもう片方も数値に変換する
 # 期待値がでかいデータだったりバイナリであるときに、期待値ファイルを用意しといてそれと比較できるようにしたい
+
+# $. を付けると、自身の結果にアクセス
+#   eg. [$.status, ==, 200]
+# $ を付けると、全体の共通変数にアクセス
+#   eg. [$file.read(hoge), ==, @status]
+#
+# 共通変数の一覧（どんなのが必要か）
+#   file (read:ファイルの読み込み)
+#   time (now:現在時刻)
+#   os (curdir:プログラムの起動ディレクトリ, hostname:ホスト名)
+#   actions (このシナリオで起動したアクションの履歴)
+#   last (直前のアクション)
+#   const
