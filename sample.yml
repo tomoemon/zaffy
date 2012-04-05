@@ -83,13 +83,19 @@ filetype: scenario
     [$.body, ==, "<<file.read(global.pwd, test1.txt)>>"], # ファイルから読み込んで比較する
     [$.body, in, [hoge, fuga, piyo]], # not in
     [piyo, in, $.body],
-    [$.length, >=, 100], # >= は ">" が予約語でダメ. gt, ge, lt, le を使うか……
+    [$.body|length, ">=", 100], # >= は ">" が予約語でダメ. gt, ge, lt, le を使うか……
     [$.body|jsonpath('/age'), between, 20, 30],
     [hoge(piyo|fuga), regex in, <<this.body>>], # regex not in, regex equal
     [$.body, json equal, '{"isSuceeded":true, "price": 980}'], # json not equal
     [[$.body, ==, "hoge,fuga,piyo"],
      or,
      [$.status, ==, 400]],
+    [$.status, eq, 200],
+    [$.status, ne, 200],
+    [$.body, eq, hoge],
+    [$.body|length, ge, 100]
+    [$.body, is empty]
+    [$.body, not empty]
   ]
 
 - control: if # endif で囲まれる箇所を実行する
