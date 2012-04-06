@@ -1,5 +1,6 @@
 filetype: scenario
 
+actions:
 - action: const.new
   HOST_NAME: 192.168.10.11
   .name: const

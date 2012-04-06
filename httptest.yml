@@ -1,0 +1,10 @@
+type: setting
+#hogehoge
+---
+type: scenario
+desc: HTTP test
+
+actions:
+- action: http.get
+  url: http://google.co.jp/
+
