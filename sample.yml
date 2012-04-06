@@ -29,9 +29,21 @@ actions:
   sql: select id, name from advertisement
   assert:
     # リスト形式でもdict形式でもどっちでもOKにする
-    - [100, test]
-    - id: 200
-      name: test
+    - self.rows == [["100", "test"]] # 数値の自動変換とかはしない（できたらする）
+    - self.rows == [
+        ["100", "test"],
+        ["200", "test2"]
+      ]
+    # select の result は __eq__ メソッドをオーバーライドしたオブジェクトにする
+    - self.rows[1] == {
+        "id":"200", # ":" のあとにスペースを入れるとyamlの辞書として解釈しようとして構文エラーになるので注意
+        "name":"test"
+       }
+    # 両端が {, } の文字列はプログラム内で再度yamlとして解釈するとか・・・無駄だな
+    - self.rows[1] == {
+        id:200,
+        name:test
+       }
 
 - action: sql.update
   db: test_db
