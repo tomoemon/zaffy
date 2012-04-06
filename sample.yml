@@ -1,6 +1,6 @@
 filetype: scenario
 
-- import: action
+- action: import
   # test_scenario ディレクトリから絶対パスで探索する
   # .insert と書けばこのファイルの同じディレクトリから探索する
   # 拡張子は指定しない
@@ -70,17 +70,17 @@ filetype: scenario
 - action: http.get
   url: http://<<http.const.HOST>>/session/landing
   assert:
-    [$.body|length, =<, 100]
+    [$.body|length, "<=", 100]
 
 - action: http.get
   url: http://foo.co.jp/
   assert_list: [
-    [<<this.status>>, ==, 200],
+    [<<this.status>>, "==", 200],
     # 省略記法。先頭が $. で始まる文字列は <<this.～>> に置換してからjinjaに渡す。略記は最小限にしてまとめたい
-    [$.status, ==, 200], # eq, (=)
-    [$.status, <>, 200], # ne, (!=) とかかっこでくくるのも1案か。だったら "" でくくればいいじゃん…
-    [$.body, ==, "hoge,fuga,piyo"],
-    [$.body, ==, "<<file.read(global.pwd, test1.txt)>>"], # ファイルから読み込んで比較する
+    [$.status, "==", 200], # eq, (=)
+    [$.status, "<>", 200], # ne, (!=) とかかっこでくくるのも1案か。だったら "" でくくればいいじゃん…
+    [$.body, "==", "hoge,fuga,piyo"],
+    [$.body, "==", "<<file.read(global.pwd, test1.txt)>>"], # ファイルから読み込んで比較する
     [$.body, in, [hoge, fuga, piyo]], # not in
     [piyo, in, $.body],
     [$.body|length, ">=", 100], # >= は ">" が予約語でダメ. gt, ge, lt, le を使うか……
