@@ -10,6 +10,7 @@ class HttpSetting(object):
     self.headers = {}
     self.params = {}
     self.assert_list = []
+    self.assertex_list = []
 
   def set_method(self, method):
     self.method = method
@@ -23,6 +24,10 @@ class HttpSetting(object):
     if isinstance(self.assert_list, str):
       self.assert_list = [self.assert_list]
 
+    self.assertex_list = params.get("assertex", self.assertex_list)
+    if isinstance(self.assertex_list, str):
+      self.assertex_list = [self.assertex_list]
+
   def get_url(self):
     if self.url_base:
       return self.url_base + self.url
@@ -31,6 +36,7 @@ class HttpSetting(object):
 class Http(object):
   def __init__(self, setting):
     self.result = {}
+    self.exception = None
     self.setting = setting
 
   def run(self):
@@ -39,15 +45,21 @@ class Http(object):
   def has_assert(self):
     return bool(self.setting.assert_list)
 
+  def has_assertex(self):
+    return bool(self.setting.assertex_list)
+
   def do_get(self):
-    r = requests.get(self.setting.get_url(),
-        headers=self.setting.headers,
-        params=self.setting.params)
-    self.result['status'] = r.status_code
-    self.result['content'] = r.text
-    self.result['headers'] = r.headers
-    self.result['encoding'] = r.encoding
-    self.result['cookies'] = r.cookies
+    try:
+      r = requests.get(self.setting.get_url(),
+          headers=self.setting.headers,
+          params=self.setting.params)
+      self.result['status'] = r.status_code
+      self.result['content'] = r.text
+      self.result['headers'] = r.headers
+      self.result['encoding'] = r.encoding
+      self.result['cookies'] = r.cookies
+    except requests.ConnectionError as e:
+      self.exception = e
 
   def do_post(self):
     pass

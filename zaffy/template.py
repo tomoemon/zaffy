@@ -1,17 +1,29 @@
 # -*- coding: utf-8 -*-
 from jinja2 import Environment, TemplateSyntaxError
 import jinja2
-from assertexception import AssertFormatException
 from pprint import pprint
+from load_module import load_module_dir
 
 env = Environment(block_start_string='<%', block_end_string='%>',
     variable_start_string='<<', variable_end_string='>>')
 
-def is_json_equal(left_value, right_value):
-  import json
-  return json.loads(left_value) == json.loads(right_value)
+def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
+  plugins = load_module_dir(custom_plugin_dir)
+  for module in plugins:
+    name_list = [name for name in dir(module) if name.startswith(prefix) and len(name) > len(prefix)]
+    for name in name_list:
+      obj = getattr(module, name)
+      if callable(obj):
+        name = name[len(prefix):]
+        if name in plugin_dict:
+          raise Exception(name + " is already defined")
+        plugin_dict[name] = obj
 
-env.tests['json_equal'] = is_json_equal
+add_plugin(env.tests, "customtests", "is_")
+add_plugin(env.filters, "customfilters")
+
+class AssertFormatException(Exception):
+  pass
 
 def assert_test(template_str, variable_map):
   """
@@ -20,7 +32,7 @@ def assert_test(template_str, variable_map):
   >>> assert_test('hoge == "fuga"', {"hoge": "piyo"})
   False
   """
-  assert_str = '<% if ' + template_str + ' %>true<% else %>false<% endif %>'
+  assert_str = '<% if ' + unicode(template_str) + ' %>true<% else %>false<% endif %>'
   try:
     result = run_raw_template(assert_str, variable_map)
     if result == 'true':

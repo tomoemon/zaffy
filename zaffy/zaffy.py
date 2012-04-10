@@ -31,9 +31,6 @@ def main():
   actions = create_actions(obj[0]['actions'])
   s = Scenario(actions)
   s.run()
-  for action in actions:
-    print action.setting.__dict__
-    #pprint(action.result)
 
 if __name__ == '__main__':
   main()
