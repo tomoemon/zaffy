@@ -1,13 +1,15 @@
-filetype: setting
+filetype: sql_setting
 
-test_db:
+db:
+- .name: hoge
   driver: mysql
   host: sintest-db01
   db_name: sintral_test
   port: 3306
   user:
   password:
-user:
+
+- .name: user
   driver: mysql
   host: sintest-db01
   db_name: user_test

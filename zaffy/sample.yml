@@ -83,7 +83,7 @@ actions:
     # 使えるようにする
     # どのパラメータの値を展開するかは action 定義に教えてもらう
     # これによって設定ファイルに定義した定数を埋め込むこともできる
-    joinDate: <<time.now|dateformat('%d-%m-%Y')>>
+    joinDate: <<time.now()|dateformat('%d-%m-%Y')>>
 
     # actionごとにレスポンスの値を取り出す方法を提供する
     # http であれば status, response_time, cookie や header, body など
@@ -99,13 +99,22 @@ actions:
 
 - action: http.get
   url: http://foo.co.jp/
-  assert_list: [
+  assert: [
     [<<self.status>>, "==", 200],
     # 省略記法。先頭が $. で始まる文字列は <<this.～>> に置換してからjinjaに渡す。略記は最小限にしてまとめたい
     [self.status, "==", 200], # eq, (=)
-    self.status == 200, # 自前パース方法
-    self.status in [100,200,300], # 自前パース方法（リストも自分で展開する）
-    # 上記2つは jinja テンプレートの if 文に展開しても実現できそう
+
+    # まるごと jinja テンプレートの if 文に展開する案
+    # （これだとassertの成否は分かるけど、失敗したときに該当変数だけ取り出すのが難しい
+    # (self|last)\.\w+ にマッチしたものを関係する変数として全部出力してしまうか（文字列かどうかとか検査するの大変だし）
+    self.status == 200,
+    self.status in [100,200,300],
+    self.body is json_equal '{"hoge": true}', # custom test
+
+    # jinja の custom test を使う方法
+    self.status is equal 200,
+    self.status is ge 200,
+
     [self.status, "<>", 200], # ne, (!=) とかかっこでくくるのも1案か。だったら "" でくくればいいじゃん…
     [self.body, "==", "hoge,fuga,piyo"],
     [self.body, "==", "<<file.read(global.pwd, test1.txt)>>"], # ファイルから読み込んで比較する
@@ -180,3 +189,6 @@ actions:
 #   actions (このシナリオで起動したアクションの履歴)
 #   last (直前のアクション)
 #   const
+#
+# 欲しい機能
+#  assert に失敗した時に行番号が欲しい
