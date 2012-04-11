@@ -2,6 +2,7 @@
 import yaml
 import sys
 from scenario import Scenario
+from actionsetting import ActionSetting
 from pprint import pprint
 
 def load_yaml():
@@ -12,12 +13,12 @@ def create_action(raw_obj):
     raise Exception("no action")
   action, method = raw_obj['action'].split(".")
   class_name = action.title()
-  setting_name = action.title() + "Setting"
-  module = __import__("actions." + action, fromlist=[class_name, setting_name])
-  setting_obj = getattr(module, setting_name)()
-  setting_obj.set_params(raw_obj)
+  module = __import__("actions." + action, fromlist=[class_name])
+  action_klass = getattr(module, class_name)
+  setting_obj = ActionSetting()
+  setting_obj.set_params(raw_obj, action_klass.default_params)
   setting_obj.set_method(method)
-  action_obj = getattr(module, class_name)(setting_obj)
+  action_obj = action_klass(setting_obj)
   return action_obj
 
 def create_actions(actions):

@@ -1,18 +1,11 @@
 filetype: sql_setting
 
 db:
-- .name: hoge
+- _name: hoge
   driver: mysql
-  host: sintest-db01
-  db_name: sintral_test
+  host: localhost
+  db_name: test_user
   port: 3306
-  user:
-  password:
-
-- .name: user
-  driver: mysql
-  host: sintest-db01
-  db_name: user_test
   user:
   password:
 

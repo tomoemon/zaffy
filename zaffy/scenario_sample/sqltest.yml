@@ -1,0 +1,31 @@
+type: scenario
+
+actions:
+- action: sql.select
+  driver: mysql
+  host: localhost
+  db: user_db
+  user: root
+  password: hogehoge
+  sql: select * from user where user_id=1;
+  assert:
+   - >
+    res.rows[0] ==
+      [1, "nanoha", "2012-04-10 15:57:26"|todatetime, "2012-04-10 15:57:26"|todatetime]
+
+- action: sql.selectdict
+  driver: mysql
+  host: localhost
+  db: user_db
+  user: root
+  password: hogehoge
+  sql: select * from user where user_id=1;
+  assert:
+   - >
+    res.rows[0] ==
+      {
+       'user_id': 1,
+       'user_name': "nanoha",
+       'created_date': "2012-04-10 15:57:26"|todatetime,
+       'updated_date': "2012-04-10 15:57:26"|todatetime
+      }

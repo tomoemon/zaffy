@@ -16,7 +16,7 @@ actions:
 - action: http.get
   url: http://google.co.jp/
   assert:
-   - this.status == 200
+   - res.status == 200
 
   #assertex:
   # - ex.__class__.__name__ == 'ConnectionError'

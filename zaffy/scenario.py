@@ -21,13 +21,13 @@ class Scenario(object):
         self.assert_test(action)
 
   def assertex_test(self, action):
-    variables = {"ex": action.exception}
+    variables = {"ex": action.exception, "this": action.__dict__}
     for assert_str in action.setting.assertex_list:
       if not assert_test(assert_str, variables):
         raise AssertionError(assert_str)
 
   def assert_test(self, action):
-    variables = {"this": action.result}
+    variables = {"res": action.result, "this": action.__dict__}
     for assert_str in action.setting.assert_list:
       if not assert_test(assert_str, variables):
         raise AssertionError(assert_str)
