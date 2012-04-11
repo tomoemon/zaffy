@@ -11,5 +11,6 @@
 ・sshアクションの作成
 ・shellアクションの作成
 ・アクション実行時のパラメータを jinja で展開できるようにする
+・todateフィルターの作成（mysqlのdateカラムはdatetime.dateオブジェクトに変換されるはず）
 ・グローバルに使用可能な file, time, os の作成
 
