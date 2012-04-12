@@ -1,11 +1,36 @@
-filetype: sql_setting
+filetype: preset
 
-db:
-- _name: hoge
-  driver: mysql
-  host: localhost
-  db_name: test_user
-  port: 3306
-  user:
-  password:
+
+# action と同じ形式にすべきか
+- action: preset.http
+  default:
+    assert:
+      - res.status == 200
+
+# preset 専用の形式にすべきか
+http:
+  default:
+    assert:
+      - res.status == 200
+  assert400:
+    assert:
+      - res.status == 400
+
+# もう一点。preset を使う方法
+# 同じキーの値が数値・文字列なら上書き←問題なさそう
+# 同じキーの値が list なら extend でマージ？まるごと上書き？
+# 同じキーの値が dict なら update でマージ？まるごと上書き？
+- action: http.get(assert400)
+  assert:
+    - res.content == "hoge"
+
+- action: preset.sql
+  hoge:
+    driver: mysql
+    host: localhost
+    db_name: test_user
+    port: 3306
+    user: ""
+    password: ""
+    sql : ""
 

@@ -34,8 +34,8 @@ class Sql(object):
       conn = driver.connect(host=params.host, port=params.port, db=params.db,
           user=params.user, password=params.password)
       cursor = conn.cursor()
-      cursor.execute(params.sql)
 
+      self.result["rowcount"] = cursor.execute(params.sql)
       self.result["rows"] = [list(row) for row in cursor.fetchall()]
 
       cursor.close()
@@ -52,8 +52,8 @@ class Sql(object):
       conn = driver.connect(host=params.host, port=params.port, db=params.db,
           user=params.user, password=params.password)
       cursor = conn.cursor(driver.dict_cursor())
-      cursor.execute(params.sql)
 
+      self.result["rowcount"] = cursor.execute(params.sql)
       self.result["rows"] = list(cursor.fetchall())
 
       cursor.close()
@@ -64,4 +64,26 @@ class Sql(object):
       self.exception = e
 
   def do_update(self):
-    pass
+    params = self.setting.params
+    driver = drivers[params.driver]
+
+    # update 文は複数実行できるようにする
+    if not isinstance(params.sql, list):
+      params.sql = [params.sql]
+
+    try:
+      conn = driver.connect(host=params.host, port=params.port, db=params.db,
+          user=params.user, password=params.password)
+
+      for sql in params.sql:
+        # 複数個あるときは結果が上書きされる
+        cursor = conn.cursor(driver.dict_cursor())
+        self.result["rowcount"] = cursor.execute(params.sql)
+        self.result["rows"] = []
+        cursor.close()
+
+      # connectionManager的なのを作ったら個別のcloseはしない
+      conn.close()
+    except Exception as e:
+      self.exception = e
+
