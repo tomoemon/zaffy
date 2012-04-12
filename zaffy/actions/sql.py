@@ -77,9 +77,10 @@ class Sql(object):
 
       for sql in params.sql:
         # 複数個あるときは結果が上書きされる
-        cursor = conn.cursor(driver.dict_cursor())
-        self.result["rowcount"] = cursor.execute(params.sql)
+        cursor = conn.cursor()
+        self.result["rowcount"] = cursor.execute(sql)
         self.result["rows"] = []
+        conn.commit()
         cursor.close()
 
       # connectionManager的なのを作ったら個別のcloseはしない
