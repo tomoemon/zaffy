@@ -32,10 +32,13 @@ def assert_test(template_str, variable_map):
   >>> assert_test('hoge == "fuga"', {"hoge": "piyo"})
   False
   """
-  assert_str = '<% if ' + unicode(template_str) + ' %>true<% else %>false<% endif %>'
+  # assert 文の中で if の制御構造を破壊されないように
+  template_str = template_str.replace('<%','').replace('%>','')
+
+  assert_str = '<% if ' + unicode(template_str) + ' %>1<% else %>0<% endif %>'
   try:
     result = run_raw_template(assert_str, variable_map)
-    if result == 'true':
+    if result == '1':
       return True
     else:
       return False

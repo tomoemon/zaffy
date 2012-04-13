@@ -2,6 +2,7 @@
 from scenario import Scenario
 from actionsetting import ActionSetting
 from pprint import pprint
+import time
 
 class ScenarioLoader(object):
   def __init__(self):
@@ -32,10 +33,13 @@ class ScenarioLoader(object):
       self.setting = setting
 
     def run(self):
+      start_time = time.time()
       try:
         getattr(self, "do_" + self.setting.method)()
       except Exception as e:
         self.exception = e
+      finally:
+        self.result["execution_time"] = time.time () - start_time
 
     def has_assert(self):
       return bool(self.setting.assert_list)
