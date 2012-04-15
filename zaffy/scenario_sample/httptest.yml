@@ -7,6 +7,12 @@ type: scenario
 desc: HTTP test
 
 actions:
+- action: http.post
+  url: http://localhost:8000/
+  params:
+    hoge: 10
+    fuga: piyo
+
 - action: http.get
   url: http://hogefugapiyo.com/
   assertex:
@@ -17,6 +23,14 @@ actions:
   url: http://google.co.jp/
   assert:
    - res.status == 200
+   #- res.status in [300,2,3]
+   #- res.encoding is json_equal '{"hoge":10}'
+   #- '"stat" in "instatu"'
+   #- '"p3p" in res.headers'
+   #- res.cookies.PREF == "hoge"
+   #- res.content|length < 200
+   #- res.encoding|upper == "hoge"
 
-  #assertex:
-  # - ex.__class__.__name__ == 'ConnectionError'
+  assertex:
+   - ex|classname == 'ConnectionError'
+

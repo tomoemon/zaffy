@@ -1,23 +1,36 @@
 
-・アクションで run を実行した時のレスポンスタイムを記録する
 ・結果出力機能の作成
-・AssertionErrorになったときに、どのアクションの何個目のassertで失敗したかを表示する
-・AssertionErrorになったときに、チェックした変数の値を表示する
 ・各アクションの設定の自動読み込み
 ・各アクション（シナリオごとに）設定の上書き、リセット
 ・sshアクションの作成
 ・scpアクションの作成
 ・shellアクションの作成
 ・アクション実行時のパラメータを jinja で展開できるようにする
-・グローバルに使用可能な file, time, os の作成
+・グローバルに使用可能な file の作成
+  - read, copy, remove, move, exists, readable, writable, executable, size, created_date, updated_date, stats
+・time の作成
+  - now
+・os の作成
 ・定数を定義してHTTPパラメータやSQLで使用できるようにする
 ・import.action でシナリオを読み込むのはいいが、importされる側のアクションが単体で実行されると困る
   （シナリオファイルの形式も要検討）
+・アクションとして使用可能なものと、jinjaテンプレート内で
+　使用可能なグローバルオブジェクトを一緒にしても良いかも。
+　例えば、file アクションで do_read という staticmethod を定義したら、
+　それは <<file.read("hoge.txt")>> という形で使用可能にする、とか
+・↑そうすると、const アクションを作成して、定数定義も可能になりそう。
+　const の actionインスタンスに対して値を set すると、その値はクラス変数にセットされて、
+　staticmethodから参照できるようになる
 
 完了
 ・todateフィルターの作成（mysqlのdateカラムはdatetime.dateオブジェクトに変換されるはず）
 ・sqlアクションのdo_updateを作成(複数個のSQLを実行できるようにする)
 ・has_assert などの action 共通メソッドを create_action 時に inject する（継承はしない）
+・assert で使う res のプロパティは全部、自前 __cmp__ を定義した比較用オブジェクトにラップする。（assert 失敗したときに期待値と実際の値を返せるように）
+・customtests (json_equalなど) の失敗時にもログを残すようにする
+・アクションで run を実行した時のレスポンスタイムを記録する
+・AssertionErrorになったときに、どのアクションの何個目のassertで失敗したかを表示する
+・AssertionErrorになったときに、チェックした変数の値を表示する
 
 保留
 ・sqlアクションでファイルからsqlを読み込んで実行する機能を追加

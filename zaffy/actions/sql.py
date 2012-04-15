@@ -10,8 +10,16 @@ for module in modules:
   drivers[module.__name__] = klass()
 
 class Sql(object):
-  default_params = {"driver":"", "host":"", "db":None, "port":3306,
-      "user":"", "password":"", "sql":""}
+
+  default_params = {
+    "driver":"",
+    "host":"",
+    "db":None,
+    "port":3306,
+    "user":"",
+    "password":"",
+    "sql":""
+  }
 
   def do_select(self):
     params = self.setting.params

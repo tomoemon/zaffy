@@ -4,13 +4,10 @@ from scenarioloader import ScenarioLoader
 
 
 def main():
+  global_env = {}
   loader = ScenarioLoader()
-  scenario_list
-  sys.argv[1])
-  obj = list(load_yaml())
-  actions = create_actions(obj[0]['actions'])
-  s = Scenario(actions)
-  s.run()
+  scenario = loader.load(sys.argv[1])
+  scenario.run(global_env)
 
 if __name__ == '__main__':
   main()

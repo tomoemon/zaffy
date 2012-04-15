@@ -1,26 +1,55 @@
 # -*- coding: utf-8 -*-
 from jinja2 import Environment, TemplateSyntaxError
-import jinja2
-from pprint import pprint
 from load_module import load_module_dir
+from comparator import wrap_func, wrap_test_func
+import types
 
 env = Environment(block_start_string='<%', block_end_string='%>',
     variable_start_string='<<', variable_end_string='>>')
 
 def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
   plugins = load_module_dir(custom_plugin_dir)
+  other_info_list = []
   for module in plugins:
     name_list = [name for name in dir(module) if name.startswith(prefix) and len(name) > len(prefix)]
     for name in name_list:
+      info = {}
       obj = getattr(module, name)
       if callable(obj):
         name = name[len(prefix):]
         if name in plugin_dict:
           raise Exception(name + " is already defined")
         plugin_dict[name] = obj
+      else:
+        info[name] = obj
+    other_info_list.append(info)
+  return other_info_list
 
-add_plugin(env.tests, "customtests", "is_")
-add_plugin(env.filters, "customfilters")
+info_list = add_plugin(env.tests, "customtests", "is_")
+normal_tests = dict(env.tests)
+assert_tests = dict(env.tests)
+for info in info_list:
+  func_list = info.get("is_tocmp_on_asserting", [])
+  for values in func_list:
+    name = values[0]
+    func = normal_tests[name]
+    index = values[1]
+    assert_tests[name] = wrap_test_func(func, index)
+
+info_list = add_plugin(env.filters, "customfilters", "do_")
+normal_filters = dict(env.filters)
+assert_filters = dict(env.filters)
+for info in info_list:
+  func_list = info.get("do_tocmp_on_asserting", [])
+  for values in func_list:
+    name = values[0]
+    if isinstance(values[1], types.FunctionType):
+      func = values[1]
+      index = 0
+    else:
+      func = normal_filters[name]
+      index = values[1]
+    assert_filters[name] = wrap_func(func, index)
 
 class AssertFormatException(Exception):
   pass
@@ -32,10 +61,14 @@ def assert_test(template_str, variable_map):
   >>> assert_test('hoge == "fuga"', {"hoge": "piyo"})
   False
   """
+  global env
+  env.filters = assert_filters
+  env.tests = assert_tests
+  template_str = unicode(template_str)
   # assert 文の中で if の制御構造を破壊されないように
   template_str = template_str.replace('<%','').replace('%>','')
 
-  assert_str = '<% if ' + unicode(template_str) + ' %>1<% else %>0<% endif %>'
+  assert_str = '<% if ' + template_str + ' %>1<% else %>0<% endif %>'
   try:
     result = run_raw_template(assert_str, variable_map)
     if result == '1':
