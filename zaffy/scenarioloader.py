@@ -81,7 +81,7 @@ class ActionMethodsInjector(object):
     for assert_index, assert_str in enumerate(self.setting.assertex_list):
       if not assert_test(assert_str, variables):
         raise AssertionFailed(assert_str,
-            self.exception._cmp_log.log_list if self.exception else [{"got": "exception not exists", "expect": "Exception"}],
+            self.exception._cmp_log.log_list if self.exception is not None else [{"got": "exception not exists", "expect": "Exception"}],
             assert_index)
 
   def _test_assert(self):
