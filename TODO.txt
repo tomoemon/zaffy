@@ -32,6 +32,7 @@
       ...
 ・アクションをインスタンス化するたびに action モジュールにメソッド追加するのはあほらしいので、action_klass をメモ化しておく
 ・action._run の中で、実行が終わったら即結果を wrap するのではなく、assert するとき（variables を定義するとき）にだけ wrap するようにする。（他のactionから結果を参照するときにややこしいことになるので）
+・SQLアクションにxlsxファイルからデータを読み込んでinsertできるメソッドを追加する
 
 完了
 ・todateフィルターの作成（mysqlのdateカラムはdatetime.dateオブジェクトに変換されるはず）
