@@ -4,7 +4,7 @@
 ・sshアクションの作成
 ・scpアクションの作成
 ・shellアクションの作成
-・アクション実行時のパラメータを jinja で展開できるようにする
+・アクション実行時のパラメータを jinja で展開できるようにする（文字列の場合は直接、リストや辞書の場合はそれぞれの中身を再帰的に置換していく）
 ・グローバルに使用可能な file の作成
   - read, copy, remove, move, exists, readable, writable, executable, size, created_date, updated_date, stats
 ・time の作成
@@ -31,6 +31,9 @@
    - action: sql.select
       ...
 ・SQLアクションにxlsxファイルからデータを読み込んでinsertできるメソッドを追加する
+・各アクションに、before_{method} アクション実行前に呼ばれるコールバックを用意する。主にパラメータのチェック。
+・アクションのパラメータチェック用の便利メソッドを用意する（任意、必須など）
+・各アクションの classmethod に before_all, after_all を用意する。シナリオの読み込みが完了したときに before_all, 全シナリオの実行が完了したら after_all が呼ばれる。引数に全アクションオブジェクトを渡したりする？
 
 完了
 ・todateフィルターの作成（mysqlのdateカラムはdatetime.dateオブジェクトに変換されるはず）

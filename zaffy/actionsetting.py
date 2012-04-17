@@ -19,8 +19,13 @@ class ActionSetting(object):
     self.method = method
 
   def set_params(self, params, default_params):
-    for key, value in default_params.items():
-      self.params[key] = params.get(key, value)
+    if '*' in default_params:
+      # * を指定している場合は任意のパラメータを受け取る
+      for key, value in params.items():
+        self.params[key] = value
+    else:
+      for key, value in default_params.items():
+        self.params[key] = params.get(key, value)
 
     self.assert_list = params.get("assert", self.assert_list)
     if isinstance(self.assert_list, str):
