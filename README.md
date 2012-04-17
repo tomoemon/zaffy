@@ -18,7 +18,7 @@ Zaffy は yaml ベースのシンプルなルールでテストシナリオを�
     - action: http.post
       url: http://localhost:8000/
       params:
-        pagesize: <<last.result.content|length>>
+        pagesize: <<last.res.content|length>>
 
 #sql test
     - action: sql.select
