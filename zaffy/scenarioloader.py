@@ -7,6 +7,8 @@ from comparator import wrap, CmpLog
 from template import assert_test
 from assertionfailed import AssertionFailed
 
+action_klass_memo = {}
+
 class ScenarioLoader(object):
 
   def load(self, filename):
@@ -22,16 +24,25 @@ class ScenarioLoader(object):
   def create_action(self, raw_obj):
     if 'action' not in raw_obj:
       raise Exception("no action")
-    action, method = raw_obj['action'].split(".")
-    class_name = action.title()
-    module = __import__("actions." + action, fromlist=[class_name])
-    action_klass = getattr(module, class_name)
-    ActionMethodsInjector.inject(action_klass)
+    action_name, method = raw_obj['action'].split(".")
+    action_klass = self.get_action_klass(action_name)
     setting_obj = ActionSetting()
     setting_obj.set_params(raw_obj, action_klass.default_params)
     setting_obj.set_method(method)
     action_obj = action_klass(setting_obj)
     return action_obj
+
+  def get_action_klass(self, action_name):
+    global action_klass_memo
+    class_name = action_name.title()
+    if class_name in action_klass_memo:
+      action_klass = action_klass_memo[class_name]
+    else:
+      module = __import__("actions." + action_name, fromlist=[class_name])
+      action_klass = getattr(module, class_name)
+      ActionMethodsInjector.inject(action_klass)
+      action_klass_memo[class_name] = action_klass
+    return action_klass
 
   def create_actions(self, actions):
     result = []
@@ -60,11 +71,10 @@ class ActionMethodsInjector(object):
     try:
       getattr(self, "do_" + self.setting.method)()
     except Exception as e:
-      self.exception = wrap(e, self.cmp_log)
+      self.exception = e
     finally:
       self.end_time = time.time()
       self.result["execution_time"] = self.end_time - self.start_time
-      self.result = wrap(self.result, self.cmp_log)
 
   def _assert(self):
     self._test_assertex()
@@ -73,22 +83,25 @@ class ActionMethodsInjector(object):
   def _test_assertex(self):
     if not self.setting.assertex_list:
       if self.exception is not None:
-        raise self.exception._value
+        raise self.exception
       else:
         return
 
-    variables = {"ex": self.exception, "this": self.__dict__}
+    wrap_exception = wrap(self.exception, self.cmp_log)
+    variables = {"ex": wrap_exception, "this": wrap(self.__dict__, self.cmp_log)}
     for assert_index, assert_str in enumerate(self.setting.assertex_list):
+      self.cmp_log.clear()
       if not assert_test(assert_str, variables):
         raise AssertionFailed(assert_str,
-            self.exception._cmp_log.log_list if self.exception is not None else [{"got": "exception not exists", "expect": "Exception"}],
+            self.cmp_log.log_list if self.exception is not None else [{"got": "exception not exists", "expect": "Exception"}],
             assert_index)
 
   def _test_assert(self):
     if not self.setting.assert_list:
       return
-    variables = {"res": self.result, "this": self.__dict__}
+    variables = {"res": wrap(self.result, self.cmp_log), "this": wrap(self.__dict__, self.cmp_log)}
     for assert_index, assert_str in enumerate(self.setting.assert_list):
+      self.cmp_log.clear()
       if not assert_test(assert_str, variables):
         raise AssertionFailed(assert_str,
             self.cmp_log.log_list,

@@ -2,13 +2,16 @@
 
 class CmpLog(object):
   def __init__(self):
-    self.log_list = []
+    self.clear()
 
   def add(self, got, expect):
     self.log_list.append({
       "got": got,
       "expect": expect
       })
+
+  def clear(self):
+    self.log_list = []
 
 class Comparator(object):
   def __init__(self, val, cmp_log):
