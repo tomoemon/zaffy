@@ -19,6 +19,10 @@ class BaseAction(object):
     """ self.result の alias """
     return self.result
 
+  @property
+  def params(self):
+    return self.setting.params
+
   def run_action(self, global_env):
     # 変数を jinja2 で展開する
     # constなどアクションを実行する最中に値が変わるものがあるので、直前じゃないとダメ
