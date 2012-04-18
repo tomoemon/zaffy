@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from jinja2 import Environment, TemplateSyntaxError
-from load_module import load_module_dir
+from loadmodule import load_module_dir
 from comparator import wrap_func, wrap_test_func
 import types
 
@@ -85,6 +85,8 @@ def run_raw_template(template_str, variable_map):
   """
   template = env.from_string(template_str)
   return template.render(variable_map)
+
+expand = run_raw_template
 
 if __name__ == "__main__":
   import doctest

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import template
 
 class DotDict(dict):
   def __setattr__(self, name, value):
@@ -34,4 +35,18 @@ class ActionSetting(object):
     self.assertex_list = params.get("assertex", self.assertex_list)
     if isinstance(self.assertex_list, str):
       self.assertex_list = [self.assertex_list]
+
+  def expand(self, global_env):
+    for key, value in self.params.items():
+      self._expand_params(self.params, key, value, global_env)
+
+  def _expand_params(self, parent, key, value, global_env):
+    if isinstance(value, basestring):
+      parent[key] = template.expand(value, global_env)
+    elif isinstance(value, dict):
+      for k, v in value.items():
+        self._expand_params(value, k, v, global_env)
+    elif isinstance(value, list):
+      for k, v in enumerate(value):
+        self._expand_params(value, k, v, global_env)
 

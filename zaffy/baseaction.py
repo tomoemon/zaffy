@@ -15,6 +15,9 @@ class BaseAction(object):
     self.cmp_log = CmpLog()
 
   def run_action(self, global_env):
+    # 変数を jinja2 で展開する
+    # constなどアクションを実行する最中に値が変わるものがあるので、直前じゃないとダメ
+    self.setting.expand(global_env)
     self.start_time = time.time()
     try:
       getattr(self, "do_" + self.setting.method)()
@@ -36,7 +39,6 @@ class BaseAction(object):
       else:
         # assertexが設定されずに例外も起きない場合は何もしない
         return
-    elif self.exception is None:
 
     wrap_exception = wrap(self.exception, self.cmp_log)
     variables = {"ex": wrap_exception, "this": wrap(self.__dict__, self.cmp_log)}

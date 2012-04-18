@@ -3,12 +3,12 @@
 #url_base: "http://hogefuga.com/piyo/"
 #
 #---
-type: scenario
-desc: HTTP test
+- HTTP テスト
+- action: const.set
+  url: localhost
 
-actions:
 - action: http.post
-  url: http://localhost:8000/
+  url: http://<<const.url>>:8000/
   params:
     hoge: 10
     fuga: piyo

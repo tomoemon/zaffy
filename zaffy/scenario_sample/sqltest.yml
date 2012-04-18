@@ -1,6 +1,4 @@
-type: scenario
-
-actions:
+- SQLテスト
 - action: sql.select
   driver: mysql
   host: localhost

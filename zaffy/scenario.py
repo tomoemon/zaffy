@@ -4,7 +4,8 @@ from template import assert_test
 from assertionfailed import AssertionFailed
 
 class Scenario(object):
-  def __init__(self, actions):
+  def __init__(self, doc, actions):
+    self.doc = doc
     self.actions = actions
 
   def run(self, global_env):
