@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from os import path
+from baseaction import BaseAction
 from load_module import load_module_dir
 
 drivers = {}
@@ -9,7 +10,7 @@ for module in modules:
   klass = getattr(module, module.__name__.title())
   drivers[module.__name__] = klass()
 
-class Sql(object):
+class Sql(BaseAction):
 
   default_params = {
     "driver":"",

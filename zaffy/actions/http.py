@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import requests
+from baseaction import BaseAction
 
-class Http(object):
+class Http(BaseAction):
   """ Http アクション
   port は url パラメータで http://hoge.com:8000/ のように指定する
   """

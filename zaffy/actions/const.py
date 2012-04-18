@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from baseaction import BaseAction
 
 class MetaConst(type):
   def __getattribute__(cls, name):
@@ -6,7 +7,7 @@ class MetaConst(type):
       return type.__getattribute__(cls, 'default_params')
     return type.__getattribute__(cls, 'const_params')[name]
 
-class Const(object):
+class Const(BaseAction):
   __metaclass__ = MetaConst
 
   const_params = {}
