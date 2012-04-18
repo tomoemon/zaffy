@@ -9,7 +9,9 @@ class Scenario(object):
     self.actions = actions
 
   def run(self, global_env):
+    last_action = None
     for action_index, action in enumerate(self.actions):
+      global_env["last"] = last_action
       action.run_action(global_env)
 
       try:
@@ -17,4 +19,6 @@ class Scenario(object):
       except AssertionFailed as e:
         e.action_index = action_index
         raise e
+
+      last_action = action
 
