@@ -24,11 +24,11 @@ class Http(BaseAction):
 
   def _to_result(self, response):
     result = {}
-    result['status'] = r.status_code
-    result['content'] = r.text
-    result['headers'] = r.headers
-    result['encoding'] = r.encoding
-    result['cookies'] = r.cookies
+    result['status'] = response.status_code
+    result['content'] = response.text
+    result['headers'] = response.headers
+    result['encoding'] = response.encoding
+    result['cookies'] = response.cookies
     return result
 
   def do_get(self):
