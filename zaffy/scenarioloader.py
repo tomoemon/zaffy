@@ -10,7 +10,7 @@ class ScenarioLoader(object):
     raw_actions = yaml_obj[0]
     doc = raw_actions.pop(0)
     if not isinstance(doc, basestring):
-      raise Exception("Scenario should have a description at first element")
+      raise Exception("Scenario should have a description at first element (" + filename + ")")
     return Scenario(doc, self.create_actions(raw_actions))
 
   def load_yaml(self, filename):
