@@ -17,7 +17,7 @@ class ActionSetting(object):
     self.assertex_list = []
 
   def set_method(self, method):
-    self.method = method
+    self._method = method
 
   def set_params(self, params, default_params):
     if '*' in default_params:

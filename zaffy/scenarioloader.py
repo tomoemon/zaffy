@@ -1,6 +1,7 @@
 # -*- coding: utf-8
 import yaml
 from scenario import Scenario
+from scenariosetting import ScenarioSetting
 from actionloader import action_loader
 
 class ScenarioLoader(object):
@@ -11,7 +12,9 @@ class ScenarioLoader(object):
     doc = raw_actions.pop(0)
     if not isinstance(doc, basestring):
       raise Exception("Scenario should have a description at first element (" + filename + ")")
-    return Scenario(doc, self.create_actions(raw_actions))
+
+    setting = ScenarioSetting(doc=doc, filename=filename, actions=self.create_actions(raw_actions))
+    return Scenario(setting)
 
   def load_yaml(self, filename):
     print filename

@@ -29,7 +29,7 @@ class BaseAction(object):
     self.setting.expand(global_env)
     self.start_time = time.time()
     try:
-      getattr(self, "do_" + self.setting.method)()
+      getattr(self, "do_" + self.setting._method)()
     except Exception as e:
       self.exception = e
     finally:

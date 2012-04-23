@@ -4,13 +4,13 @@ from template import assert_test
 from assertionfailed import AssertionFailed
 
 class Scenario(object):
-  def __init__(self, doc, actions):
-    self.doc = doc
-    self.actions = actions
+  def __init__(self, setting):
+    self.setting = setting
 
   def run(self, global_env):
     last_action = None
-    for action_index, action in enumerate(self.actions):
+    actions = self.setting.actions
+    for action_index, action in enumerate(actions):
       global_env["last"] = last_action
       action.run_action(global_env)
 

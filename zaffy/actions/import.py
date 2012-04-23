@@ -25,7 +25,9 @@ class Import(BaseAction):
 
     if empty_elem_num == 0:
       # シナリオディレクトリのトップから探してくる
+      pass
     else:
+      pass
       # (empty_elem_num - 1) 個上のディレクトリまでさかのぼって探す
       # empty_elem_num == 0 の場合はカレントディレクトリ
 
