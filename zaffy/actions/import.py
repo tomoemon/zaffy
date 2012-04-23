@@ -6,7 +6,11 @@ class Import(BaseAction):
   """
   default_params = {
     "path":""
+    "source":""
   }
+
+  def do_string(self):
+    pass
 
   def do_action(self):
     params = self.setting.params

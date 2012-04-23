@@ -7,7 +7,7 @@ def main():
   global_env = {}
   global_env.update(action_loader.get_all_action_map())
   loader = ScenarioLoader()
-  scenario = loader.load(sys.argv[1])
+  scenario = loader.load_file(sys.argv[1])
   scenario.run(global_env)
 
 if __name__ == '__main__':
