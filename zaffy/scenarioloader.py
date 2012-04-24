@@ -3,12 +3,13 @@ import yaml
 from scenario import Scenario
 from scenariosetting import ScenarioSetting
 from actionloader import action_loader
+from os import path
 
 class ScenarioLoader(object):
 
   def load_file(self, filename):
     scenario = self.load(file(filename))
-    scenario.setting.filename = filename
+    scenario.setting.filename = path.abspath(filename)
     return scenario
 
   def load(self, content):
@@ -16,14 +17,14 @@ class ScenarioLoader(object):
     raw_actions = yaml_obj[0]
     doc = raw_actions.pop(0)
     if not isinstance(doc, basestring):
-      raise Exception("Scenario should have a description at first element: " + content)
+      raise Exception("Scenario should have a description at first element: " + str(content))
 
     setting = ScenarioSetting(doc=doc)
     return Scenario(setting, self.create_actions(raw_actions))
 
   def load_yaml(self, content):
     """ string でも file でも同じメソッドで読みこめる """
-    print content
+    #print(getattr(content, 'name', content))
     return yaml.load_all(content)
 
   def create_actions(self, actions):
@@ -33,3 +34,4 @@ class ScenarioLoader(object):
     return result
 
 scenario_loader = ScenarioLoader()
+

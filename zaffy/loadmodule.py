@@ -22,8 +22,8 @@ def load_modules(basepath):
       elif os.path.isdir(fdn):
         m = load_module(fdn)
         plugin_list.append(m)
-    except ImportError:
-      pass
+    except ImportError as e:
+      print(fdn, e)
   return plugin_list
 
 def load_module_dir(module_name):

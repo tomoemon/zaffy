@@ -2,41 +2,50 @@
 from baseaction import BaseAction
 from scenarioloader import scenario_loader
 from os import path
+import time
 
 class Require(BaseAction):
   """ require アクション
   """
   default_params = {
-    "path":""
+    "path":"",
     "source":""
   }
+
+  def __init__(self, setting):
+    super(Require, self).__init__(setting)
+    self.scenario = None
+
+  def __getitem__(self, index):
+    return self.scenario.actions[index]
 
   def do_string(self):
     pass
 
-  def do_action(self):
+  def do_action(self, global_env):
     params = self.setting.params
-    params.path = params.path.trim()
+    params.path = params.path.strip()
     if not params.path:
       raise Exception(params.path + " not exists")
 
     filename = params.path
 
     if not path.isabs(filename):
-      filename = path.join(path.dirname(self.scenario_setting), filename)
+      filename = path.join(path.dirname(self.scenario_setting.filename), filename)
 
     samefile = getattr(path, 'samefile', self.samefile)
 
     if samefile(filename, self.scenario_setting.filename):
       raise Exception(params.path + " require self")
 
-    scenario = scenario_loader.load_file(params.path)
+    scenario = scenario_loader.load_file(filename)
     scenario.run(global_env)
+    self.scenario = scenario
 
   @classmethod
   def samefile(cls, path1, path2):
     return path.normcase(path.abspath(path1)) == \
-        path.normcase(path.abspath(path2)):
+        path.normcase(path.abspath(path2))
 
   def run_action(self, global_env, scenario_setting):
     # 変数を jinja2 で展開する

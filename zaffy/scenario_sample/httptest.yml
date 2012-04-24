@@ -4,6 +4,12 @@
 #
 #---
 - HTTP テスト
+
+- action: debug.print
+
+- action: require.action
+  path: required.yml
+
 - action: const.set
   url: localhost
 
@@ -30,7 +36,3 @@
    #- res.cookies.PREF == "hoge"
    #- res.content|length < 200
    #- res.encoding|upper == "hoge"
-
-  assertex:
-   - ex|classname == 'ConnectionError'
-

@@ -5,10 +5,6 @@ from loadmodule import load_module_dir
 class ActionLoader(object):
   def __init__(self):
     self.action_klasses = {}
-    module_list = load_module_dir("actions")
-    for module in module_list:
-      module_name = module.__name__
-      self.action_klasses[module_name] = getattr(module, module_name.title())
 
   def create_action(self, raw_obj):
     if 'action' not in raw_obj:
@@ -21,6 +17,12 @@ class ActionLoader(object):
     setting_obj.set_method(method)
     action_obj = action_klass(setting_obj)
     return action_obj
+
+  def load_actions(self):
+    module_list = load_module_dir("actions")
+    for module in module_list:
+      module_name = module.__name__
+      self.action_klasses[module_name] = getattr(module, module_name.title())
 
   def get_all_action_map(self):
     return self.action_klasses
