@@ -5,4 +5,5 @@ class ScenarioSetting(object):
     self.doc = doc
     self.actions = actions
     self.filename = filename
+    self.from_scenario = None
 

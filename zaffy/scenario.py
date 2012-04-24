@@ -13,7 +13,7 @@ class Scenario(object):
     global_env["actions"] = self.actions
     for action_index, action in enumerate(self.actions):
       global_env["last"] = last_action
-      action.run_action(global_env, self.setting)
+      action.run_action(global_env, self)
 
       try:
         action.run_assert()

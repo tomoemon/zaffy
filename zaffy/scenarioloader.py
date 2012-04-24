@@ -7,9 +7,24 @@ from os import path
 
 class ScenarioLoader(object):
 
-  def load_file(self, filename):
+  def check_circular_reference(self, filename, from_scenario):
+    """ 循環参照チェック """
+    refer_list = [filename]
+    while from_scenario:
+      from_filename = from_scenario.setting.filename
+      if from_filename in refer_list:
+        refer_list.append(from_filename)
+        raise Exception("Circular reference detected: " + str(list(reversed(refer_list))))
+      refer_list.append(from_filename)
+      from_scenario = from_scenario.setting.from_scenario
+
+  def load_file(self, filename, from_scenario=None):
+    filename = path.normcase(path.abspath(filename))
+    if from_scenario:
+      self.check_circular_reference(filename, from_scenario)
     scenario = self.load(file(filename))
-    scenario.setting.filename = path.abspath(filename)
+    scenario.setting.filename = filename
+    scenario.setting.from_scenario = from_scenario
     return scenario
 
   def load(self, content):
