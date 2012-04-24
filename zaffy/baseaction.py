@@ -12,6 +12,7 @@ class BaseAction(object):
     self.start_time = None
     self.end_time = None
     self.setting = setting
+    self.scenario_setting = None
     self.cmp_log = CmpLog()
 
   @property
@@ -23,10 +24,11 @@ class BaseAction(object):
   def params(self):
     return self.setting.params
 
-  def run_action(self, global_env):
+  def run_action(self, global_env, scenario_setting):
     # 変数を jinja2 で展開する
     # constなどアクションを実行する最中に値が変わるものがあるので、直前じゃないとダメ
     self.setting.expand(global_env)
+    self.scenario_setting = scenario_setting
     self.start_time = time.time()
     try:
       getattr(self, "do_" + self.setting._method)()

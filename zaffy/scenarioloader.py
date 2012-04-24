@@ -18,8 +18,8 @@ class ScenarioLoader(object):
     if not isinstance(doc, basestring):
       raise Exception("Scenario should have a description at first element: " + content)
 
-    setting = ScenarioSetting(doc=doc, actions=self.create_actions(raw_actions))
-    return Scenario(setting)
+    setting = ScenarioSetting(doc=doc)
+    return Scenario(setting, self.create_actions(raw_actions))
 
   def load_yaml(self, content):
     """ string でも file でも同じメソッドで読みこめる """
@@ -32,3 +32,4 @@ class ScenarioLoader(object):
       result.append(action_loader.create_action(action))
     return result
 
+scenario_loader = ScenarioLoader()
