@@ -3,13 +3,20 @@ import sys
 import argparse
 from actionloader import action_loader
 from scenarioloader import scenario_loader
+from actionexception import ActionException
 
 def main():
   action_loader.load_actions()
   global_env = {}
   global_env.update(action_loader.get_all_action_map())
-  scenario = scenario_loader.load_file(sys.argv[1])
-  scenario.run(global_env)
+  try:
+    scenario = scenario_loader.load_file(sys.argv[1])
+    scenario.run(global_env)
+  except ActionException as e:
+    print "--------------------------"
+    print(e.stack_trace)
+    print(e.original)
+    print "--------------------------"
 
 if __name__ == '__main__':
   main()

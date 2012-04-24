@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import time
+import traceback
 from comparator import wrap, CmpLog
 from template import assert_test
 from assertionfailed import AssertionFailed
+from actionexception import ActionException
 
 class BaseAction(object):
 
@@ -26,14 +28,14 @@ class BaseAction(object):
 
   def run_action(self, global_env, scenario_setting):
     # 変数を jinja2 で展開する
-    # constなどアクションを実行する最中に値が変わるものがあるので、直前じゃないとダメ
+    # const で定義する変数などアクション実行中に値が変わるものがあるので、直前じゃないとダメ
     self.setting.expand(global_env)
     self.scenario_setting = scenario_setting
     self.start_time = time.time()
     try:
       getattr(self, "do_" + self.setting._method)()
     except Exception as e:
-      self.exception = e
+      self.exception = ActionException(e, traceback.format_exc())
     finally:
       self.end_time = time.time()
       self.result["execution_time"] = self.end_time - self.start_time
@@ -51,7 +53,7 @@ class BaseAction(object):
         # assertexが設定されずに例外も起きない場合は何もしない
         return
 
-    wrap_exception = wrap(self.exception, self.cmp_log)
+    wrap_exception = wrap(self.exception.original, self.cmp_log)
     variables = {"ex": wrap_exception, "this": wrap(self.__dict__, self.cmp_log)}
     for assert_index, assert_str in enumerate(self.setting.assertex_list):
       self.cmp_log.clear()
