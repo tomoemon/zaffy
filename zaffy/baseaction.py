@@ -14,7 +14,6 @@ class BaseAction(object):
     self.start_time = None
     self.end_time = None
     self.setting = setting
-    self.scenario_setting = None
     self.cmp_log = CmpLog()
 
   @property
@@ -26,19 +25,24 @@ class BaseAction(object):
   def params(self):
     return self.setting.params
 
-  def run_action(self, global_env, scenario_setting):
+  def run_action(self, global_env, scenario):
     # 変数を jinja2 で展開する
     # const で定義する変数などアクション実行中に値が変わるものがあるので、直前じゃないとダメ
     self.setting.expand(global_env)
-    self.scenario_setting = scenario_setting
     self.start_time = time.time()
     try:
-      getattr(self, "do_" + self.setting._method)()
+      self._run_dynamic_method(global_env, scenario)
     except Exception as e:
+      if isinstance(e, ActionException):
+        # require アクションの中で例外が飛んだ時は ActionException になっているので
+        e = e.original
       self.exception = ActionException(e, traceback.format_exc())
     finally:
       self.end_time = time.time()
       self.result["execution_time"] = self.end_time - self.start_time
+
+  def _run_dynamic_method(self, global_env, scenario):
+    getattr(self, "do_" + self.setting._method)()
 
   def run_assert(self):
     self._test_assertex()

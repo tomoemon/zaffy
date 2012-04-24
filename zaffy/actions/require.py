@@ -14,16 +14,16 @@ class Require(BaseAction):
 
   def __init__(self, setting):
     super(Require, self).__init__(setting)
-    self.scenario = None
+    self.new_scenario = None
 
   def __getitem__(self, index):
-    return self.scenario.actions[index]
+    return self.new_scenario.actions[index]
 
   def do_string(self):
     pass
 
-  def do_action(self, global_env):
-    params = self.setting.params
+  def do_file(self, global_env, scenario):
+    params = self.params
     params.path = params.path.strip()
     if not params.path:
       raise Exception(params.path + " not exists")
@@ -31,33 +31,13 @@ class Require(BaseAction):
     filename = params.path
 
     if not path.isabs(filename):
-      filename = path.join(path.dirname(self.scenario_setting.filename), filename)
+      filename = path.join(path.dirname(scenario.setting.filename), filename)
 
-    samefile = getattr(path, 'samefile', self.samefile)
+    new_scenario = scenario_loader.load_file(filename, scenario)
+    new_scenario.run(global_env)
+    self.new_scenario = new_scenario
 
-    if samefile(filename, self.scenario_setting.filename):
-      raise Exception(params.path + " require self")
-
-    scenario = scenario_loader.load_file(filename)
-    scenario.run(global_env)
-    self.scenario = scenario
-
-  @classmethod
-  def samefile(cls, path1, path2):
-    return path.normcase(path.abspath(path1)) == \
-        path.normcase(path.abspath(path2))
-
-  def run_action(self, global_env, scenario_setting):
-    # 変数を jinja2 で展開する
-    # constなどアクションを実行する最中に値が変わるものがあるので、直前じゃないとダメ
-    self.setting.expand(global_env)
-    self.scenario_setting = scenario_setting
-    self.start_time = time.time()
-    try:
-      getattr(self, "do_" + self.setting._method)(global_env)
-    except Exception as e:
-      self.exception = e
-    finally:
-      self.end_time = time.time()
-      self.result["execution_time"] = self.end_time - self.start_time
+  def _run_dynamic_method(self, global_env, scenario):
+    """ オーバーライド """
+    getattr(self, "do_" + self.setting._method)(global_env, scenario)
 
