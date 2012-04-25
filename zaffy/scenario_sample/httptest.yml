@@ -7,7 +7,7 @@
 
 - action: debug.print
 
-- action: require.action
+- action: require
   path: required.yml
 
 - action: const.set

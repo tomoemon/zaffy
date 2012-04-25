@@ -1,7 +1,5 @@
-filetype: scenario
 
 # action と同じ形式にすべきか
-actions:
 - action: preset.http
   default:
     assert:
