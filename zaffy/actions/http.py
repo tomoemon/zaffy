@@ -8,19 +8,9 @@ class Http(BaseAction):
   """
   default_params = {
     "url":"",
-    "url_prefix":"",
-    "url_suffix":"",
     "headers":{},
     "params":{}
   }
-
-  def _get_url(self, params):
-    result = params.url
-    if params.url_prefix:
-      result = params.url_prefix + result
-    if params.url_suffix:
-      result = result + params.url_suffix
-    return result
 
   def _to_result(self, response):
     result = {}
@@ -31,16 +21,14 @@ class Http(BaseAction):
     result['cookies'] = response.cookies
     return result
 
-  def do_get(self):
-    params = self.setting.params
-    r = requests.get(self._get_url(params),
+  def do_get(self, params):
+    r = requests.get(params.url,
         headers=params.headers,
         params=params.params)
     self.result = self._to_result(r)
 
-  def do_post(self):
-    params = self.setting.params
-    r = requests.post(self._get_url(params),
+  def do_post(self, params):
+    r = requests.post(params.url,
         headers=params.headers,
         data=params.params)
     self.result = self._to_result(r)

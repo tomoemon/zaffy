@@ -7,9 +7,19 @@ class ActionLoader(object):
     self.action_klasses = {}
 
   def create_action(self, raw_obj):
-    if 'action' not in raw_obj:
+    if 'action' not in raw_obj or not raw_obj['action']:
       raise Exception("no action")
-    action_name, method = raw_obj['action'].split(".")
+    action_info = raw_obj['action'].split(".")
+    action_name = action_info[0]
+
+    # action: require
+    # のように . 付きでメソッドを明示しない場合は
+    # メソッド名はアクションと同じになる
+    if len(action_info) == 2 and action_info[1]:
+      method = action_info[1]
+    else:
+      method = action_name
+
     action_klass = self.get_action_klass(action_name)
     setting_obj = ActionSetting()
     del raw_obj['action']

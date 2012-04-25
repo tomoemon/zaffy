@@ -22,8 +22,7 @@ class Sql(BaseAction):
     "sql":""
   }
 
-  def do_select(self):
-    params = self.setting.params
+  def do_select(self, params):
     driver = drivers[params.driver]
     conn = driver.connect(host=params.host, port=params.port, db=params.db,
         user=params.user, password=params.password)
@@ -37,8 +36,7 @@ class Sql(BaseAction):
     # connectionManager的なのを作ったら個別のcloseはしない
     conn.close()
 
-  def do_selectdict(self):
-    params = self.setting.params
+  def do_selectdict(self, params):
     driver = drivers[params.driver]
     conn = driver.connect(host=params.host, port=params.port, db=params.db,
         user=params.user, password=params.password)
@@ -52,8 +50,7 @@ class Sql(BaseAction):
     # connectionManager的なのを作ったら個別のcloseはしない
     conn.close()
 
-  def do_update(self):
-    params = self.setting.params
+  def do_update(self, params):
     driver = drivers[params.driver]
 
     # update 文は複数実行できるようにする

@@ -16,15 +16,15 @@ class Const(BaseAction):
     "*":"",
   }
 
-  def do_set(self):
-    for key, value in self.setting.params.items():
+  def do_set(self, params):
+    for key, value in params.items():
       self.const_params[key] = [value]
 
-  def do_push(self):
-    for key, value in self.setting.params.items():
+  def do_push(self, params):
+    for key, value in params.items():
       self.const_params[key] = self.const_params.get(key, []) + [value]
 
-  def do_pop(self):
-    for key in self.setting.params.keys():
+  def do_pop(self, params):
+    for key in params.keys():
       self.const_params[key].pop()
 
