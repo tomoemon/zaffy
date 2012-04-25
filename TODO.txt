@@ -3,13 +3,12 @@
 ・sshアクションの作成
 ・scpアクションの作成
 ・shellアクションの作成
-・グローバルに使用可能な file の作成
+・file アクションの作成
   - read, copy, remove, move, exists, readable, writable, executable, size, created_date, updated_date, stats
 ・time の作成
   - now
 ・os の作成
-・importアクションの作成
-・import.action でシナリオを読み込むのはいいが、importされる側のアクションが単体で実行されると困る
+・require でシナリオを読み込むのはいいが、requireされる側のアクションが単体で実行されると困る場合がある
   （シナリオファイルの形式も要検討）
 ・SQLアクションにxlsxファイルからデータを読み込んでinsertできるメソッドを追加する
 ・各アクションに、before_{method} アクション実行前に呼ばれるコールバックを用意する。主にパラメータのチェック。
@@ -48,6 +47,7 @@
 　staticmethodから参照できるようになる
 ・定数を定義してHTTPパラメータやSQLで使用できるようにする
 ・アクション実行時のパラメータを jinja で展開できるようにする（文字列の場合は直接、リストや辞書の場合はそれぞれの中身を再帰的に置換していく）
+・importアクションの作成
 
 保留
 ・sqlアクションでファイルからsqlを読み込んで実行する機能を追加
