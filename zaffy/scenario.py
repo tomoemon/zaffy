@@ -17,7 +17,7 @@ class Scenario(object):
       action.run_action(global_env, self)
 
       try:
-        action.run_assert()
+        action.run_assert(global_env)
       except AssertionFailed as e:
         e.action_index = action_index
         raise e

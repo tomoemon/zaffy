@@ -19,7 +19,7 @@ class Require(BaseAction):
   def __getitem__(self, index):
     return self.new_scenario.actions[index]
 
-  def do_require(self, params, global_env):
+  def do_require(self, params, global_env, scenario):
     params.path = params.path.strip()
     if not params.path:
       raise Exception(params.path + " not exists")
@@ -27,13 +27,13 @@ class Require(BaseAction):
     filename = params.path
 
     if not path.isabs(filename):
-      filename = path.join(path.dirname(self.scenario.setting.filename), filename)
+      filename = path.join(path.dirname(scenario.setting.filename), filename)
 
-    new_scenario = scenario_loader.load_file(filename, self.scenario)
+    new_scenario = scenario_loader.load_file(filename, scenario)
     new_scenario.run(global_env)
     self.new_scenario = new_scenario
 
-  def _run_dynamic_method(self, global_env):
+  def _run_dynamic_method(self, global_env, scenario):
     """ オーバーライド """
-    getattr(self, "do_" + self.setting._method)(self.params, global_env)
+    getattr(self, "do_" + self.setting._method)(self.params, global_env, scenario)
 

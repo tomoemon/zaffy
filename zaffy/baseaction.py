@@ -15,7 +15,6 @@ class BaseAction(object):
     self.end_time = None
     self.setting = setting
     self.cmp_log = CmpLog()
-    self.scenario = None
 
   @property
   def res(self):
@@ -30,10 +29,9 @@ class BaseAction(object):
     # 変数を jinja2 で展開する
     # const で定義する変数などアクション実行中に値が変わるものがあるので、直前じゃないとダメ
     self.setting.expand(global_env)
-    self.scenario = scenario
     self.start_time = time.time()
     try:
-      self._run_dynamic_method(global_env)
+      self._run_dynamic_method(global_env, scenario)
     except ActionException as e:
       self.exception = e
     except Exception as e:
@@ -42,14 +40,14 @@ class BaseAction(object):
       self.end_time = time.time()
       self.result["execution_time"] = self.end_time - self.start_time
 
-  def _run_dynamic_method(self, global_env):
+  def _run_dynamic_method(self, global_env, scenario):
     getattr(self, "do_" + self.setting._method)(self.params)
 
-  def run_assert(self):
-    self._test_assertex()
-    self._test_assert()
+  def run_assert(self, global_env):
+    self._test_assertex(global_env)
+    self._test_assert(global_env)
 
-  def _test_assertex(self):
+  def _test_assertex(self, global_env):
     if not self.setting.assertex_list:
       if self.exception is not None:
         # assertexが設定されずに例外が起きた場合はそのまま上に投げる
@@ -59,7 +57,10 @@ class BaseAction(object):
         return
 
     wrap_exception = wrap(self.exception.original, self.cmp_log)
-    variables = {"ex": wrap_exception, "this": wrap(self.__dict__, self.cmp_log)}
+    variables = dict(global_env)
+    variables.update({
+      "ex": wrap_exception,
+      "this": wrap(self.__dict__, self.cmp_log)})
     for assert_index, assert_str in enumerate(self.setting.assertex_list):
       self.cmp_log.clear()
       if not assert_test(assert_str, variables):
@@ -67,10 +68,13 @@ class BaseAction(object):
             self.cmp_log.log_list if self.exception is not None else [{"got": "exception not exists", "expect": "Exception"}],
             assert_index)
 
-  def _test_assert(self):
+  def _test_assert(self, global_env):
     if not self.setting.assert_list:
       return
-    variables = {"res": wrap(self.result, self.cmp_log), "this": wrap(self.__dict__, self.cmp_log)}
+    variables = dict(global_env)
+    variables.update({
+      "res": wrap(self.result, self.cmp_log),
+      "this": wrap(self.__dict__, self.cmp_log)})
     for assert_index, assert_str in enumerate(self.setting.assert_list):
       self.cmp_log.clear()
       if not assert_test(assert_str, variables):
