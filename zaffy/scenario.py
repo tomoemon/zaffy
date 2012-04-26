@@ -10,9 +10,10 @@ class Scenario(object):
 
   def run(self, global_env):
     last_action = None
-    global_env["actions"] = self.actions
     for action_index, action in enumerate(self.actions):
+      global_env["actions"] = self.actions[0:action_index]
       global_env["last"] = last_action
+      global_env["this"] = action
       action.run_action(global_env, self)
 
       try:
