@@ -11,13 +11,24 @@
   path: required.yml
 
 - action: const.set
-  url: localhost
+  url: yahoo.co.jp
 
 - action: http.post
-  url: http://<<const.url>>:8000/
+  url: http://<<const.url>>:80/
   params:
     hoge: 10
     fuga: piyo
+
+- action: debug.rawprint
+  a: 100
+  x: [1,2,3]
+  res: <<actions[-1].res.headers>>
+
+- action: debug.print
+  a: 100
+  x: [1,2,3]
+  param: <<this.params.a>>
+  res: <<actions[-2].res.headers>>
 
 - action: http.get
   url: http://hogefugapiyo.com/
