@@ -12,14 +12,15 @@ def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
   other_info_list = []
   for module in plugins:
     name_list = [name for name in dir(module) if name.startswith(prefix) and len(name) > len(prefix)]
+    overridable = getattr(module, prefix + "override", [])
     for name in name_list:
       info = {}
       obj = getattr(module, name)
       if callable(obj):
-        name = name[len(prefix):]
-        if name in plugin_dict:
+        plugin_name = name[len(prefix):]
+        if plugin_name in plugin_dict and name not in overridable:
           raise Exception(name + " is already defined")
-        plugin_dict[name] = obj
+        plugin_dict[plugin_name] = obj
       else:
         info[name] = obj
     other_info_list.append(info)
@@ -86,7 +87,11 @@ def run_raw_template(template_str, variable_map):
   template = env.from_string(template_str)
   return template.render(variable_map)
 
-expand = run_raw_template
+def expand(template_str, variable_map):
+  global env
+  env.filters = normal_filters
+  env.tests = normal_tests
+  return run_raw_template(template_str, variable_map)
 
 if __name__ == "__main__":
   import doctest
