@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from actionsetting import ActionSetting
-from loadmodule import load_module_dir
+from moduleloader import load_module_dir
 
 class ActionLoader(object):
   def __init__(self):

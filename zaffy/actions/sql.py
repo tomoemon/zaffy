@@ -2,7 +2,7 @@
 
 from os import path
 from baseaction import BaseAction
-from loadmodule import load_module_dir
+from moduleloader import load_module_dir
 
 drivers = {}
 modules = load_module_dir(path.join("actions", "sqldrivers"))

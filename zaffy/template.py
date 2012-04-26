@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from jinja2 import Environment, TemplateSyntaxError
-from loadmodule import load_module_dir
+from moduleloader import load_module_dir
 from comparator import wrap_func, wrap_test_func
 import types
 
