@@ -3,7 +3,7 @@ import sys
 import os
 import imp
 
-_scenario_dir = ""
+_scenario_root_dir = ""
 
 if hasattr(sys,"setdefaultencoding"):
   sys.setdefaultencoding("utf-8")
@@ -18,10 +18,10 @@ def get_main_dir():
     return os.path.abspath(os.path.dirname(sys.executable))
   return os.path.abspath(os.path.dirname(sys.argv[0]))
 
-def get_scenario_dir():
-  return _scenario_dir
+def get_scenario_root():
+  return _scenario_root_dir
 
-def set_scenario_dir(dirname):
-  global _scenario_dir
-  _scenario_dir = dirname
+def set_scenario_root(dirname):
+  global _scenario_root_dir
+  _scenario_root_dir = dirname
 

@@ -22,7 +22,8 @@ class ScenarioLoader(object):
     filename = path.normcase(path.abspath(filename))
     if from_scenario:
       self.check_circular_reference(filename, from_scenario)
-    scenario = self.load(file(filename))
+    with open(filename) as fp:
+      scenario = self.load(fp)
     scenario.setting.filename = filename
     scenario.setting.from_scenario = from_scenario
     return scenario

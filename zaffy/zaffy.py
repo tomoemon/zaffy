@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
-import argparse
+import option
 from actionloader import action_loader
 from scenarioloader import scenario_loader
 from actionexception import ActionException
