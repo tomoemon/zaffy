@@ -22,13 +22,14 @@
 - action: debug.rawprint
   a: 100
   x: [1,2,3]
-  res: <<actions[-1].res.headers>>
+  hoge: <<actions[-1].res.content.startswith('hoge')>>
+  #res: <<actions[-1].res.headers>>
 
-- action: debug.print
-  a: 100
-  x: [1,2,3]
-  param: <<this.params.a>>
-  res: <<actions[-2].res.headers>>
+#- action: debug.print
+#  a: 100
+#  x: [1,2,3]
+#  param: <<this.params.a>>
+#  res: <<actions[-2].res.headers>>
 
 - action: http.get
   url: http://hogefugapiyo.com/
