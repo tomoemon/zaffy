@@ -21,8 +21,8 @@
 
 - action: debug.rawprint
   a: 100
-  x: [1,2,3]
-  hoge: <<actions[-1].res.content.startswith('hoge')>>
+  +x: "[1,2,3]"
+  +hoge: <<actions[-1].res.content.startswith('hoge')>>
   #res: <<actions[-1].res.headers>>
 
 #- action: debug.print

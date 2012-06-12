@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import template
+import ast
 
 class DotDict(dict):
   def __setattr__(self, name, value):
@@ -41,8 +42,17 @@ class ActionSetting(object):
       self._expand_params(self.params, key, value, global_env)
 
   def _expand_params(self, parent, key, value, global_env):
+    # 文字列の場合はテンプレートとして扱い、
+    # 辞書、リストの場合はさらにその中の要素を展開する。
+    # ここで指定していない数値等の型はそのまま
     if isinstance(value, basestring):
-      parent[key] = template.expand(value, global_env)
+      new_value = template.expand(value, global_env)
+      if key.startswith('+'):
+        original_key = key.lstrip('+')
+        parent[original_key] = ast.literal_eval(new_value)
+        del parent[key]
+      else:
+        parent[key] = new_value
     elif isinstance(value, dict):
       for k, v in value.items():
         self._expand_params(value, k, v, global_env)
