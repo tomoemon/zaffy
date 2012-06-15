@@ -6,6 +6,7 @@ from os import path
 
 def load_module(module_name, basepath):
   """ モジュールをロードして返す
+  imp.load_module は reload() と同じなので注意!!
   """
   f,n,d = imp.find_module(module_name,[basepath])
   return imp.load_module(module_name,f,n,d)

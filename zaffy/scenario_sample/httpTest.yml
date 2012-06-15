@@ -13,6 +13,12 @@
 - action: const.set
   url: yahoo.co.jp
 
+- action: preset.http
+  default:
+    url: yahoo.hoge
+
+- action: http.get
+
 - action: http.post
   url: http://<<const.url>>:80/
   params:

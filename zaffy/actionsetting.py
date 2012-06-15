@@ -13,12 +13,16 @@ class ActionSetting(object):
   def __init__(self):
     self._parent = None
     self._method = None
+    self._preset = None
     self.params = DotDict()
     self.assert_list = []
     self.assertex_list = []
 
   def set_method(self, method):
     self._method = method
+
+  def set_preset(self, preset):
+    self._preset = preset
 
   def set_params(self, params, default_params):
     if '*' in default_params:
@@ -38,6 +42,7 @@ class ActionSetting(object):
       self.assertex_list = [self.assertex_list]
 
   def expand(self, global_env):
+    self.params = DotDict(self._preset.apply(self.params))
     for key, value in self.params.items():
       self._expand_params(self.params, key, value, global_env)
 

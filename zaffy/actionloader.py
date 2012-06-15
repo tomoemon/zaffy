@@ -9,7 +9,13 @@ class ActionLoader(object):
   def create_action(self, raw_obj):
     if 'action' not in raw_obj or not raw_obj['action']:
       raise Exception("no action")
-    action_info = raw_obj['action'].split(".")
+    action_preset = raw_obj['action'].split("<")
+    if len(action_preset) == 1:
+      preset_name = "default"
+    else:
+      preset_name = action_preset[1].strip()
+
+    action_info = action_preset[0].split(".")
     action_name = action_info[0]
 
     # action: require
@@ -25,6 +31,7 @@ class ActionLoader(object):
     del raw_obj['action']
     setting_obj.set_params(raw_obj, action_klass.default_params)
     setting_obj.set_method(method)
+    setting_obj.set_preset(self.get_action_klass('preset').get_applier(action_name, preset_name))
     action_obj = action_klass(setting_obj)
     return action_obj
 
