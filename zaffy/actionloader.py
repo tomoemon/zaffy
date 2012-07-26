@@ -13,8 +13,8 @@ class ActionLoader(object):
   def create_action(self, raw_obj):
     if 'action' not in raw_obj or not raw_obj['action']:
       raise Exception("No action")
-    match_dict = self.parse_action_id(raw_obj['action'])
 
+    match_dict = self.parse_action_id(raw_obj['action'])
     action_name = match_dict['actionName']
     method_name = match_dict['methodName']
     preset_name = match_dict['presetName']
