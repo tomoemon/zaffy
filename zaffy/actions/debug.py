@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
+from actionparamsetting import ActionParamSetting
 from pprint import pformat, pprint
 import datetime
 
 class Debug(BaseAction):
   """ debug アクション
   """
-  default_params = {
-    "*":""
-  }
+
+  param_setting = ActionParamSetting(
+      allow_any_params=True
+      )
 
   def do_rawprint(self, params, scenario):
     var_str = pformat(params, width=60)

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
+from actionparamsetting import ActionParamSetting
 from scenarioloader import scenario_loader
 from os import path
-import time
 
 class Require(BaseAction):
   """ require アクション
   """
-  default_params = {
-    "path":"",
-    "source":""
-  }
+  param_setting = ActionParamSetting(
+      allow_any_params=False,
+      required=['path']
+      )
 
   def __init__(self, setting):
     super(Require, self).__init__(setting)
@@ -20,7 +20,7 @@ class Require(BaseAction):
     return self.new_scenario.actions[index]
 
   def do_require(self, params, global_env, scenario):
-    params.path = params.path.strip()
+    params.path = self.apply_environ(params.path.strip())
     if not params.path:
       raise Exception(params.path + " not exists")
 
@@ -32,6 +32,9 @@ class Require(BaseAction):
     new_scenario = scenario_loader.load_file(filename, scenario)
     new_scenario.run(global_env)
     self.new_scenario = new_scenario
+
+  def apply_environ(self, require_path):
+    return path.expandvars(path.expanduser(require_path))
 
   def _run_dynamic_method(self, global_env, scenario):
     """ オーバーライド """

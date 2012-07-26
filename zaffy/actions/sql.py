@@ -2,6 +2,7 @@
 
 from os import path
 from baseaction import BaseAction
+from actionparamsetting import ActionParamSetting
 from moduleloader import load_module_dir
 
 drivers = {}
@@ -12,15 +13,13 @@ for module in modules:
 
 class Sql(BaseAction):
 
-  default_params = {
-    "driver":"",
-    "host":"",
-    "db":None,
-    "port":3306,
-    "user":"",
-    "password":"",
-    "sql":""
-  }
+  DEFAULT_PORT = 3306
+
+  param_setting = ActionParamSetting(
+      allow_any_params=False,
+      required=["driver", "host", "db", "user", "password", "sql"],
+      optional={'port': DEFAULT_PORT}
+      )
 
   def do_select(self, params):
     driver = drivers[params.driver]

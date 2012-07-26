@@ -55,6 +55,12 @@ class BaseAction(object):
       else:
         # assertexが設定されずに例外も起きない場合は何もしない
         return
+    else:
+      # assertex が設定されたが、例外が起きていない場合
+      if self.exception is None:
+        raise AssertionFailed("Exception not raised",
+            [{"got": "exception not exists", "expect": "Exception"}],
+            0)
 
     wrap_exception = wrap(self.exception.original, self.cmp_log)
     variables = dict(global_env)
@@ -65,7 +71,7 @@ class BaseAction(object):
       self.cmp_log.clear()
       if not assert_test(assert_str, variables):
         raise AssertionFailed(assert_str,
-            self.cmp_log.log_list if self.exception is not None else [{"got": "exception not exists", "expect": "Exception"}],
+            self.cmp_log.log_list,
             assert_index)
 
   def _test_assert(self, global_env):

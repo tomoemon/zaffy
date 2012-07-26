@@ -15,7 +15,9 @@
 
 - action: preset.http
   default:
-    url: yahoo.hoge
+    url: http://yahoo.hoge
+    assertex:
+     - true
 
 - action: http.get
 
@@ -24,6 +26,7 @@
   params:
     hoge: 10
     fuga: piyo
+  assertex: []
 
 - action: debug.rawprint
   a: 100
@@ -47,6 +50,7 @@
   url: http://google.co.jp/
   assert:
    - res.status == 200
+  assertex: []
    #- res.status in [300,2,3]
    #- res.encoding is json_equal '{"hoge":10}'
    #- '"stat" in "instatu"'

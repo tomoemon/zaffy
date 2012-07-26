@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
+from actionparamsetting import ActionParamSetting
 
 class PresetApplier(object):
   def __init__(self, action_name, preset_name, is_merge):
@@ -17,7 +18,7 @@ class PresetApplier(object):
     elif self.preset_name not in presets:
       raise Exception("preset name: '" + self.preset_name + "' related to '" + self.action_name + "' action is not defined")
 
-    preset_params = presets[self.preset_name]
+    preset_params = dict(presets[self.preset_name])
     self.apply_params(preset_params, action_params, self.is_merge)
     return preset_params
 
@@ -36,21 +37,22 @@ class PresetApplier(object):
         else:
           # 数値・文字列の場合は上書き
           before[key] = value
-    print "APPLIED", before, after
+    print "APPLIED", before
 
 
 class Preset(BaseAction):
   _presets = {}
-  default_params = {
-    "*":"",
-  }
+
+  param_setting = ActionParamSetting(
+      allow_any_params=True
+      )
 
   @classmethod
   def get_preset_params(cls, action_name):
     return cls._presets.get(action_name, None)
 
   @classmethod
-  def get_applier(cls, action_name, preset_name="default", is_merge=True):
+  def get_applier(cls, action_name, preset_name, is_merge):
     return PresetApplier(action_name, preset_name, is_merge)
 
   @classmethod

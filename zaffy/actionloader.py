@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from actionsetting import ActionSetting
 from moduleloader import load_module_dir
+from actionparamsetting import ActionParams
 
 class ActionLoader(object):
   def __init__(self):
@@ -29,9 +30,12 @@ class ActionLoader(object):
     action_klass = self.get_action_klass(action_name)
     setting_obj = ActionSetting()
     del raw_obj['action']
-    setting_obj.set_params(raw_obj, action_klass.default_params)
+    setting_obj.set_params(ActionParams(
+      param_setting=action_klass.param_setting,
+      raw_params=raw_obj,
+      preset=self.get_action_klass('preset').get_applier(action_name, preset_name, False)
+      ))
     setting_obj.set_method(method)
-    setting_obj.set_preset(self.get_action_klass('preset').get_applier(action_name, preset_name))
     action_obj = action_klass(setting_obj)
     return action_obj
 
@@ -45,6 +49,8 @@ class ActionLoader(object):
     return self.action_klasses
 
   def get_action_klass(self, action_name):
-    return self.action_klasses[action_name]
+    if action_name in self.action_klasses:
+      return self.action_klasses[action_name]
+    raise Exception("No such action: " + action_name)
 
 action_loader = ActionLoader()

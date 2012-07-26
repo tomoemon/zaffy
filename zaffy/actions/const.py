@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
+from actionparamsetting import ActionParamSetting
 
 class MetaConst(type):
   def __getattribute__(cls, name):
-    if name == 'default_params':
-      return type.__getattribute__(cls, 'default_params')
+    if name == 'param_setting':
+      return type.__getattribute__(cls, 'param_setting')
     return type.__getattribute__(cls, 'const_params')[name][-1]
 
 class Const(BaseAction):
@@ -12,9 +13,9 @@ class Const(BaseAction):
 
   const_params = {}
 
-  default_params = {
-    "*":"",
-  }
+  param_setting = ActionParamSetting(
+      allow_any_params=True
+      )
 
   def do_set(self, params):
     for key, value in params.items():
