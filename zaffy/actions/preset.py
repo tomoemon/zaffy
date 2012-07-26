@@ -3,20 +3,22 @@ from baseaction import BaseAction
 from actionparamsetting import ActionParamSetting
 
 class PresetApplier(object):
+  DEFAULT_NAME = 'default'
+
   def __init__(self, action_name, preset_name, is_merge):
     self.action_name = action_name
-    self.preset_name = preset_name
+    self.preset_name = preset_name if preset_name else self.DEFAULT_NAME
     self.is_merge = is_merge
 
   def apply(self, action_params):
     presets = Preset.get_preset_params(self.action_name)
     if presets is None:
       return action_params
-    elif self.preset_name == 'default':
-      if 'default' not in presets:
+    elif self.preset_name == self.DEFAULT_NAME:
+      if self.DEFAULT_NAME not in presets:
         return action_params
     elif self.preset_name not in presets:
-      raise Exception("preset name: '" + self.preset_name + "' related to '" + self.action_name + "' action is not defined")
+      raise Exception("preset '" + self.action_name + "." + self.preset_name + "' is not defined")
 
     preset_params = dict(presets[self.preset_name])
     self.apply_params(preset_params, action_params, self.is_merge)

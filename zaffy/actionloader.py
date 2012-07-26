@@ -2,30 +2,30 @@
 from actionsetting import ActionSetting
 from moduleloader import load_module_dir
 from actionparamsetting import ActionParams
+import re
 
 class ActionLoader(object):
+  ACTION_REGEX = re.compile(r'(?P<actionName>\w+)(?:\.(?P<methodName>\w+))?(?:\s*\<\s*(?P<presetName>\w+))?')
+
   def __init__(self):
     self.action_klasses = {}
 
   def create_action(self, raw_obj):
     if 'action' not in raw_obj or not raw_obj['action']:
-      raise Exception("no action")
-    action_preset = raw_obj['action'].split("<")
-    if len(action_preset) == 1:
-      preset_name = "default"
-    else:
-      preset_name = action_preset[1].strip()
+      raise Exception("No action")
+    match_dict = self.parse_action_id(raw_obj['action'])
 
-    action_info = action_preset[0].split(".")
-    action_name = action_info[0]
+    action_name = match_dict['actionName']
+    method_name = match_dict['methodName']
+    preset_name = match_dict['presetName']
 
+    # action: http.get
+    # の場合は http アクションの get メソッドを呼ぶ
     # action: require
     # のように . 付きでメソッドを明示しない場合は
     # メソッド名はアクションと同じになる
-    if len(action_info) == 2 and action_info[1]:
-      method = action_info[1]
-    else:
-      method = action_name
+    if not method_name:
+      method_name = action_name
 
     action_klass = self.get_action_klass(action_name)
     setting_obj = ActionSetting()
@@ -35,9 +35,15 @@ class ActionLoader(object):
       raw_params=raw_obj,
       preset=self.get_action_klass('preset').get_applier(action_name, preset_name, False)
       ))
-    setting_obj.set_method(method)
+    setting_obj.set_method(method_name)
     action_obj = action_klass(setting_obj)
     return action_obj
+
+  def parse_action_id(self, raw_action_id):
+    match = self.ACTION_REGEX.match(raw_action_id)
+    if match is None:
+      raise Exception("Invalid action: '" + raw_action_id + "'")
+    return match.groupdict()
 
   def load_actions(self):
     module_list = load_module_dir("actions")
