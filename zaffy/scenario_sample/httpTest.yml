@@ -8,7 +8,7 @@
 - action: debug.print
 
 - action: require
-  path: required.yml
+  path: <<env.HOMEPATH>>/required.yml
 
 - action: const.set
   url: yahoo.co.jp

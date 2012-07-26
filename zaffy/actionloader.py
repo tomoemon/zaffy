@@ -43,7 +43,11 @@ class ActionLoader(object):
     module_list = load_module_dir("actions")
     for module in module_list:
       module_name = module.__name__
-      self.action_klasses[module_name] = getattr(module, module_name.title())
+      action_klass = getattr(module, module_name.title())
+      if not hasattr(action_klass, "param_setting"):
+        raise Exception("actions." + module_name.title()
+            + " class should have static property 'param_setting'")
+      self.action_klasses[module_name] = action_klass
 
   def get_all_action_map(self):
     return self.action_klasses
