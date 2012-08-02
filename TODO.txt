@@ -1,12 +1,10 @@
 ・結果出力機能の作成
 ・sshアクションの作成
 ・scpアクションの作成
-・shellアクションの作成
 ・file アクションの作成
   - read, copy, remove, move, exists, readable, writable, executable, size, created_date, updated_date, stats
 ・time の作成
   - now
-・os の作成
 ・require でシナリオを読み込むのはいいが、requireされる側のアクションが単体で実行されると困る場合がある
   （シナリオファイルの形式も要検討）
   → ディレクトリ指定された場合は *Test.yml のファイルだけ実行するようにする
@@ -14,7 +12,6 @@
 ・アクションのパラメータチェック用の便利メソッドを用意する（任意、必須など）
 ・各アクションの classmethod に before_all, after_all を用意する。シナリオの読み込みが完了したときに before_all, 全シナリオの実行が完了したら after_all が呼ばれる。引数に全アクションオブジェクトを渡したりする？
 ・「シナリオディレクトリ」をコマンドのオプションで定義する（importするときのトップディレクトリ）
-・httpアクションに受け取ったデータを直接ファイルに保存する save メソッドを用意する。巨大なファイルを受信する際にメモリに保存してると厳しいので。（response.iter_content を使えばよい）
 
 
 完了
@@ -56,6 +53,8 @@
 ・require の path 変数を解釈する際に、内部で環境変数を展開しているが、シナリオの方で env を使うようにする
 ・zaffy.yml ファイルを作って、そこでアクション単位のパラメータ指定や const, preset の定義などをできるようにする。
 ・zaffy.yml で定義したアクションごとのパラメータは、起動直後に各アクションの classmethod init(options) に渡す
+・shellアクションの作成
+・httpアクションに受け取ったデータを直接ファイルに保存する save メソッドを用意する。巨大なファイルを受信する際にメモリに保存してると厳しいので。（response.iter_content を使えばよい）
 
 保留
 ・sqlアクションでファイルからsqlを読み込んで実行する機能を追加

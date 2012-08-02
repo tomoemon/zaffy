@@ -16,6 +16,9 @@ class Debug(BaseAction):
     var_str = pformat(params, width=60)
     print("<{2}\nDEBUG: {0}\n  {1}\n".format(datetime.datetime.now(), var_str, scenario.setting.filename))
 
+  def do_debug(self, params, scenario):
+    self.do_print(params, scenario)
+
   def do_print(self, params, scenario):
     dump = {}
     for key, value in params.items():
