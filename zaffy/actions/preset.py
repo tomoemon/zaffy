@@ -50,6 +50,10 @@ class Preset(BaseAction):
       )
 
   @classmethod
+  def apply_config(cls, config):
+    cls._presets = config
+
+  @classmethod
   def get_preset_params(cls, action_name):
     return cls._presets.get(action_name, None)
 

@@ -17,6 +17,12 @@ class Const(BaseAction):
       allow_any_params=True
       )
 
+  @classmethod
+  def apply_config(cls, config):
+    for key, value in config.items():
+      config[key] = [value]
+    type.__setattr__(cls, 'const_params', config)
+
   def do_set(self, params):
     for key, value in params.items():
       self.const_params[key] = [value]

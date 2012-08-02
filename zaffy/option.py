@@ -9,7 +9,8 @@ root_dir を指定した上で、
 
 def _parse():
   parser = argparse.ArgumentParser(description='テストツールです')
-  parser.add_argument('-r', '--root', action='store', dest='root_dir')
+  #parser.add_argument('-r', '--root', action='store', dest='root_dir')
+  parser.add_argument('-c', '--config', action='store', dest='config_file', default=None)
   parser.add_argument('scenarios', nargs='+')
   return parser.parse_args()
 
@@ -48,7 +49,11 @@ def _add_target(scenario_root, filename, targets):
   scenario_root = scenario_root if scenario_root else path.dirname(filename)
   targets.append(TestTarget(scenario_root, filename))
 
-_added_fileset = set()
-targets = _filter_args(_parse())
+__result = _parse()
+targets = __result.scenarios
+config_file = __result.config_file
 
-print [(key, item) for key, item in locals().items() if key.startswith('scenario')]
+#_added_fileset = set()
+#targets = _filter_args(_parse())
+#
+#print [(key, item) for key, item in locals().items() if key.startswith('scenario')]

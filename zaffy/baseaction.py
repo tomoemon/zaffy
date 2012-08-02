@@ -25,6 +25,10 @@ class BaseAction(object):
   def params(self):
     return self.setting.params
 
+  @classmethod
+  def apply_config(cls, config):
+    pass
+
   def run_action(self, global_env, scenario):
     # 変数を jinja2 で展開する
     # const で定義する変数などアクション実行中に値が変わるものがあるので、直前じゃないとダメ

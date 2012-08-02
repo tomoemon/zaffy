@@ -1,24 +1,24 @@
 
 actions:
   const:
-    config:
-      MYSQL_HOST: localhost
-      MYSQL_USER: testuser
-      MYSQL_PASS: testpass
+    MYSQL_HOST: localhost
+    MYSQL_USER: testuser
+    MYSQL_PASS: testpass
 
-  http:
-    config:
-    preset:
-      default:
+  preset:
+    http:
+      hoge:
         url: "http://yahoo.co.jp"
         params: {}
-  sql:
-    config:
-      # そのアクション全体に共通する設定をここに書く
-      connect_each_time: false
-    preset:
-      default:
+    sql:
+      fuga:
         host: <<const.MYSQL_HOST>>
         user: <<const.MYSQL_USER>>
         pass: <<const.MYSQL_PASS>>
 
+  http:
+    connection_timeout: 5000
+
+  sql:
+    # そのアクション全体に共通する設定をここに書く
+    connect_each_time: false
