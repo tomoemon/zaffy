@@ -1,8 +1,6 @@
 ・結果出力機能の作成
 ・sshアクションの作成
 ・scpアクションの作成
-・file アクションの作成
-  - read, copy, remove, move, exists, readable, writable, executable, size, created_date, updated_date, stats
 ・time の作成
   - now
 ・require でシナリオを読み込むのはいいが、requireされる側のアクションが単体で実行されると困る場合がある
@@ -12,7 +10,7 @@
 ・アクションのパラメータチェック用の便利メソッドを用意する（任意、必須など）
 ・各アクションの classmethod に before_all, after_all を用意する。シナリオの読み込みが完了したときに before_all, 全シナリオの実行が完了したら after_all が呼ばれる。引数に全アクションオブジェクトを渡したりする？
 ・「シナリオディレクトリ」をコマンドのオプションで定義する（importするときのトップディレクトリ）
-
+・同一アクション内で必要なパラメータが異なるメソッドがある場合に、ActionParamSetting で指定できないのをどうにかする。メソッドごとに required とか optional を分けるか
 
 完了
 ・todateフィルターの作成（mysqlのdateカラムはdatetime.dateオブジェクトに変換されるはず）
@@ -55,6 +53,8 @@
 ・zaffy.yml で定義したアクションごとのパラメータは、起動直後に各アクションの classmethod init(options) に渡す
 ・shellアクションの作成
 ・httpアクションに受け取ったデータを直接ファイルに保存する save メソッドを用意する。巨大なファイルを受信する際にメモリに保存してると厳しいので。（response.iter_content を使えばよい）
+・file アクションの作成
+  - read, copy, remove, move, exists, readable, writable, executable, size, created_date, updated_date, stats
 
 保留
 ・sqlアクションでファイルからsqlを読み込んで実行する機能を追加

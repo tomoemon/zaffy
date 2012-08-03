@@ -1,0 +1,32 @@
+- file test
+
+- action: debug
+  exists: <<file.exists('var_dump.py')>>
+  writable: <<file.writable('var_dump.py')>>
+  readable: <<file.readable('var_dump.py')>>
+  executable: <<file.executable('var_dump.py')>>
+  size: <<file.size('var_dump.py')>>
+  read: <<file.read('var_dump.py', 30)>>
+  atime: <<file.access_time('var_dump.py')>>
+  mtime: <<file.update_time('var_dump.py')>>
+  ctime: <<file.create_time('var_dump.py')>>
+  not_exists: <<file.exists('not_exist')>>
+  not_writable: <<file.writable('not_exist')>>
+  not_readable: <<file.readable('not_exist')>>
+  not_executable: <<file.executable('not_exist')>>
+
+- action: file.write
+  path: test.txt
+  mode: ab
+  data: hoge
+
+- action: file.rename
+  path: test.txt
+  to: test_renamed.txt
+
+- action: file.copy
+  path: test_renamed.txt
+  to: test_renamed_copy.txt
+
+- action: file.remove
+  path: test_renamed.txt
