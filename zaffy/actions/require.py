@@ -12,6 +12,10 @@ class Require(BaseAction):
       required=['path']
       )
 
+  @classmethod
+  def get_param_setting(cls, method_name):
+    return cls.param_setting
+
   def __init__(self, setting):
     super(Require, self).__init__(setting)
     self.new_scenario = None

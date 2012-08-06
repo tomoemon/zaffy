@@ -11,11 +11,29 @@ class File(BaseAction):
   ファイルに関する検査などを行なう
   """
 
-  param_setting = ActionParamSetting(
-      allow_any_params=False,
-      required=['path'],
-      optional={'to':None, 'data':"", 'mode':'wb'}
-      )
+  param_setting = {
+      "write": ActionParamSetting(
+        allow_any_params=False,
+        required=['path', 'data'],
+        optional={'mode':'wb'}
+        ),
+      "copy": ActionParamSetting(
+        allow_any_params=False,
+        required=['path', 'to']
+        ),
+      "remove": ActionParamSetting(
+        allow_any_params=False,
+        required=['path']
+        ),
+      "rename": ActionParamSetting(
+        allow_any_params=False,
+        required=['path', 'to']
+        )
+      }
+
+  @classmethod
+  def get_param_setting(cls, method_name):
+    return cls.param_setting[method_name]
 
   @classmethod
   def exists(cls, filepath):

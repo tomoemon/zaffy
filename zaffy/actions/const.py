@@ -1,21 +1,16 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
-from actionparamsetting import ActionParamSetting
 
 class MetaConst(type):
   def __getattribute__(cls, name):
-    if name == 'param_setting':
-      return type.__getattribute__(cls, 'param_setting')
+    if name == 'get_param_setting':
+      return type.__getattribute__(cls, 'get_param_setting')
     return type.__getattribute__(cls, 'const_params')[name][-1]
 
 class Const(BaseAction):
   __metaclass__ = MetaConst
 
   const_params = {}
-
-  param_setting = ActionParamSetting(
-      allow_any_params=True
-      )
 
   @classmethod
   def apply_config(cls, config):

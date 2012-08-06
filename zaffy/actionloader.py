@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from actionsetting import ActionSetting
+from baseaction import BaseAction
 from moduleloader import load_module_dir
 from actionparamsetting import ActionParams
 import re
@@ -31,7 +32,7 @@ class ActionLoader(object):
     setting_obj = ActionSetting()
     del raw_obj['action']
     setting_obj.set_params(ActionParams(
-      param_setting=action_klass.param_setting,
+      param_setting=action_klass.get_param_setting(method_name),
       raw_params=raw_obj,
       preset=self.get_action_klass('preset').get_applier(action_name, preset_name, False)
       ))
@@ -50,9 +51,9 @@ class ActionLoader(object):
     for module in module_list:
       module_name = module.__name__
       action_klass = getattr(module, module_name.title())
-      if not hasattr(action_klass, "param_setting"):
-        raise Exception("actions." + module_name.title()
-            + " class should have static property 'param_setting'")
+      if not issubclass(action_klass, BaseAction):
+        # BaseAction クラスを継承していないクラスがあったらエラー
+        raise Exception(module_name.title() + " class must extend BaseAction")
       self.action_klasses[module_name] = action_klass
 
   def get_all_action_map(self):

@@ -12,13 +12,17 @@ class Http(BaseAction):
       allow_any_params=False,
       required=['url'],
       optional={
-        'headers':{},
-        'params':{},
-        'no_content':False, # True にすると header のみ取得する
-        'binary_content':False, # content をバイナリとして取得する
-        'save_file':None # content をファイルに保存してメモリ上に持たない (binary_content=Trueとして扱う)
+        'headers': {},
+        'params': {},
+        'no_content': False, # True にすると header のみ取得する
+        'binary_content': False, # content をバイナリとして取得する
+        'save_file': None # content をファイルに保存してメモリ上に持たない (binary_content=Trueとして扱う)
         }
       )
+
+  @classmethod
+  def get_param_setting(cls, method_name):
+    return cls.param_setting
 
   def _create_result(self, params, response):
     result = {}

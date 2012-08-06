@@ -16,6 +16,10 @@ class Shell(BaseAction):
       optional={'stdin': None, 'curdir': None}
       )
 
+  @classmethod
+  def get_param_setting(cls, method_name):
+    return cls.param_setting
+
   def do_shell(self, params):
     self.do_run(params)
 

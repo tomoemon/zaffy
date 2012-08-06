@@ -3,6 +3,7 @@ import time
 import traceback
 from comparator import wrap, CmpLog
 from template import assert_test
+import actionparamsetting
 from assertionfailed import AssertionFailed
 from actionexception import ActionException
 
@@ -24,6 +25,10 @@ class BaseAction(object):
   @property
   def params(self):
     return self.setting.params
+
+  @classmethod
+  def get_param_setting(cls, method_name):
+    return actionparamsetting.any_param()
 
   @classmethod
   def apply_config(cls, config):

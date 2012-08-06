@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
-from actionparamsetting import ActionParamSetting
 
 class PresetApplier(object):
   DEFAULT_NAME = 'default'
@@ -44,10 +43,6 @@ class PresetApplier(object):
 
 class Preset(BaseAction):
   _presets = {}
-
-  param_setting = ActionParamSetting(
-      allow_any_params=True
-      )
 
   @classmethod
   def apply_config(cls, config):

@@ -74,4 +74,8 @@ class ActionParams(object):
       for k, v in enumerate(value):
         self._expand_params(value, k, v, global_env)
 
+__ANY = ActionParamSetting(allow_any_params=True)
+
+def any_param():
+  return __ANY
 

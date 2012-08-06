@@ -13,6 +13,10 @@ class Sleep(BaseAction):
       required=['time']
       )
 
+  @classmethod
+  def get_param_setting(cls, method_name):
+    return cls.param_setting
+
   def do_sleep(self, params):
     time.sleep(params.time / 1000.0)
 

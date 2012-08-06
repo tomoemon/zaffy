@@ -21,6 +21,10 @@ class Sql(BaseAction):
       optional={'port': DEFAULT_PORT}
       )
 
+  @classmethod
+  def get_param_setting(cls, method_name):
+    return cls.param_setting
+
   def do_select(self, params):
     driver = drivers[params.driver]
     conn = driver.connect(host=params.host, port=params.port, db=params.db,
