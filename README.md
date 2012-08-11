@@ -33,9 +33,9 @@ Zaffy は yaml ベースのシンプルなルールでテストシナリオを�
         res.rows[0] ==
           [1, "nanoha", "2012-04-10 15:57:26"|todatetime, "2012-04-10 15:57:26"|todatetime]
 
-   # preset 機能を使うことで接続情報などを省略したシンプルな記述が可能
-   - action: sql.update
-     sql: insert into user (user_id, name) values (10, "hoge")
+    # preset 機能を使うことで接続情報などを省略したシンプルな記述が可能
+    - action: sql.update
+      sql: insert into user (user_id, name) values (10, "hoge")
 
 # shell test
     - action: shell
@@ -47,11 +47,18 @@ Zaffy は yaml ベースのシンプルなルールでテストシナリオを�
 アクション一覧
 --------------
 * http
-    * get, post, put, delete, head, patch
+    * get
+    * post
+    * put
+    * delete
+    * head
+    * patch
 
 * sql
-    * select, selectdict, update
+    * select…selectした結果の1行1行をリスト形式で取得する
+    * selectdict…selectした結果の1行1行をカラム名と対応した辞書形式で取得する
+    * update…insert文やupdate文などの更新系SQLを実行する
 
 * shell
-    * run(*)
+    * run(*)…デフォルトシェル経由でコマンドを実行する
 
