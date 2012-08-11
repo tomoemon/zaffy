@@ -33,3 +33,25 @@ Zaffy は yaml ベースのシンプルなルールでテストシナリオを�
         res.rows[0] ==
           [1, "nanoha", "2012-04-10 15:57:26"|todatetime, "2012-04-10 15:57:26"|todatetime]
 
+   # preset 機能を使うことで接続情報などを省略したシンプルな記述が可能
+   - action: sql.update
+     sql: insert into user (user_id, name) values (10, "hoge")
+
+# shell test
+    - action: shell
+      cmd: wc -l output.txt
+      assert:
+        - res.returncode == 0
+        - res.stdout.strip() == "50 output.txt"
+
+アクション一覧
+--------------
+* http
+    * get, post, put, delete, head, patch
+
+* sql
+    * select, selectdict, update
+
+* shell
+    * run(*)
+

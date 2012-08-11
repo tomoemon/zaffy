@@ -44,15 +44,26 @@ class Http(BaseAction):
         return response.content if params.binary_content else response.text
     return ''
 
-  def do_get(self, params):
-    r = requests.get(params.url,
+  def _http_method(self, method, params):
+    r = getattr(requests, method)(params.url,
           headers=params.headers,
           params=params.params)
     self.result = self._create_result(params, r)
 
-  def do_post(self, params):
-    r = requests.post(params.url,
-          headers=params.headers,
-          data=params.params)
-    self.result = self._create_result(params, r)
+  def do_get(self, params):
+    self._http_method("get", params)
 
+  def do_post(self, params):
+    self._http_method("post", params)
+
+  def do_put(self, params):
+    self._http_method("put", params)
+
+  def do_delete(self, params):
+    self._http_method("delete", params)
+
+  def do_head(self, params):
+    self._http_method("head", params)
+
+  def do_patch(self, params):
+    self._http_method("patch", params)
