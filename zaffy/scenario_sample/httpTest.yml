@@ -9,15 +9,18 @@
 
 - action: require
   path: <<env.HOMEPATH>>/required.yml
+  assertex:
+   - true
 
 - action: const.set
   url: yahoo.co.jp
 
-- action: preset.http
-  default:
-    url: http://yahoo.hoge
-    assertex:
-     - true
+- action: preset
+  http:
+    default:
+      url: http://yahoo.hoge
+      assertex:
+       - true
 
 - action: http.get
 

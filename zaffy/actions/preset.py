@@ -60,9 +60,7 @@ class Preset(BaseAction):
   def reset(cls):
     cls._presets = {}
 
-  def set_preset(self, target_action, params):
-    self._presets[target_action] = params
+  def do_preset(self, **params):
+    for target_action, presets in params.items():
+      self._presets[target_action] = presets
 
-  def _run_dynamic_method(self, global_env, scenario):
-    """ オーバーライド """
-    self.set_preset(self.setting._method, self.params)

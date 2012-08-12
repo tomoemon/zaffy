@@ -9,42 +9,23 @@ class DotDict(dict):
   def __getattr__(self, name):
     return self.get(name, None)
 
-class ActionParamSetting(object):
-  def __init__(self, allow_any_params, required=[], optional={}):
-    self.allow_any_params = allow_any_params
-    self.required = required
-    self.optional = optional
-    self.optional.update({'assert':[], 'assertex':[]})
-
 class ActionParams(object):
-  def __init__(self, param_setting, raw_params, preset):
-    self.param_setting = param_setting
+  def __init__(self, argspec, raw_params, preset):
     self.raw_params = raw_params
     self.preset = preset
+    self.argspec = argspec
     self.params = None
     self.assert_list = None
     self.assertex_list = None
 
-  def expand(self, global_env):
+  def expand(self, scenario, global_env):
     self.params = self.preset.apply(self.raw_params)
     for key, value in self.params.items():
       self._expand_params(self.params, key, value, global_env)
 
-    exists_keys = self.params.keys()
-    for required_param in self.param_setting.required:
-      if required_param not in self.params:
-        raise Exception("required: " + required_param)
-      exists_keys.remove(required_param)
-
-    for optional_param, value in self.param_setting.optional.items():
-      if optional_param in self.params:
-        exists_keys.remove(optional_param)
-      else:
-        self.params[optional_param] = value
-
-    if not self.param_setting.allow_any_params and exists_keys:
-      raise Exception("unknown param: " + exists_keys[0])
-
+    #
+    # assert 設定の取得
+    #
     self.assert_list = self.params.get('assert', [])
     if isinstance(self.assert_list, basestring):
       self.assert_list = [self.assert_list]
@@ -53,6 +34,40 @@ class ActionParams(object):
       self.assertex_list = [self.assertex_list]
     self.params.pop('assert', None)
     self.params.pop('assertex', None)
+
+    #
+    # params 設定の取得
+    #
+    argspec = self.argspec
+    # instance method は "self" が付いてるので除く
+    args = argspec.args[1:]
+    if argspec.defaults:
+      no_default_key_count = len(args) - len(argspec.defaults)
+      required_keys = args[:no_default_key_count]
+      optional_params = dict(zip(args[no_default_key_count:], argspec.defaults))
+    else:
+      required_keys = args
+      optional_params = {}
+    allow_any_params = bool(argspec.keywords)
+    if "scenario" in args:
+      self.params["scenario"] = scenario
+    if "global_env" in args:
+      self.params["global_env"] = global_env
+
+    exists_keys = self.params.keys()
+    for required_param in required_keys:
+      if required_param not in self.params:
+        raise Exception("required: " + required_param)
+      exists_keys.remove(required_param)
+
+    for optional_param, value in optional_params.items():
+      if optional_param in self.params:
+        exists_keys.remove(optional_param)
+      else:
+        self.params[optional_param] = value
+
+    if not allow_any_params and exists_keys:
+      raise Exception("unknown param: " + exists_keys[0])
     self.params = DotDict(self.params)
 
   def _expand_params(self, parent, key, value, global_env):
@@ -73,9 +88,4 @@ class ActionParams(object):
     elif isinstance(value, list):
       for k, v in enumerate(value):
         self._expand_params(value, k, v, global_env)
-
-__ANY = ActionParamSetting(allow_any_params=True)
-
-def any_param():
-  return __ANY
 

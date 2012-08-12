@@ -37,7 +37,7 @@ class BaseAction(object):
   def run_action(self, global_env, scenario):
     # 変数を jinja2 で展開する
     # const で定義する変数などアクション実行中に値が変わるものがあるので、直前じゃないとダメ
-    self.setting.expand(global_env)
+    self.setting.expand(scenario, global_env)
     self.start_time = time.time()
     try:
       self._run_dynamic_method(global_env, scenario)
@@ -50,7 +50,7 @@ class BaseAction(object):
       self.result["execution_time"] = self.end_time - self.start_time
 
   def _run_dynamic_method(self, global_env, scenario):
-    getattr(self, "do_" + self.setting._method)(self.params)
+    self.setting._method(**self.params)
 
   def run_assert(self, global_env):
     self._test_assertex(global_env)

@@ -4,6 +4,7 @@ from baseaction import BaseAction
 from moduleloader import load_module_dir
 from actionparamsetting import ActionParams
 import re
+import inspect
 
 class ActionLoader(object):
   ACTION_REGEX = re.compile(r'(?P<actionName>\w+)(?:\.(?P<methodName>\w+))?(?:\s*\<\s*(?P<presetName>\w+))?')
@@ -29,15 +30,16 @@ class ActionLoader(object):
       method_name = action_name
 
     action_klass = self.get_action_klass(action_name)
-    setting_obj = ActionSetting()
     del raw_obj['action']
+    setting_obj = ActionSetting()
+    action_obj = action_klass(setting_obj)
+    method_obj = getattr(action_obj, "do_" + method_name)
     setting_obj.set_params(ActionParams(
-      param_setting=action_klass.get_param_setting(method_name),
+      argspec=inspect.getargspec(method_obj),
       raw_params=raw_obj,
       preset=self.get_action_klass('preset').get_applier(action_name, preset_name, False)
       ))
-    setting_obj.set_method(method_name)
-    action_obj = action_klass(setting_obj)
+    setting_obj.set_method(method_obj)
     return action_obj
 
   def parse_action_id(self, raw_action_id):

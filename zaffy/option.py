@@ -52,6 +52,8 @@ def _add_target(scenario_root, filename, targets):
 __result = _parse()
 targets = __result.scenarios
 config_file = __result.config_file
+if config_file is None and os.access('zaffy.yml', os.R_OK):
+  config_file = 'zaffy.yml'
 
 #_added_fileset = set()
 #targets = _filter_args(_parse())

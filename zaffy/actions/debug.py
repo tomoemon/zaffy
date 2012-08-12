@@ -7,14 +7,14 @@ class Debug(BaseAction):
   """ debug アクション
   """
 
-  def do_rawprint(self, params, scenario):
+  def do_rawprint(self, scenario, **params):
     var_str = pformat(params, width=60)
     print("<{2}\nDEBUG: {0}\n  {1}\n".format(datetime.datetime.now(), var_str, scenario.setting.filename))
 
-  def do_debug(self, params, scenario):
-    self.do_print(params, scenario)
+  def do_debug(self, scenario, **params):
+    self.do_print(scenario, **params)
 
-  def do_print(self, params, scenario):
+  def do_print(self, scenario, **params):
     dump = {}
     for key, value in params.items():
       if isinstance(value, basestring):
@@ -28,7 +28,3 @@ class Debug(BaseAction):
         dump[key] = value
     var_str = pformat(dump, width=60)
     print("<{2}\nDEBUG: {0}\n  {1}\n".format(datetime.datetime.now(), var_str, scenario.setting.filename))
-
-  def _run_dynamic_method(self, global_env, scenario):
-    """ オーバーライド """
-    getattr(self, "do_" + self.setting._method)(self.params, scenario)

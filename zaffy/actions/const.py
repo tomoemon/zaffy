@@ -18,15 +18,15 @@ class Const(BaseAction):
       config[key] = [value]
     type.__setattr__(cls, 'const_params', config)
 
-  def do_set(self, params):
-    for key, value in params.items():
+  def do_set(self, **kwargs):
+    for key, value in kwargs.items():
       self.const_params[key] = [value]
 
-  def do_push(self, params):
-    for key, value in params.items():
+  def do_push(self, **kwargs):
+    for key, value in kwargs.items():
       self.const_params[key] = self.const_params.get(key, []) + [value]
 
-  def do_pop(self, params):
-    for key in params.keys():
+  def do_pop(self, **kwargs):
+    for key in kwargs.keys():
       self.const_params[key].pop()
 

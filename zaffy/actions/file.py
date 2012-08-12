@@ -1,40 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
 from datetime import datetime
-from os import path
 import shutil
 from baseaction import BaseAction
-from actionparamsetting import ActionParamSetting
 
 class File(BaseAction):
   """ File アクション
   ファイルに関する検査などを行なう
   """
-
-  param_setting = {
-      "write": ActionParamSetting(
-        allow_any_params=False,
-        required=['path', 'data'],
-        optional={'mode':'wb'}
-        ),
-      "copy": ActionParamSetting(
-        allow_any_params=False,
-        required=['path', 'to']
-        ),
-      "remove": ActionParamSetting(
-        allow_any_params=False,
-        required=['path']
-        ),
-      "rename": ActionParamSetting(
-        allow_any_params=False,
-        required=['path', 'to']
-        )
-      }
-
-  @classmethod
-  def get_param_setting(cls, method_name):
-    return cls.param_setting[method_name]
-
   @classmethod
   def exists(cls, filepath):
     return os.access(filepath, os.F_OK)
@@ -77,19 +50,19 @@ class File(BaseAction):
       fp.seek(offset)
       return fp.read(size)
 
-  def do_copy(self, params):
-    shutil.copy(params.path, params.to)
+  def do_copy(self, path, to):
+    shutil.copy(path, to)
 
-  def do_remove(self, params):
-    if path.isdir(params.path):
-      shutil.rmtree(params.path)
+  def do_remove(self, path):
+    if os.path.isdir(path):
+      shutil.rmtree(path)
     else:
-      os.unlink(params.path)
+      os.unlink(path)
 
-  def do_rename(self, params):
-    shutil.move(params.path, params.to)
+  def do_rename(self, path, to):
+    shutil.move(path, to)
 
-  def do_write(self, params):
-    with open(params.path, params.mode) as fp:
-      fp.write(params.data)
+  def do_write(self, path, data, mode="wb"):
+    with open(path, mode) as fp:
+      fp.write(data)
 
