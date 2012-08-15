@@ -2,7 +2,7 @@
 from actionsetting import ActionSetting
 from baseaction import BaseAction
 from moduleloader import load_module_dir
-from actionparamsetting import ActionParams
+from actionparams import ActionParams
 import re
 import inspect
 
