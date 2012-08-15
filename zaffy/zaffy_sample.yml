@@ -1,11 +1,14 @@
 
 actions:
   const:
+    # 任意の定数を定義する
     MYSQL_HOST: localhost
+    MYSQL_DB: zaffytest
     MYSQL_USER: testuser
-    MYSQL_PASS: testpass
+    MYSQL_PASSWORD: testpass
 
   preset:
+    # アクションごとのパラメータプリセットを定義する
     http:
       hoge:
         url: "http://yahoo.co.jp"
@@ -13,12 +16,17 @@ actions:
     sql:
       fuga:
         host: <<const.MYSQL_HOST>>
+        db: <<const.MYSQL_DB>>
         user: <<const.MYSQL_USER>>
-        pass: <<const.MYSQL_PASS>>
+        password: <<const.MYSQL_PASSWORD>>
 
   http:
     connection_timeout: 5000
 
   sql:
     # そのアクション全体に共通する設定をここに書く
-    connect_each_time: false
+    connect_persistent: false
+
+  require:
+    # require するときのルートパス
+    root_path: null
