@@ -20,5 +20,5 @@ class ConfigLoader(object):
       if name not in action_configs:
         continue
       apply_method = type.__getattribute__(klass, 'apply_config')
-      apply_method(*action_configs[name])
+      apply_method(action_configs[name])
 

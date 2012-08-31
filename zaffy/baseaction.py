@@ -26,7 +26,7 @@ class BaseAction(object):
     return self.setting.params
 
   @classmethod
-  def apply_config(cls):
+  def apply_config(cls, config):
     pass
 
   def run_action(self, global_env, scenario):
