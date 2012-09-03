@@ -18,9 +18,9 @@ class Http(BaseAction):
   def _create_content(self,response, no_content, binary_content, save_file):
     if not no_content:
       if save_file:
-        iterator = response.iter_content() if binary_content else response.iter_lines()
+        # ファイルに保存する場合は自動的にバイナリ保存
         fp = open(save_file, "wb")
-        for line in iterator:
+        for line in response.iter_content():
           fp.write(line)
         fp.close()
       else:
