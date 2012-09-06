@@ -3,6 +3,14 @@ Zaffy
 
 Zaffy は yaml ベースのシンプルなフォーマットでテストシナリオを記述できる機能テストツールです。Web や Database、ファイルシステムなどの「外部システム」に対する入力とその応答チェックを共通の形式で記述することができます。種々の機能を組み合わせた自動化ツールとして使うことも可能です。
 
+setup
+--------------
+    pip install -r required_packages.txt
+
+usage
+--------------
+    python zaffy.py scenario_sample/httpTest.yml
+
 シナリオ記述例
 --------------
 #http test
