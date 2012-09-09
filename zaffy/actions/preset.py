@@ -25,7 +25,6 @@ class PresetApplier(object):
 
   @staticmethod
   def apply_params(before, after, is_merge):
-    print "APPLY", before, after
     for key, value in after.items():
       if key not in before or type(before[key]) is not type(value) or not is_merge:
         # preset に存在しないキー、または型が違う、または上書きモードの場合は上書き
@@ -38,7 +37,6 @@ class PresetApplier(object):
         else:
           # 数値・文字列の場合は上書き
           before[key] = value
-    print "APPLIED", before
 
 
 class Preset(BaseAction):

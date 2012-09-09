@@ -15,14 +15,17 @@ def main():
     print("using config file: " + option.config_file)
   config_loader = ConfigLoader(option.config_file)
   config_loader.apply_config_to_klass(action_loader.get_all_action_map())
-  try:
-    scenario = scenario_loader.load_file(option.targets[0])
-    scenario.run(global_env)
-  except ActionException as e:
-    print "--------------------------"
-    print(e.stack_trace)
-    print(e.original)
-    print "--------------------------"
+  for target in option.targets:
+    try:
+      print ""
+      print "[running]", target
+      scenario = scenario_loader.load_file(target)
+      scenario.run(global_env)
+    except ActionException as e:
+      print "--------------------------"
+      print(e.stack_trace)
+      print(e.original)
+      print "--------------------------"
 
 if __name__ == '__main__':
   main()
