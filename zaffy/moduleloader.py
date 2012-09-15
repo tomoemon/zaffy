@@ -15,16 +15,19 @@ def load_modules(basepath):
   """ Pluginをロードしてリストにして返す
   """
   plugin_list = []
-  for fdn in os.listdir(basepath):
+  for filename in os.listdir(basepath):
+    if filename.startswith('.'):
+      # ドットファイルは無視する
+      continue
     try:
-      if not fdn.startswith('__') and fdn.endswith(".py"):
-        m = load_module(fdn.replace(".py",""),basepath)
+      if not filename.startswith('__') and filename.endswith(".py"):
+        m = load_module(filename.replace(".py",""), basepath)
         plugin_list.append(m)
-      elif os.path.isdir(fdn):
-        m = load_module(fdn)
+      elif os.path.isdir(filename):
+        m = load_module(filename, basepath)
         plugin_list.append(m)
     except ImportError as e:
-      print(fdn, e)
+      print(filename, e)
   return plugin_list
 
 def load_module_dir(module_name):
