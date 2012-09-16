@@ -15,6 +15,7 @@ class BaseAction(object):
     self.end_time = None
     self.setting = setting
     self.cmp_log = CmpLog()
+    self.scenario_dir = None # Scenario クラスから実行時にセットされる
 
   @property
   def res(self):

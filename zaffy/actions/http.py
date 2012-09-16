@@ -15,7 +15,7 @@ class Http(BaseAction):
     result['content'] = self._create_content(response, no_content, binary_content, save_file)
     return result
 
-  def _create_content(self,response, no_content, binary_content, save_file):
+  def _create_content(self, response, no_content, binary_content, save_file):
     if not no_content:
       if save_file:
         # ファイルに保存する場合は自動的にバイナリ保存
