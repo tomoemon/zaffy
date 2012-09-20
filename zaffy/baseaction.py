@@ -68,7 +68,9 @@ class BaseAction(object):
             0)
 
     wrap_exception = wrap(self.exception.original, self.cmp_log)
-    variables = dict(global_env)
+    variables = {}
+    for key, value in global_env.items():
+      variables[key] = wrap(value, self.cmp_log)
     variables.update({
       "ex": wrap_exception,
       "this": wrap(self.__dict__, self.cmp_log)})
@@ -82,7 +84,10 @@ class BaseAction(object):
   def _test_assert(self, global_env):
     if not self.setting.assert_list:
       return
-    variables = dict(global_env)
+
+    variables = {}
+    for key, value in global_env.items():
+      variables[key] = wrap(value, self.cmp_log)
     variables.update({
       "res": wrap(self.result, self.cmp_log),
       "this": wrap(self.__dict__, self.cmp_log)})
