@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
 from scenarioloader import scenario_loader
-from os import path
+import os
 
 class Require(BaseAction):
   """ require アクション
@@ -20,17 +20,14 @@ class Require(BaseAction):
     return self.new_scenario.actions[index]
 
   def do_require(self, path, global_env, scenario):
-    params.path = params.path.strip()
-    print params.path
-    if not params.path:
-      raise Exception(params.path + " not exists")
+    path = path.strip()
+    if not path:
+      raise Exception(path + " not exists")
 
-    filename = params.path
+    if not os.path.isabs(path):
+      path = os.path.join(os.path.dirname(scenario.setting.filename), path)
 
-    if not path.isabs(filename):
-      filename = path.join(path.dirname(scenario.setting.filename), filename)
-
-    new_scenario = scenario_loader.load_file(filename, scenario)
+    new_scenario = scenario_loader.load_file(path, scenario)
     new_scenario.run(global_env)
     self.new_scenario = new_scenario
 

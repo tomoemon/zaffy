@@ -82,6 +82,7 @@ class BaseAction(object):
   def _test_assert(self, global_env):
     if not self.setting.assert_list:
       return
+
     variables = dict(global_env)
     variables.update({
       "res": wrap(self.result, self.cmp_log),

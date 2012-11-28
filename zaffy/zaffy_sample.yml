@@ -14,7 +14,8 @@ actions:
         url: "http://yahoo.co.jp"
         params: {}
     sql:
-      fuga:
+      default:
+        driver: mysql
         host: <<const.MYSQL_HOST>>
         db: <<const.MYSQL_DB>>
         user: <<const.MYSQL_USER>>
