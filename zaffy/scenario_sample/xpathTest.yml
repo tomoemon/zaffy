@@ -1,0 +1,16 @@
+#---
+- XPath テスト
+
+- action: const.set
+  ns:
+    r: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+    d: http://purl.org/rss/1.0/
+
+- action: http.get
+  url: http://d.hatena.ne.jp/hatenadiary/rss
+  assert:
+  # 要素内のtextの取得
+   - (res.content|xpath('/r:RDF/d:channel/d:title/text()', const.ns)) == 'はてなダイアリー日記'
+  # 要素の属性取得
+   - (res.content|xpath('/r:RDF/d:channel/@r:about', const.ns)) == 'http://d.hatena.ne.jp/hatenadiary/rss'
+
