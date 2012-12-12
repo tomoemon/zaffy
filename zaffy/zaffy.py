@@ -21,6 +21,8 @@ def main():
     try:
       scenario = scenario_loader.load_file(target)
       scenario.run(global_env)
+    except ActionException as e:
+      print e.original
     except AssertionFailed as e:
       print("FAILED!")
       print("  action_index: {0}".format(e.action_index))
