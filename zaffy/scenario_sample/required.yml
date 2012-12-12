@@ -1,6 +1,4 @@
-- hoge
-- action: debug.print
-  var: hoge
-  a: 100
-  x: [1,2,3]
+- required sample
+- action: debug
+  sample: required called
 

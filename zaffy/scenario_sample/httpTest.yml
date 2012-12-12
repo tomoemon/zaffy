@@ -7,11 +7,6 @@
 
 - action: debug.print
 
-- action: require
-  path: <<env.HOMEPATH>>/required.yml
-  assertex:
-   - true
-
 - action: const.set
   url: yahoo.co.jp
 
@@ -35,13 +30,6 @@
   a: 100
   +x: "[1,2,3]"
   +hoge: <<actions[-1].res.content.startswith('hoge')>>
-  #res: <<actions[-1].res.headers>>
-
-#- action: debug.print
-#  a: 100
-#  x: [1,2,3]
-#  param: <<this.params.a>>
-#  res: <<actions[-2].res.headers>>
 
 - action: http.get
   url: http://hogefugapiyo.com/
@@ -54,10 +42,4 @@
   assert:
    - res.status == 200
   assertex: []
-   #- res.status in [300,2,3]
-   #- res.encoding is json_equal '{"hoge":10}'
-   #- '"stat" in "instatu"'
-   #- '"p3p" in res.headers'
-   #- res.cookies.PREF == "hoge"
-   #- res.content|length < 200
-   #- res.encoding|upper == "hoge"
+
