@@ -18,7 +18,3 @@ def do_xpath(value, xpath, namespaces=None):
     return result[0]
   return result
 
-do_tocmp_on_asserting = [
-  ['xpathlist', 2],
-  ['xpath', 2]
-]

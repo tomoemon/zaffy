@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
 import traceback
-from comparator import wrap, CmpLog
 from template import assert_test
 from assertionfailed import AssertionFailed
 from actionexception import ActionException
@@ -14,7 +13,6 @@ class BaseAction(object):
     self.start_time = None
     self.end_time = None
     self.setting = setting
-    self.cmp_log = CmpLog()
     self.scenario_dir = None # Scenario クラスから実行時にセットされる
 
   @property
@@ -67,17 +65,17 @@ class BaseAction(object):
             [{"got": "exception not exists", "expect": "Exception"}],
             0)
 
-    wrap_exception = wrap(self.exception.original, self.cmp_log)
     variables = dict(global_env)
     variables.update({
-      "ex": wrap_exception,
-      "this": wrap(self.__dict__, self.cmp_log)})
+      "ex": self.exception.original,
+      "this": self.__dict__
+      })
     for assert_index, assert_str in enumerate(self.setting.assertex_list):
-      self.cmp_log.clear()
-      if not assert_test(assert_str, variables):
-        raise AssertionFailed(assert_str,
-            self.cmp_log.log_list,
-            assert_index)
+      try:
+        assert_test(assert_str, variables)
+      except AssertionFailed as e:
+        e.assert_index = assert_index
+        raise e
 
   def _test_assert(self, global_env):
     if not self.setting.assert_list:
@@ -85,12 +83,13 @@ class BaseAction(object):
 
     variables = dict(global_env)
     variables.update({
-      "res": wrap(self.result, self.cmp_log),
-      "this": wrap(self.__dict__, self.cmp_log)})
+      "res": self.result,
+      "this": self.__dict__
+      })
     for assert_index, assert_str in enumerate(self.setting.assert_list):
-      self.cmp_log.clear()
-      if not assert_test(assert_str, variables):
-        raise AssertionFailed(assert_str,
-            self.cmp_log.log_list,
-            assert_index)
+      try:
+        assert_test(assert_str, variables)
+      except AssertionFailed as e:
+        e.assert_index = assert_index
+        raise e
 
