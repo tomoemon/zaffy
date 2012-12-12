@@ -34,7 +34,8 @@ class Http(BaseAction):
           verify=ssl_verify)
     self.result = self._create_result(r, no_content, binary_content, save_file)
 
-  def do_get(self, url, headers={}, params={}, no_content=False, binary_content=False, save_file=None, ssl_verify=True):
+  def do_get(self, url, headers={}, params={}, no_content=False, binary_content=False,
+      save_file=None, ssl_verify=True):
     """
     @param no_content True にすると header のみ取得する
     @param binary_content content をバイナリとして取得する
@@ -43,18 +44,23 @@ class Http(BaseAction):
     """
     self._http_method("get", url, headers, params, no_content, binary_content, save_file, ssl_verify)
 
-  def do_post(self, url, headers={}, params={}, no_content=False, binary_content=False, save_file=None, ssl_verify=True):
+  def do_post(self, url, headers={}, params={}, no_content=False,
+      binary_content=False, save_file=None, ssl_verify=True):
     self._http_method("post", url, headers, params, no_content, binary_content, save_file, ssl_verify)
 
-  def do_put(self, url, headers={}, params={}, no_content=False, binary_content=False, save_file=None, ssl_verify=True):
+  def do_put(self, url, headers={}, params={}, no_content=False,
+      binary_content=False, save_file=None, ssl_verify=True):
     self._http_method("put", url, headers, params, no_content, binary_content, save_file, ssl_verify)
 
-  def do_delete(self, url, headers={}, params={}, no_content=False, binary_content=False, save_file=None, ssl_verify=True):
+  def do_delete(self, url, headers={}, params={}, no_content=False,
+      binary_content=False, save_file=None, ssl_verify=True):
     self._http_method("delete", url, headers, params, no_content, binary_content, save_file, ssl_verify)
 
-  def do_head(self, url, headers={}, params={}, no_content=False, binary_content=False, save_file=None, ssl_verify=True):
+  def do_head(self, url, headers={}, params={}, no_content=False,
+      binary_content=False, save_file=None, ssl_verify=True):
     self._http_method("head", url, headers, params, no_content, binary_content, save_file, ssl_verify)
 
-  def do_patch(self, url, headers={}, params={}, no_content=False, binary_content=False, save_file=None, ssl_verify=True):
+  def do_patch(self, url, headers={}, params={}, no_content=False,
+      binary_content=False, save_file=None, ssl_verify=True):
     self._http_method("patch", url, headers, params, no_content, binary_content, save_file, ssl_verify)
 
