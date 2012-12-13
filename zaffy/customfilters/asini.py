@@ -18,8 +18,7 @@ def do_asini(value):
     config.remove_section(dummy_section)
     result = {}
     for section in config.sections():
-      result[section] = \
-          {key: value for key, value in config.items(section)}
+      result[section] = {key: value for key, value in config.items(section)}
   return result
 
 if __name__ == '__main__':
