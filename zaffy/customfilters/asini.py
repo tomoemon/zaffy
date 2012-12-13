@@ -9,7 +9,6 @@ import io
 def do_asini(value):
   dummy_section = "__{0}__".format(id(value))
   value = "[{0}]\n".format(dummy_section) + value
-  print value
   config = configparser.SafeConfigParser(allow_no_value=True)
   config.readfp(io.BytesIO(value))
 
