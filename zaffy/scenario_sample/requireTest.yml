@@ -1,0 +1,5 @@
+- requireTest
+
+- action: require
+  path: required.yml
+

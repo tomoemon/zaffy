@@ -1,0 +1,12 @@
+- HTTP テスト
+
+- action: http.get
+  url: http://b.hatena.ne.jp/entry/json/?url=http%3A%2F%2Fwww.hatena.ne.jp%2F
+  assert:
+   - (res.content|asjson).related[0].entry_url is eq 'http://b.hatena.ne.jp/entry/ugomemo.hatena.ne.jp/letters'
+   - (res.content|asjson).related[0].entry_url is ne ((res.content|asjson).related[1].entry_url)
+
+- action: debug
+  url: <<(last.res.content|asjson).related[0].entry_url>>
+  title: <<(last.res.content|asjson).related[0].title>>
+

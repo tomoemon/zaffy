@@ -3,4 +3,5 @@ PyMySQL
 PyYAML
 requests
 argparse
+lxml
 

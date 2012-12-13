@@ -1,0 +1,12 @@
+- HTTP テスト
+
+- action: const.set
+  FILE_NAME: yahoo.html
+
+- action: http.get
+  url: http://yahoo.co.jp/
+  save_file: <<const.FILE_NAME>>
+  assert:
+   - file.size(const.FILE_NAME) > 100
+   - file.read(const.FILE_NAME, 10) == '<!DOCTYPE '
+

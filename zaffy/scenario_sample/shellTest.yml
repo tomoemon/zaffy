@@ -7,11 +7,3 @@
 - action: debug
   result: <<last.res>>
 
-- action: http.get
-  url: http://yahoo.co.jp
-
-- action: debug.print
-  r: <<last.res>>
-
-- action: http.get
-  url: 'http://search.twitter.com/search.json?q=blue%20angels&rpp=5&include_entities=true&result_type=mixed'
