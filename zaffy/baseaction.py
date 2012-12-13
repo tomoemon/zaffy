@@ -61,9 +61,8 @@ class BaseAction(object):
     else:
       # assertex が設定されたが、例外が起きていない場合
       if self.exception is None:
-        raise AssertionFailed("Exception not raised",
-            [{"got": "exception not exists", "expect": "Exception"}],
-            0)
+        raise AssertionFailed("exception expected, but not raised",
+            (self.setting.assertex_list,), 0)
 
     variables = dict(global_env)
     variables.update({
