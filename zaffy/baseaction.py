@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 import time
 import traceback
-from template import assert_test
+from template import assert_test, TemplateFormatException
 from assertionfailed import AssertionFailed
-from actionexception import ActionException
+
+class ActionException(Exception):
+  def __init__(self, exception, stack_trace):
+    self.original = exception
+    self.stack_trace = stack_trace
+    self.action_index = None
 
 class BaseAction(object):
 
@@ -13,7 +18,6 @@ class BaseAction(object):
     self.start_time = None
     self.end_time = None
     self.setting = setting
-    self.scenario_dir = None # Scenario クラスから実行時にセットされる
 
   @property
   def res(self):
@@ -28,13 +32,13 @@ class BaseAction(object):
   def apply_config(cls, config):
     pass
 
-  def run_action(self, global_env, scenario):
-    # 変数を jinja2 で展開する
-    # const で定義する変数などアクション実行中に値が変わるものがあるので、直前じゃないとダメ
-    self.setting.expand(scenario, global_env)
+  def run_action(self, global_env):
     self.start_time = time.time()
     try:
-      self._run_dynamic_method(global_env, scenario)
+      # 変数を jinja2 で展開する
+      # const で定義する変数などアクション実行中に値が変わるものがあるので、直前じゃないとダメ
+      self.setting.expand(global_env)
+      self._run_dynamic_method(global_env)
     except ActionException as e:
       self.exception = e
     except Exception as e:
@@ -43,12 +47,15 @@ class BaseAction(object):
       self.end_time = time.time()
       self.result["execution_time"] = self.end_time - self.start_time
 
-  def _run_dynamic_method(self, global_env, scenario):
-    self.setting._method(**self.params)
+  def _run_dynamic_method(self, global_env):
+    self.setting._method(**self.setting.params)
 
   def run_assert(self, global_env):
-    self._test_assertex(global_env)
-    self._test_assert(global_env)
+    try:
+      self._test_assertex(global_env)
+      self._test_assert(global_env)
+    except TemplateFormatException as e:
+      raise ActionException(e, traceback.format_exc())
 
   def _test_assertex(self, global_env):
     if not self.setting.assertex_list:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from jinja2 import Environment, TemplateSyntaxError
+from jinja2 import Environment, TemplateSyntaxError, UndefinedError
 from moduleloader import load_module_dir
 from assertionfailed import AssertionFailed
 import types
@@ -38,7 +38,10 @@ class CustomTest(object):
 for name, testfunc in env.tests.items():
   env.tests[name] = CustomTest(testfunc)
 
-class AssertFormatException(AssertionError):
+class TemplateFormatException(Exception):
+  pass
+
+class AssertFormatException(TemplateFormatException):
   pass
 
 def assert_test(assertion, variable_map):
@@ -61,6 +64,8 @@ def assert_test(assertion, variable_map):
       raise AssertionFailed(assertion, CustomTest.failed)
   except TemplateSyntaxError as e:
     raise AssertFormatException(unicode(e) + "\n" + assertion)
+  except UndefinedError as e:
+    raise AssertFormatException(unicode(e) + "\n" + assertion)
 
 def run_raw_template(template_str, variable_map):
   """
@@ -71,7 +76,12 @@ def run_raw_template(template_str, variable_map):
   return template.render(variable_map)
 
 def expand(template_str, variable_map):
-  return run_raw_template(template_str, variable_map)
+  try:
+    return run_raw_template(template_str, variable_map)
+  except TemplateSyntaxError as e:
+    raise TemplateFormatException(unicode(e) + "\n" + template_str)
+  except UndefinedError as e:
+    raise TemplateFormatException(unicode(e) + "\n" + template_str)
 
 if __name__ == "__main__":
   import doctest

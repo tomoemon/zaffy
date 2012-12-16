@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+from baseaction import ActionException
+from assertionfailed import AssertionFailed
+
+class ScenarioRunner(object):
+  def __init__(self, aggregator, formatter):
+    """ init ScenarioRunner
+    @param aggregator Aggregator
+    @param formatter Formatter
+    """
+    self.aggregator = aggregator
+    self.formatter = formatter
+
+  def run(self, global_env):
+    formatter = self.formatter
+    formatter.start_test(len(self.aggregator))
+    for scenario in self.aggregator:
+      formatter.start(scenario)
+      try:
+        scenario.run(global_env)
+        formatter.succeed()
+      except ActionException as e:
+        formatter.error(e)
+      except AssertionFailed as e:
+        formatter.fail(e)
+    formatter.end_test()
+

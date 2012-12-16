@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
-from pprint import pformat, pprint
-import datetime
 
 class Debug(BaseAction):
   """ debug アクション
   """
 
-  def do_rawprint(self, scenario, **params):
-    var_str = pformat(params, width=60)
-    print("<{2}\nDEBUG: {0}\n  {1}\n".format(datetime.datetime.now(), var_str, scenario.setting.filename))
+  def do_rawprint(self, global_env, **params):
+    global_env['formatter'].debug(params)
 
-  def do_debug(self, scenario, **params):
-    self.do_print(scenario, **params)
+  def do_debug(self, global_env, **params):
+    self.do_print(global_env, **params)
 
-  def do_print(self, scenario, **params):
+  def do_print(self, global_env, **params):
     dump = {}
     for key, value in params.items():
       if isinstance(value, basestring):
@@ -26,5 +23,5 @@ class Debug(BaseAction):
           dump[key] = str(value)
       else:
         dump[key] = value
-    var_str = pformat(dump, width=60)
-    print("<{2}\nDEBUG: {0}\n  {1}\n".format(datetime.datetime.now(), var_str, scenario.setting.filename))
+    global_env['formatter'].debug(dump)
+
