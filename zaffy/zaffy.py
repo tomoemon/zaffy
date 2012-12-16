@@ -11,7 +11,7 @@ def init():
   action_loader.load_actions()
 
   if option.config_file:
-    print("# using config file: " + option.config_file + "\n")
+    print("# using config file: " + option.config_file)
   config_loader = ConfigLoader(option.config_file)
   config_loader.apply_config_to_klass(action_loader.get_all_action_map())
 

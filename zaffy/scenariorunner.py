@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from baseaction import ActionException
 from assertionfailed import AssertionFailed
+import time
 
 class ScenarioRunner(object):
   def __init__(self, aggregator, formatter):
@@ -12,6 +13,7 @@ class ScenarioRunner(object):
     self.formatter = formatter
 
   def run(self, global_env):
+    start_time = time.time()
     formatter = self.formatter
     formatter.start_test(len(self.aggregator))
     for scenario in self.aggregator:
@@ -23,5 +25,5 @@ class ScenarioRunner(object):
         formatter.error(e)
       except AssertionFailed as e:
         formatter.fail(e)
-    formatter.end_test()
+    formatter.end_test(time.time() - start_time)
 

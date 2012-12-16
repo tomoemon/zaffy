@@ -15,11 +15,13 @@ setup
 usage
 --------------
     $ python zaffy.py scenario_sample/httpTest.yml
-
+    # using config file: zaffy.yml
     1..1
     ok 1 - HTTP テスト
 
-    1 test succeeded
+    1 test succeeded (1.00 sec elapsed)
+
+標準でTAP(Test Anything Protocol)形式による出力を行います
 
 シナリオ記述例
 --------------

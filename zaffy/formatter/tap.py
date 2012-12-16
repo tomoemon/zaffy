@@ -82,19 +82,22 @@ class Tap(object):
     self.test_count = test_count
     writer.write("1..{0}\n".format(test_count))
 
-  def end_test(self):
+  def end_test(self, elapsed_time):
     writer = self.writer
 
     writer.write("\n")
     if self.not_ok_list:
       writer.write("FAILED tests {0}\n".format(
         ", ".join([str(e) for e in self.not_ok_list])))
-      writer.write("Failed {0}/{1} tests, {2:.2f}% ok\n".format(
+      writer.write("Failed {0}/{1} tests, {2:.2f}% ok ({0:.2f} sec elapsed)\n".format(
         len(self.not_ok_list), self.test_count,
-        float(self.succeeded) / self.test_count * 100))
+        float(self.succeeded) / self.test_count * 100,
+        elapsed_time))
     else:
       if self.test_count == 1:
-        writer.write("1 test succeeded\n".format(self.test_count))
+        writer.write("1 test succeeded ({0:.2f} sec elapsed)\n".format(
+          self.test_count, elapsed_time))
       else:
-        writer.write("{0} tests all succeeded\n".format(self.test_count))
+        writer.write("{0} tests all succeeded ({0:.2f} sec elapsed)\n".format(
+          self.test_count, elapsed_time))
 
