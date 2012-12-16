@@ -14,7 +14,12 @@ setup
 
 usage
 --------------
-    python zaffy.py scenario_sample/httpTest.yml
+    $ python zaffy.py scenario_sample/httpTest.yml
+
+    1..1
+    ok 1 - HTTP テスト
+
+    1 test succeeded
 
 シナリオ記述例
 --------------
