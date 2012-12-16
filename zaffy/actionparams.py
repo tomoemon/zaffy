@@ -18,7 +18,7 @@ class ActionParams(object):
     self.assert_list = None
     self.assertex_list = None
 
-  def expand(self, scenario, global_env):
+  def expand(self, global_env):
     self.params = self.preset.apply(self.raw_params)
     for key, value in self.params.items():
       self._expand_params(self.params, key, value, global_env)
@@ -50,7 +50,7 @@ class ActionParams(object):
       optional_params = {}
     allow_any_params = bool(argspec.keywords)
     if "scenario" in args:
-      self.params["scenario"] = scenario
+      self.params["scenario"] = global_env['scenario']
     if "global_env" in args:
       self.params["global_env"] = global_env
 

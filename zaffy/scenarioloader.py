@@ -23,14 +23,14 @@ class ScenarioLoader(object):
     if from_scenario:
       self.check_circular_reference(filename, from_scenario)
     with open(filename) as fp:
-      scenario = self.load(fp)
+      raw_scenario = list(self.load_yaml(fp))
+      scenario = self.parse(raw_scenario)
     scenario.setting.filename = filename
     scenario.setting.from_scenario = from_scenario
     return scenario
 
-  def load(self, content):
-    yaml_obj = list(self.load_yaml(content))
-    raw_actions = yaml_obj[0]
+  def parse(self, content):
+    raw_actions = content[0]
     doc = raw_actions.pop(0)
     if not isinstance(doc, basestring):
       raise Exception("Scenario should have a description at first element: " + str(content))
