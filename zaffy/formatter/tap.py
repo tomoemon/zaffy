@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import pprint
-import datetime
 
 def _i(prefix, output_string, postfix="\n"):
   """ 行先頭に "ok" 等の文字が出力されないようにフォーマットする
@@ -20,13 +18,9 @@ class Tap(object):
   def total_elapsed(self):
     return self.succeeded + self.failed + self.errored
 
-  def debug(self, params):
+  def debug(self, debug_str):
     writer = self.writer
-
-    var_str = pprint.pformat(params, width=80, indent=2)
-    writer.write("\n")
-    writer.write(_i("  # ", "DEBUG at {0}".format(datetime.datetime.now())))
-    writer.write(_i("  # ", var_str))
+    writer.write(_i("  # ", unicode(debug_str)))
 
   def start(self, scenario):
     self.current = scenario
@@ -89,15 +83,15 @@ class Tap(object):
     if self.not_ok_list:
       writer.write("FAILED tests {0}\n".format(
         ", ".join([str(e) for e in self.not_ok_list])))
-      writer.write("Failed {0}/{1} tests, {2:.2f}% ok ({0:.2f} sec elapsed)\n".format(
+      writer.write("Failed {0}/{1} tests, {2:.2f}% ok ({3:.2f} sec elapsed)\n".format(
         len(self.not_ok_list), self.test_count,
         float(self.succeeded) / self.test_count * 100,
         elapsed_time))
     else:
       if self.test_count == 1:
         writer.write("1 test succeeded ({0:.2f} sec elapsed)\n".format(
-          self.test_count, elapsed_time))
+          elapsed_time))
       else:
-        writer.write("{0} tests all succeeded ({0:.2f} sec elapsed)\n".format(
+        writer.write("{0} tests all succeeded ({1:.2f} sec elapsed)\n".format(
           self.test_count, elapsed_time))
 

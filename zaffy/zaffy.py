@@ -7,26 +7,28 @@ from scenariorunner import ScenarioRunner
 from formatter.tap import Tap
 from writer.stdout import Stdout
 
-def init():
+def init(formatter):
   action_loader.load_actions()
+  for error in action_loader.load_error_list:
+    formatter.debug("action import: " + unicode(error))
 
   if option.config_file:
-    print("# using config file: " + option.config_file)
+    formatter.debug("config file: " + option.config_file)
+
   config_loader = ConfigLoader(option.config_file)
   config_loader.apply_config_to_klass(action_loader.get_all_action_map())
 
-  env = {}
+  env = {"formatter": formatter}
   env.update(action_loader.get_all_action_map())
   return env
 
 def main():
-  global_env = init()
+  formatter = Tap(Stdout())
+  global_env = init(formatter)
 
   agg = Aggregator()
   agg.add_files(option.targets)
 
-  formatter = Tap(Stdout())
-  global_env['formatter'] = formatter
 
   runner = ScenarioRunner(agg, formatter)
   runner.run(global_env)

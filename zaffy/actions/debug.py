@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
+import datetime
+import pprint
 
 class Debug(BaseAction):
   """ debug アクション
   """
 
   def do_rawprint(self, global_env, **params):
-    global_env['formatter'].debug(params)
+    self._write(global_env, params)
 
   def do_debug(self, global_env, **params):
     self.do_print(global_env, **params)
@@ -23,5 +25,10 @@ class Debug(BaseAction):
           dump[key] = str(value)
       else:
         dump[key] = value
-    global_env['formatter'].debug(dump)
+    self._write(global_env, dump)
+
+  def _write(self, global_env, params):
+    formatter = global_env['formatter']
+    formatter.debug("\nDEBUG at {0}".format(datetime.datetime.now()))
+    formatter.debug(pprint.pformat(params, width=80, indent=2))
 

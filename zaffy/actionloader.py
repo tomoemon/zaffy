@@ -11,6 +11,7 @@ class ActionLoader(object):
 
   def __init__(self):
     self.action_klasses = {}
+    self.load_error_list = []
 
   def create_action(self, raw_obj):
     if 'action' not in raw_obj or not raw_obj['action']:
@@ -49,7 +50,7 @@ class ActionLoader(object):
     return match.groupdict()
 
   def load_actions(self):
-    module_list = load_module_dir("actions")
+    module_list, self.load_error_list = load_module_dir("actions")
     for module in module_list:
       # action に使いたいモジュール名がすでに使われている場合にprefixに "_" を付ける
       module_name = module.__name__.lstrip('_')
