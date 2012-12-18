@@ -18,7 +18,7 @@ setup
 usage
 --------------
     $ python zaffy.py scenario_sample/httpTest.yml
-    # using config file: zaffy.yml
+      # using config file: zaffy.yml
     1..1
     ok 1 - HTTP テスト
 
