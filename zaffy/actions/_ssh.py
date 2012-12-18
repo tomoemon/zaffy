@@ -39,8 +39,8 @@ class Ssh(BaseAction):
     stdin, stdout, stderr = client.exec_command(cmd)
 
     self.result = {
-        'stdin': stdin,
         'stdout': stdout.read(),
         'stderr': stderr.read(),
+        'returncode': stdout.channel.recv_exit_status(),
         }
 
