@@ -1,0 +1,26 @@
+#---
+- SSH テスト
+
+- action: ssh
+  host: localhost
+  user: testuser
+  password: hogehoge
+  cmd: ls -l
+
+- action: debug
+  x: <<last.res>>
+
+- action: ssh.put
+  host: localhost
+  user: testuser
+  password: hogehoge
+  local: zaffy.py
+  remote: zaffy2.py
+
+- action: ssh.get
+  host: localhost
+  user: testuser
+  password: hogehoge
+  remote: zaffy2.py
+  local: zaffy3.py
+

@@ -51,7 +51,8 @@ class ActionLoader(object):
   def load_actions(self):
     module_list = load_module_dir("actions")
     for module in module_list:
-      module_name = module.__name__
+      # action に使いたいモジュール名がすでに使われている場合にprefixに "_" を付ける
+      module_name = module.__name__.lstrip('_')
       action_klass = getattr(module, module_name.title())
       if not issubclass(action_klass, BaseAction):
         # BaseAction クラスを継承していないクラスがあったらエラー

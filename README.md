@@ -5,10 +5,13 @@ Zaffy は yaml ベースのシンプルなフォーマットでテストシナ�
 
 setup
 --------------
-    # lxml(XMLのパースに必要) パッケージのインストールに libxml2-dev, libxslt-dev パッケージが必要になります
-    # eg.(ubuntu) apt-get install libxslt-dev
-    # eg.(centos) yum install libxslt-devel
-    # windows の場合は http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
+    # requirements for installing `lxml` package (parsing XML and HTML)
+    #   on linux
+    #     (ubuntu) apt-get install libxslt-dev
+    #     (centos) yum install libxslt-devel
+    #   on windows http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
+    # requirements for installing `ssh` package
+    #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
 
     pip install -r required_packages.txt
 
