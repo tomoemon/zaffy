@@ -18,7 +18,7 @@ setup
 usage
 --------------
     $ python zaffy.py scenario_sample/httpTest.yml
-    # using config file: zaffy.yml
+      # using config file: zaffy.yml
     1..1
     ok 1 - HTTP テスト
 
@@ -29,6 +29,7 @@ usage
 シナリオ記述例
 --------------
 #http test
+    - HTTP テスト
     - action: http.get
       url: http://yahoo.co.jp/
       params:
@@ -44,6 +45,7 @@ usage
         pagesize: <<last.res.content|length>>
 
 #sql test
+    - SQL テスト
     - action: sql.select
       driver: mysql
       host: localhost
@@ -61,6 +63,7 @@ usage
       sql: insert into user (user_id, name) values (10, "hoge")
 
 # shell test
+    - SHELL テスト
     - action: shell
       cmd: wc -l output.txt
       assert:
