@@ -4,7 +4,7 @@ import lxml.etree
 
 def do_xpathlist(value, xpath, namespaces=None):
   """ 常に list 形式で返す """
-  if isinstance(value, lxml.etree._Element):
+  if getattr(value, 'xpath', None):
     root = value
   else:
     root = lxml.etree.fromstring(str(value))
