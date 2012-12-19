@@ -15,6 +15,7 @@ def load_modules(basepath):
   """ Pluginをロードしてリストにして返す
   """
   plugin_list = []
+  error_list = []
   for filename in os.listdir(basepath):
     if filename.startswith('.'):
       # ドットファイルは無視する
@@ -27,8 +28,8 @@ def load_modules(basepath):
         m = load_module(filename, basepath)
         plugin_list.append(m)
     except ImportError as e:
-      print(filename, e)
-  return plugin_list
+      error_list.append((filename, e))
+  return plugin_list, error_list
 
 def load_module_dir(module_name):
   return load_modules(path.join(os.getcwd(), path.dirname(sys.argv[0]), module_name))

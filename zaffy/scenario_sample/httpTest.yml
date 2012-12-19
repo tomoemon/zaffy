@@ -5,8 +5,6 @@
 #---
 - HTTP テスト
 
-- action: debug.print
-
 - action: const.set
   url: yahoo.co.jp
 
@@ -19,17 +17,15 @@
 
 - action: http.get
 
+- action: preset
+  http:
+   default: {}
+
 - action: http.post
   url: http://<<const.url>>:80/
   params:
     hoge: 10
     fuga: piyo
-  assertex: []
-
-- action: debug.rawprint
-  a: 100
-  +x: "[1,2,3]"
-  +hoge: <<actions[-1].res.content.startswith('hoge')>>
 
 - action: http.get
   url: http://hogefugapiyo.com/
@@ -41,5 +37,4 @@
   url: http://google.co.jp/
   assert:
    - res.status == 200
-  assertex: []
 

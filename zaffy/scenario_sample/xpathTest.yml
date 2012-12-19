@@ -14,3 +14,7 @@
   # 要素の属性取得
    - res.content|xpath('/r:RDF/d:channel/@r:about', const.ns) == 'http://d.hatena.ne.jp/hatenadiary/rss'
 
+- action: http.get
+  url: http://yahoo.co.jp
+  assert:
+  - res.content|ashtml|xpath('/html/head/title/text()') is eq 'Yahoo! JAPAN'

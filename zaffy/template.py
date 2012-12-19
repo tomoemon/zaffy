@@ -8,7 +8,7 @@ env = Environment(block_start_string='<%', block_end_string='%>',
     variable_start_string='<<', variable_end_string='>>')
 
 def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
-  plugins = load_module_dir(custom_plugin_dir)
+  plugins, error_list = load_module_dir(custom_plugin_dir)
   for module in plugins:
     name_list = [name for name in dir(module) if name.startswith(prefix) and len(name) > len(prefix)]
     overridable = getattr(module, prefix + "override", [])

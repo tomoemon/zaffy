@@ -1,4 +1,4 @@
-- HTTP テスト
+- HTTP Download テスト
 
 - action: const.set
   FILE_NAME: yahoo.html
