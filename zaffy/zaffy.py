@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+
+try:
+  import sys
+  sys.setdefaultencoding('utf-8')
+finally:
+  import site
+
 import option
 from configloader import ConfigLoader
 from actionloader import action_loader
