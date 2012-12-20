@@ -4,8 +4,6 @@ import os
 
 class MetaConst(type):
   def __getattribute__(cls, name):
-    if name == 'get_param_setting' or name == 'get':
-      return type.__getattribute__(cls, name)
     return type.__getattribute__(cls, 'get')(name, None)
 
 class Env(BaseAction):
