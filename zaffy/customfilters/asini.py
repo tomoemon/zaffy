@@ -10,7 +10,7 @@ def do_asini(value):
   dummy_section = "__{0}__".format(id(value))
   value = "[{0}]\n".format(dummy_section) + value
   config = configparser.SafeConfigParser()
-  config.readfp(io.BytesIO(value))
+  config.readfp(io.StringIO(unicode(value)))
 
   if len(config.sections()) == 1:
     result = dict(config.items(dummy_section))
@@ -20,7 +20,7 @@ def do_asini(value):
   return result
 
 if __name__ == '__main__':
-  d = """[hoge]
+  d = u"""[hoge]
 fuga=piyo
 x= 10
 y=
