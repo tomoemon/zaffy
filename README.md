@@ -26,6 +26,11 @@ usage
 
 標準でTAP(Test Anything Protocol)形式による出力を行います
 
+`UnicodeEncodeError` や `UnicodeDecodeError` が出る場合は `sitecustomize.py` で
+デフォルトエンコーディングの設定を行うか、下記のように `-S` オプションを付けて実行してみてください
+
+    $ python -S zaffy.py scenario_sample/httpTest.yml
+
 シナリオ記述例
 --------------
 #http test
