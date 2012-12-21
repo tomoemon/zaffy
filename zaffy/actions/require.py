@@ -30,4 +30,5 @@ class Require(BaseAction):
     new_scenario = scenario_loader.load_file(path, scenario)
     new_scenario.run(global_env)
     self.new_scenario = new_scenario
+    global_env["scenario"] = scenario
 
