@@ -16,8 +16,5 @@ class Const(BaseAction):
 
   def do_set(self, **kwargs):
     for key, value in kwargs.items():
-      if key in self.const_params:
-        raise Exception("'const.{0}' already exists.\n  old: {1}\n  new: {2}".format(
-          key, self.const_params[key], value))
       self.const_params[key] = value
 
