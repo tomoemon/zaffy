@@ -3,6 +3,8 @@
 try:
   import sys
   sys.setdefaultencoding('utf-8')
+except:
+  pass
 finally:
   import site
 
