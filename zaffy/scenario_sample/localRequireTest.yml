@@ -1,13 +1,24 @@
 - ローカル変数テスト（参照）
 # required from localTest.yml
 
-# ここではまだ変数に代入していないので空
+# local.hoge にはまだ変数に代入していないので空
+# local.piyo は呼び出し元で値をセットしているので入っている
 - action: debug
-  x: <<local.hoge>>
+  local.hoge: <<local.hoge>>
+  local.piyo: <<local.piyo>>
+  assert:
+   - local.hoge is not defined
+   - local.piyo is eq 'arg value'
 
 - action: local
   hoge: required_value
 
 - action: debug
-  x: <<local.hoge>>
+  local.hoge: <<local.hoge>>
+  local.piyo: <<local.piyo>>
+  assert:
+   - local.hoge is eq 'required_value'
+   - local.piyo is eq 'arg value'
 
+- action: local
+  response: 100

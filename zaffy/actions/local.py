@@ -12,3 +12,5 @@ class Local(BaseAction):
     for key, value in kwargs.items():
       scenario.localvar[key] = value
 
+    self.result = scenario.localvar
+

@@ -23,3 +23,5 @@ class Const(BaseAction):
         raise Exception("cannot overridden const key '{0}', value '{1}'".format(key, value))
       self.const_params[key] = value
 
+    self.result = self.const_params
+

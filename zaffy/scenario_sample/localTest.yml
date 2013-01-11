@@ -1,23 +1,38 @@
 - ローカル変数テスト
 
 - action: local
-  hoge: piyo
+  hoge: hoge
   fuga: bar
 
 - action: debug
-  x: <<local.hoge>>
+  local.hoge: <<local.hoge>>
+  assert:
+   - local.hoge is eq 'hoge'
 
 # 上書き可能
 - action: local
   hoge: hogehoge
 
 - action: debug
-  x: <<local.hoge>>
+  local.hoge: <<local.hoge>>
+  assert:
+   - local.hoge is eq 'hogehoge'
 
 # 別のシナリオで local.hoge に保存しても影響しない
 - action: require
   path: localRequireTest.yml
+  params:
+    piyo: arg value
 
 - action: debug
-  x: <<local.hoge>>
+  result: <<last.result>>
+  assert:
+   - last.result.response is eq 100
+
+- action: debug
+  local.hoge: <<local.hoge>>
+  local.piyo: <<local.piyo>> # local.piyo は値なし
+  assert:
+   - local.hoge is eq 'hogehoge'
+   - local.piyo is not defined
 
