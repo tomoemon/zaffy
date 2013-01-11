@@ -1,0 +1,13 @@
+- ローカル変数テスト（参照）
+# required from localTest.yml
+
+# ここではまだ変数に代入していないので空
+- action: debug
+  x: <<local.hoge>>
+
+- action: local
+  hoge: required_value
+
+- action: debug
+  x: <<local.hoge>>
+

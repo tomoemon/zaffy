@@ -19,5 +19,7 @@ class Const(BaseAction):
 
   def do_set(self, **kwargs):
     for key, value in kwargs.items():
+      if key in self.const_params:
+        raise Exception("cannot overridden const key '{0}', value '{1}'".format(key, value))
       self.const_params[key] = value
 

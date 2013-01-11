@@ -1,0 +1,23 @@
+- ローカル変数テスト
+
+- action: local
+  hoge: piyo
+  fuga: bar
+
+- action: debug
+  x: <<local.hoge>>
+
+# 上書き可能
+- action: local
+  hoge: hogehoge
+
+- action: debug
+  x: <<local.hoge>>
+
+# 別のシナリオで local.hoge に保存しても影響しない
+- action: require
+  path: localRequireTest.yml
+
+- action: debug
+  x: <<local.hoge>>
+

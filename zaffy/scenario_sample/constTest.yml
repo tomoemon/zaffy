@@ -1,0 +1,25 @@
+- 定数テスト
+
+- action: const
+  hoge: piyo
+  fuga: bar
+
+- action: debug
+  x: <<const.hoge>>
+
+# 上書き不可能
+- action: const
+  hoge: hogehoge
+  assertex:
+   - true
+
+# 別のシナリオで const.hoge を参照可能
+- action: require
+  path: constRequireTest.yml
+
+# 別のシナリオでセットした const.required を参照可能
+- action: debug
+  x: <<const.required>>
+  assert:
+   - const.required is eq "required_value"
+

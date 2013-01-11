@@ -10,9 +10,12 @@ class Scenario(object):
     self.setting = setting
     self.actions = actions
     self.parent = parent
+    self.localvar = {}
 
   def run(self, global_env):
     global_env["scenario"] = self
+    global_env["local"] = self.localvar
+
     last_action = None
     for action_index, action in enumerate(self.actions):
       global_env["actions"] = self.actions[0:action_index]
@@ -25,6 +28,7 @@ class Scenario(object):
       except (ActionException, AssertionFailed) as e:
         e.action_index = action_index
         raise e
-
       last_action = action
+
     global_env["scenario"] = self.parent
+    global_env["local"] = self.parent.localvar if self.parent else None

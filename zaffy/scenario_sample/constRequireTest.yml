@@ -1,0 +1,16 @@
+- ローカル変数テスト
+
+- action: debug
+  x: <<const.hoge>>
+  assert:
+   - const.hoge is eq "piyo"
+
+# 上書き不可能
+- action: const
+  hoge: hogehoge
+  assertex:
+   - true
+
+- action: const
+  required: required_value
+
