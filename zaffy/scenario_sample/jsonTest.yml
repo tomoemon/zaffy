@@ -10,3 +10,12 @@
   url: <<(last.res.content|asjson).related[0].entry_url>>
   title: <<(last.res.content|asjson).related[0].title>>
 
+- action: const
+  params:
+    x: 100
+    y: 200
+    hoge: true
+    fuga: "false"
+
+- action: debug
+  s: <<const.params|tojson>>

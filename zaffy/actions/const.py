@@ -14,6 +14,9 @@ class Const(BaseAction):
   def apply_config(cls, config):
     type.__setattr__(cls, 'const_params', config)
 
+  def do_const(self, **kwargs):
+    self.do_set(**kwargs)
+
   def do_set(self, **kwargs):
     for key, value in kwargs.items():
       self.const_params[key] = value
