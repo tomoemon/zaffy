@@ -13,6 +13,8 @@ def _todatetime(dateobj, format=None):
     if format is None:
       return dateutil.parser.parse(dateobj)
     return datetime.strptime(dateobj, format)
+  elif isinstance(dateobj, int) or isinstance(dateobj, float):
+    return datetime.fromtimestamp(dateobj)
   raise Exception("cannot convert to datetime from unknown type: {0}".format(dateobj))
 
 def do_dateformat(value, format, fromformat=None):
