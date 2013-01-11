@@ -1,0 +1,13 @@
+- timeTest
+
+- action: debug
+  t0: <<time.now()>>
+  t1: <<time.now(sec=100)>>
+  t2: <<time.now()|dateadd(day=10)>>
+  t3: <<time.timestamp()>>
+  t4: <<time.format('%Y-%m-%dT%H:%M:%S')>>
+  t5: <<"2012-10-23"|dateadd(day=10)>>
+  t6: <<"2012-10-23"|timestamp>>
+  t7: <<time.now()|dateformat('%Y-%m-%d')>>
+  t8: <<"2012-10-30"|todate>>
+
