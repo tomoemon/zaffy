@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 import dateutil.parser
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 def _adddate(value, day=0, hour=0, min=0, sec=0, msec=0):
   return value + timedelta(days=day, hours=hour, minutes=min, seconds=sec, milliseconds=msec)
@@ -9,6 +9,8 @@ def _adddate(value, day=0, hour=0, min=0, sec=0, msec=0):
 def _todatetime(dateobj, format=None):
   if isinstance(dateobj, datetime):
     return dateobj
+  elif isinstance(dateobj, date):
+    return datetime(dateobj.year, dateobj.month, dateobj.day)
   elif isinstance(dateobj, basestring):
     if format is None:
       return dateutil.parser.parse(dateobj)
