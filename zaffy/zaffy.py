@@ -41,6 +41,12 @@ def main():
   runner = ScenarioRunner(agg, formatter)
   runner.run(global_env)
 
+  teardown()
+
+def teardown():
+  for action_klass in action_loader.get_all_action_map().values():
+    teardown_method = type.__getattribute__(action_klass, 'teardown')
+    teardown_method()
 
 if __name__ == '__main__':
   main()
