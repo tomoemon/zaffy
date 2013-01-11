@@ -43,7 +43,7 @@ class Preset(BaseAction):
   _presets = {}
 
   @classmethod
-  def apply_config(cls, config):
+  def setup(cls, config):
     cls._presets = config
 
   @classmethod

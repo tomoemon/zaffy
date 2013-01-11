@@ -14,11 +14,11 @@ class ConfigLoader(object):
     yaml_obj = list(yaml.load_all(content))
     return yaml_obj[0]
 
-  def apply_config_to_klass(self, klasses):
+  def setup_klass(self, klasses):
     action_configs = self.config.get('actions', {})
     for name, klass in klasses.items():
       if name not in action_configs:
         continue
-      apply_method = type.__getattribute__(klass, 'apply_config')
+      apply_method = type.__getattribute__(klass, 'setup')
       apply_method(action_configs[name])
 

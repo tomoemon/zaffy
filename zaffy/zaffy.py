@@ -25,7 +25,7 @@ def init(formatter):
     formatter.debug("config file: " + option.config_file)
 
   config_loader = ConfigLoader(option.config_file)
-  config_loader.apply_config_to_klass(action_loader.get_all_action_map())
+  config_loader.setup_klass(action_loader.get_all_action_map())
 
   env = {"formatter": formatter}
   env.update(action_loader.get_all_action_map())
@@ -37,7 +37,6 @@ def main():
 
   agg = Aggregator()
   agg.add_files(option.targets)
-
 
   runner = ScenarioRunner(agg, formatter)
   runner.run(global_env)

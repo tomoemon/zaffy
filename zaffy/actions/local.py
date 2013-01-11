@@ -5,7 +5,6 @@ class Local(BaseAction):
   """ Localアクション
   scenario単位のローカル変数を保存するアクション
   """
-
   def do_local(self, scenario, **kwargs):
     self.do_set(scenario, **kwargs)
 

@@ -29,7 +29,11 @@ class BaseAction(object):
     return self.setting.params
 
   @classmethod
-  def apply_config(cls, config):
+  def setup(cls, config):
+    pass
+
+  @classmethod
+  def teardown(cls):
     pass
 
   def run_action(self, global_env):

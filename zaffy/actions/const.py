@@ -11,7 +11,7 @@ class Const(BaseAction):
   const_params = {}
 
   @classmethod
-  def apply_config(cls, config):
+  def setup(cls, config):
     type.__setattr__(cls, 'const_params', config)
 
   def do_const(self, **kwargs):

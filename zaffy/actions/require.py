@@ -9,7 +9,7 @@ class Require(BaseAction):
   root_path = None
 
   @classmethod
-  def apply_config(cls, root_path=None):
+  def setup(cls, root_path=None):
     cls.root_path = root_path
 
   def __init__(self, setting):
