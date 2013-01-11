@@ -66,8 +66,7 @@ class Tap(object):
     writer.write("  ------------------------------------------------------------\n")
     writer.write(_i("  ", "filename: {0}".format(self.current.setting.filename)))
     writer.write(_i("  ", "action_index: {0}".format(exception.action_index)))
-    writer.write(_i("  ", "{0}: {1}".format(
-      exception.original.__class__.__name__, str(exception.original))))
+    writer.write(_i("  ", exception.stack_trace))
     writer.write("  ------------------------------------------------------------\n")
 
   def start_test(self, test_count):
