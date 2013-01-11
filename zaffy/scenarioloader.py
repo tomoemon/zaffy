@@ -7,36 +7,36 @@ from os import path
 
 class ScenarioLoader(object):
 
-  def check_circular_reference(self, filename, from_scenario):
+  def check_circular_reference(self, filename, parent):
     """ 循環参照チェック """
     refer_list = [filename]
-    while from_scenario:
-      from_filename = from_scenario.setting.filename
+    while parent:
+      from_filename = parent.setting.filename
       if from_filename in refer_list:
         refer_list.append(from_filename)
         raise Exception("Circular reference detected: " + str(list(reversed(refer_list))))
       refer_list.append(from_filename)
-      from_scenario = from_scenario.setting.from_scenario
+      parent = parent.parent
 
-  def load_file(self, filename, from_scenario=None):
+  def load_file(self, filename, parent=None):
     filename = path.normcase(path.abspath(filename))
-    if from_scenario:
-      self.check_circular_reference(filename, from_scenario)
+    if parent:
+      self.check_circular_reference(filename, parent)
     with open(filename) as fp:
       raw_scenario = list(self.load_yaml(fp))
-      scenario = self.parse(raw_scenario)
-    scenario.setting.filename = filename
-    scenario.setting.from_scenario = from_scenario
-    return scenario
+      doc, raw_actions = self.parse(raw_scenario)
+
+    return Scenario(
+        ScenarioSetting(doc, filename),
+        self.create_actions(raw_actions),
+        parent)
 
   def parse(self, content):
     raw_actions = content[0]
     doc = raw_actions.pop(0)
     if not isinstance(doc, basestring):
       raise Exception("Scenario should have a description at first element: " + str(content))
-
-    setting = ScenarioSetting(doc=doc)
-    return Scenario(setting, self.create_actions(raw_actions))
+    return doc, raw_actions
 
   def load_yaml(self, content):
     """ string でも file でも同じメソッドで読みこめる """

@@ -6,15 +6,17 @@ from assertionfailed import AssertionFailed
 from baseaction import ActionException
 
 class Scenario(object):
-  def __init__(self, setting, actions):
+  def __init__(self, setting, actions, parent=None):
     self.setting = setting
     self.actions = actions
+    self.parent = parent
 
   def run(self, global_env):
     global_env["scenario"] = self
     last_action = None
     for action_index, action in enumerate(self.actions):
       global_env["actions"] = self.actions[0:action_index]
+      global_env["action_index"] = action_index
       global_env["last"] = last_action
       global_env["this"] = action
       try:
@@ -25,4 +27,4 @@ class Scenario(object):
         raise e
 
       last_action = action
-
+    global_env["scenario"] = self.parent

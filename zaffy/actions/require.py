@@ -14,10 +14,10 @@ class Require(BaseAction):
 
   def __init__(self, setting):
     super(Require, self).__init__(setting)
-    self.new_scenario = None
+    self.result = {}
 
   def __getitem__(self, index):
-    return self.new_scenario.actions[index]
+    return self.result['actions'][index]
 
   def do_require(self, path, global_env, scenario):
     path = path.strip()
@@ -29,6 +29,5 @@ class Require(BaseAction):
 
     new_scenario = scenario_loader.load_file(path, scenario)
     new_scenario.run(global_env)
-    self.new_scenario = new_scenario
-    global_env["scenario"] = scenario
+    self.result['actions'] = new_scenario.actions
 
