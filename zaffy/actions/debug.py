@@ -2,18 +2,19 @@
 from baseaction import BaseAction
 import datetime
 import pprint
+import os.path
 
 class Debug(BaseAction):
   """ debug アクション
   """
 
-  def do_rawprint(self, global_env, **params):
-    self._write(global_env, params)
+  def do_rawprint(self, global_env, scenario, **params):
+    self._write(global_env, scenario, params)
 
-  def do_debug(self, global_env, **params):
-    self.do_print(global_env, **params)
+  def do_debug(self, global_env, scenario, **params):
+    self.do_rawprint(global_env, scenario, **params)
 
-  def do_print(self, global_env, **params):
+  def do_print(self, global_env, scenario, **params):
     dump = {}
     for key, value in params.items():
       if isinstance(value, basestring):
@@ -25,10 +26,12 @@ class Debug(BaseAction):
           dump[key] = str(value)
       else:
         dump[key] = value
-    self._write(global_env, dump)
+    self._write(global_env, scenario, dump)
 
-  def _write(self, global_env, params):
+  def _write(self, global_env, scenario, params):
     formatter = global_env['formatter']
-    formatter.debug("\nDEBUG at {0}".format(datetime.datetime.now()))
+    params['__file__'] = scenario.setting.filename
+    params['__index__'] = global_env['action_index']
+    formatter.debug("\nDEBUG - {0}".format(datetime.datetime.now()))
     formatter.debug(pprint.pformat(params, width=80, indent=2))
 
