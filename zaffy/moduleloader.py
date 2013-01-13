@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import imp
-import sys
 import os
 from os import path
+import environment
 
 
 def load_module(module_name, basepath):
@@ -20,8 +20,8 @@ def load_modules(basepath):
   error_list = []
   for filename in os.listdir(basepath):
     if filename.startswith('.'):
-      # ドットファイルは無視する
       continue
+
     try:
       if not filename.startswith('__') and filename.endswith(".py"):
         m = load_module(filename.replace(".py", ""), basepath)
@@ -35,12 +35,12 @@ def load_modules(basepath):
 
 
 def load_module_dir(module_name):
-  return load_modules(path.join(os.getcwd(), path.dirname(sys.argv[0]), module_name))
+  return load_modules(path.join(environment.get_main_dir(), module_name))
 
 if __name__ == "__main__":
   plugindir = "plugins"  # Pluginが入っているディレクトリ
   cwd = os.getcwd()
   moduledir = os.path.join(cwd,plugindir)
-  plugins = load_plugins(moduledir)   # Pluginを読み込む
+  plugins = load_module_dir(moduledir)   # Pluginを読み込む
   for p in plugins:
     p.foo()     # 読み込んだPluginの関数(foo)を呼び出す
