@@ -4,11 +4,15 @@ from baseaction import ActionException
 
 
 class Scenario(object):
-  def __init__(self, setting, actions, parent=None):
+  def __init__(self, setting, doc, actions, parent=None):
     self.setting = setting
+    self.doc = doc
     self.actions = actions
     self.parent = parent
     self.localvar = {}
+
+  def __getattr__(self, item):
+    return getattr(self.setting, item)
 
   def run(self, global_env):
     global_env["scenario"] = self

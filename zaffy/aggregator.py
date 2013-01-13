@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from scenarioloader import scenario_loader
+from scenariosetting import ScenarioSetting
 
 
 class Aggregator(object):
@@ -11,7 +12,7 @@ class Aggregator(object):
 
   def add_files(self, file_list):
     for target in file_list:
-        scenario = scenario_loader.load_file(target)
+        scenario = scenario_loader.load(ScenarioSetting(filename=target))
         self.add(scenario)
 
   def __iter__(self):

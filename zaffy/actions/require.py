@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
 from scenarioloader import scenario_loader
+from scenariosetting import ScenarioSetting
 import os
 
 
 class Require(BaseAction):
   """ require アクション
   """
-  root_path = None
+  root_path = ""
 
   @classmethod
-  def setup(cls, root_path=None):
+  def setup(cls, root_path=""):
     cls.root_path = root_path
 
   def __init__(self, setting):
@@ -25,9 +26,12 @@ class Require(BaseAction):
       raise Exception(path + " not exists")
 
     if not os.path.isabs(path):
-      path = os.path.join(os.path.dirname(scenario.setting.filename), path)
+      if self.root_path:
+        path = os.path.join(self.root_path, path)
+      else:
+        path = os.path.join(scenario.dir, path)
 
-    new_scenario = scenario_loader.load_file(path, scenario)
+    new_scenario = scenario_loader.load(ScenarioSetting(path), scenario)
     new_scenario.localvar = params if params else {}
     new_scenario.run(global_env)
     self.result = new_scenario.actions[-1].result

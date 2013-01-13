@@ -32,7 +32,7 @@ class Tap(object):
 
     self.succeeded += 1
     writer.write("ok {0} - {1}\n".format(
-      self.total_elapsed(), self.current.setting.doc))
+      self.total_elapsed(), self.current.doc))
 
   def fail(self, exception):
     """
@@ -43,7 +43,7 @@ class Tap(object):
     self.failed += 1
     self.not_ok_list.append(self.total_elapsed())
     writer.write("not ok {0} - {1}\n".format(
-      self.total_elapsed(), self.current.setting.doc))
+      self.total_elapsed(), self.current.doc))
     writer.write("  ------------------------------------------------------------\n")
     writer.write(_i("  ", "filename: {0}".format(self.current.setting.filename)))
     writer.write(_i("  ", "action_index: {0}".format(exception.action_index)))
@@ -64,7 +64,7 @@ class Tap(object):
     self.errored += 1
     self.not_ok_list.append(self.total_elapsed())
     writer.write("not ok {0} - {1}\n".format(
-      self.total_elapsed(), self.current.setting.doc))
+      self.total_elapsed(), self.current.doc))
     writer.write("  ------------------------------------------------------------\n")
     writer.write(_i("  ", "filename: {0}".format(self.current.setting.filename)))
     writer.write(_i("  ", "action_index: {0}".format(exception.action_index)))

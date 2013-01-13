@@ -1,9 +1,7 @@
 # -*- coding: utf-8
 import yaml
 from scenario import Scenario
-from scenariosetting import ScenarioSetting
 from actionloader import action_loader
-from os import path
 
 
 class ScenarioLoader(object):
@@ -12,23 +10,23 @@ class ScenarioLoader(object):
     """ 循環参照チェック """
     refer_list = [filename]
     while parent:
-      from_filename = parent.setting.filename
+      from_filename = parent.filename
       if from_filename in refer_list:
         refer_list.append(from_filename)
         raise Exception("Circular reference detected: " + str(list(reversed(refer_list))))
       refer_list.append(from_filename)
       parent = parent.parent
 
-  def load_file(self, filename, parent=None):
-    filename = path.normcase(path.abspath(filename))
-    if parent:
-      self.check_circular_reference(filename, parent)
-    with open(filename) as fp:
-      raw_scenario = list(self.load_yaml(fp))
-      doc, raw_actions = self.parse(raw_scenario)
+  def load(self, setting, parent=None):
+    if setting.filename and parent:
+      self.check_circular_reference(setting.filename, parent)
+
+    raw_scenario = list(self.load_yaml(setting.read()))
+    doc, raw_actions = self.parse(raw_scenario)
 
     return Scenario(
-        ScenarioSetting(doc, filename),
+        setting,
+        doc,
         self.create_actions(raw_actions),
         parent)
 
