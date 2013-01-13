@@ -2,6 +2,7 @@
 from baseaction import BaseAction
 import datetime
 import pprint
+import re
 
 
 class Debug(BaseAction):
@@ -33,5 +34,13 @@ class Debug(BaseAction):
     params['__file__'] = scenario.setting.filename
     params['__index__'] = global_env['action_index']
     formatter.debug("\nDEBUG - {0}".format(datetime.datetime.now()))
-    formatter.debug(pprint.pformat(params, width=80, indent=2))
+    formatter.debug(self._pp(params))
 
+  @staticmethod
+  def _pp(obj):
+    # 日本語を pprint で表示しようとすると、
+    # 以下のように文字コードで表示されてしまうため置換する
+    # 'row1': u'\u6570\u5b66\u30ac\u30fc\u30eb'
+    pstr = pprint.pformat(obj, width=80, indent=2)
+    return re.sub(r"\\u([0-9a-f]{4})",
+                  lambda x: unichr(int("0x" + x.group(1), 16)), pstr)
