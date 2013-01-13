@@ -18,7 +18,7 @@ class Sql(BaseAction):
 
   @classmethod
   def setup(cls, config):
-    cls.is_pool_connection = config.is_pool_connection
+    pass
 
   @classmethod
   def teardown(cls):
