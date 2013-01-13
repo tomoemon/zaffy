@@ -1,15 +1,18 @@
 - file test
 
+- action: local
+  filename: <<scenario.dir>>/fileTest.txt
+
 - action: debug
-  exists: <<file.exists('var_dump.py')>>
-  writable: <<file.writable('var_dump.py')>>
-  readable: <<file.readable('var_dump.py')>>
-  executable: <<file.executable('var_dump.py')>>
-  size: <<file.size('var_dump.py')>>
-  read: <<file.read('var_dump.py', 30)>>
-  atime: <<file.access_time('var_dump.py')>>
-  mtime: <<file.update_time('var_dump.py')>>
-  ctime: <<file.create_time('var_dump.py')>>
+  exists: <<file.exists(local.filename)>>
+  writable: <<file.writable(local.filename)>>
+  readable: <<file.readable(local.filename)>>
+  executable: <<file.executable(local.filename)>>
+  size: <<file.size(local.filename)>>
+  read: <<file.read(local.filename, 30)>>
+  atime: <<file.access_time(local.filename)>>
+  mtime: <<file.update_time(local.filename)>>
+  ctime: <<file.create_time(local.filename)>>
   not_exists: <<file.exists('not_exist')>>
   not_writable: <<file.writable('not_exist')>>
   not_readable: <<file.readable('not_exist')>>
