@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import _time as timemod
+import time as _time
 from baseaction import BaseAction
 
 
@@ -9,5 +9,5 @@ class Sleep(BaseAction):
   """
 
   def do_sleep(self, time):
-    timemod.sleep(time / 1000.0)
+    _time.sleep(time / 1000.0)
 
