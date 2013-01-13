@@ -1,0 +1,23 @@
+- python テスト
+
+- action: local
+  x: 100
+  y: 200
+
+- action: python
+  code: |
+    import re
+    a = 10
+    b = 20
+    c = a + b
+    d = local['x'] + local['y']
+    local['z'] = d * 20
+
+- action: debug
+  result: <<last.result>>
+  local: <<local>>
+  assert:
+    - last.result.a is eq 11
+    - last.result.d is eq 300
+    - local.z is eq 6001
+
