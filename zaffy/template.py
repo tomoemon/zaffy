@@ -23,11 +23,15 @@ def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
 
 
 def init_customtests():
-  return add_plugin(env.tests, "customtests", "is_")
+  error_list = add_plugin(env.tests, "customtests", "is_")
+  for name, testfunc in env.tests.items():
+    env.tests[name] = CustomTest(testfunc)
+  return error_list
 
 
 def init_customfilters():
-  return add_plugin(env.filters, "customfilters", "do_")
+  error_list = add_plugin(env.filters, "customfilters", "do_")
+  return error_list
 
 
 class CustomTest(object):
@@ -41,9 +45,6 @@ class CustomTest(object):
     if not result:
       self.failed.append(args)
     return result
-
-for name, testfunc in env.tests.items():
-  env.tests[name] = CustomTest(testfunc)
 
 
 class TemplateFormatException(Exception):
