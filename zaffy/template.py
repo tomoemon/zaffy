@@ -19,9 +19,15 @@ def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
         if plugin_name in plugin_dict and name not in overridable:
           raise Exception(name + " is already defined")
         plugin_dict[plugin_name] = obj
+  return error_list
 
-add_plugin(env.tests, "customtests", "is_")
-add_plugin(env.filters, "customfilters", "do_")
+
+def init_customtests():
+  return add_plugin(env.tests, "customtests", "is_")
+
+
+def init_customfilters():
+  return add_plugin(env.filters, "customfilters", "do_")
 
 
 class CustomTest(object):
