@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-import sys
-from template import assert_test
 from assertionfailed import AssertionFailed
 from baseaction import ActionException
 

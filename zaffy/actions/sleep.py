@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import time as timemod
+import _time as timemod
 from baseaction import BaseAction
 
 

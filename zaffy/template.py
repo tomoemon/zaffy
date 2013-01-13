@@ -2,10 +2,9 @@
 from jinja2 import Environment, TemplateSyntaxError, UndefinedError
 from moduleloader import load_module_dir
 from assertionfailed import AssertionFailed
-import types
 
 env = Environment(block_start_string='<%', block_end_string='%>',
-    variable_start_string='<<', variable_end_string='>>')
+                  variable_start_string='<<', variable_end_string='>>')
 
 
 def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):

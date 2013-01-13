@@ -2,7 +2,6 @@
 from baseaction import BaseAction
 import datetime
 import pprint
-import os.path
 
 
 class Debug(BaseAction):
@@ -23,7 +22,7 @@ class Debug(BaseAction):
           # debug中で任意のコードが実行されないように、
           # ビルトイン関数を無効にしてリテラルと一部の式だけ解釈できるようにする
           dump[key] = eval(value, {'__builtins__':{}}, {})
-        except Exception as e:
+        except Exception:
           dump[key] = str(value)
       else:
         dump[key] = value
