@@ -3,6 +3,7 @@ from baseaction import ActionException
 from assertionfailed import AssertionFailed
 import time
 
+
 class ScenarioRunner(object):
   def __init__(self, aggregator, formatter):
     """ init ScenarioRunner

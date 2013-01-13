@@ -4,6 +4,7 @@ from os import path
 from subprocess import Popen, PIPE
 from baseaction import BaseAction
 
+
 class Shell(BaseAction):
   """ Shell アクション
   プロセスの実行などを行なう
@@ -28,6 +29,6 @@ class Shell(BaseAction):
         'stdout': stdoutdata,
         'stderr': stderrdata,
         'returncode': proc.returncode
-        }
+    }
 
     os.chdir(before_curdir)

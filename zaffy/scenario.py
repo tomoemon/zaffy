@@ -5,6 +5,7 @@ from template import assert_test
 from assertionfailed import AssertionFailed
 from baseaction import ActionException
 
+
 class Scenario(object):
   def __init__(self, setting, actions, parent=None):
     self.setting = setting

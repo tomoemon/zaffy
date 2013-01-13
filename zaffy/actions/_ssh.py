@@ -2,12 +2,13 @@
 import ssh
 from baseaction import BaseAction
 
+
 class Ssh(BaseAction):
   """ Ssh アクション
   SSH接続を通してプロセスの実行などを行なう
   """
   def do_ssh(self, host, user, cmd, port=22, password=None, key_file=None):
-    method_params = locals();
+    method_params = locals()
     del method_params['self']
     self.do_run(**method_params)
 

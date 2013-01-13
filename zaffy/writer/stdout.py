@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
+
 class Stdout(object):
   def open(self):
     pass

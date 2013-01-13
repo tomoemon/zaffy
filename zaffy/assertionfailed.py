@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 class AssertionFailed(AssertionError):
   def __init__(self, assertion_str, compared_list, assert_index=None, action_index=None):
     self.assertion = assertion_str

@@ -6,6 +6,7 @@ from actionparams import ActionParams
 import re
 import inspect
 
+
 class ActionLoader(object):
   ACTION_REGEX = re.compile(r'(?P<actionName>\w+)(?:\.(?P<methodName>\w+))?(?:\s*\<\s*(?P<presetName>\w+))?')
 
@@ -39,7 +40,7 @@ class ActionLoader(object):
       argspec=inspect.getargspec(method_obj),
       raw_params=raw_obj,
       preset=self.get_action_klass('preset').get_applier(action_name, preset_name, False)
-      ))
+    ))
     setting_obj.set_method(method_obj)
     return action_obj
 

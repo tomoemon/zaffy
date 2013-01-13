@@ -4,12 +4,14 @@ import sys
 import os
 from os import path
 
+
 def load_module(module_name, basepath):
   """ モジュールをロードして返す
   imp.load_module は reload() と同じなので注意!!
   """
-  f,n,d = imp.find_module(module_name,[basepath])
-  return imp.load_module(module_name,f,n,d)
+  f, n, d = imp.find_module(module_name, [basepath])
+  return imp.load_module(module_name, f, n, d)
+
 
 def load_modules(basepath):
   """ Pluginをロードしてリストにして返す
@@ -22,7 +24,7 @@ def load_modules(basepath):
       continue
     try:
       if not filename.startswith('__') and filename.endswith(".py"):
-        m = load_module(filename.replace(".py",""), basepath)
+        m = load_module(filename.replace(".py", ""), basepath)
         plugin_list.append(m)
       elif os.path.isdir(filename):
         m = load_module(filename, basepath)
@@ -30,6 +32,7 @@ def load_modules(basepath):
     except ImportError as e:
       error_list.append((filename, e))
   return plugin_list, error_list
+
 
 def load_module_dir(module_name):
   return load_modules(path.join(os.getcwd(), path.dirname(sys.argv[0]), module_name))

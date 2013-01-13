@@ -6,6 +6,7 @@ except ImportError:
 
 import io
 
+
 def do_asini(value):
   dummy_section = "__{0}__".format(id(value))
   value = "[{0}]\n".format(dummy_section) + value

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from scenarioloader import scenario_loader
 
+
 class Aggregator(object):
   def __init__(self):
     self.scenario_list = []

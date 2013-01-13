@@ -5,6 +5,7 @@ from scenariosetting import ScenarioSetting
 from actionloader import action_loader
 from os import path
 
+
 class ScenarioLoader(object):
 
   def check_circular_reference(self, filename, parent):

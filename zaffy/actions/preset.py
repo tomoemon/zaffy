@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
 
+
 class PresetApplier(object):
   DEFAULT_NAME = 'default'
 

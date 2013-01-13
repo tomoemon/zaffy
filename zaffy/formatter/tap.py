@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
+
 def _i(prefix, output_string, postfix="\n"):
   """ 行先頭に "ok" 等の文字が出力されないようにフォーマットする
   """
   return "\n".join([prefix + line for line in output_string.split("\n")]) + "\n"
+
 
 class Tap(object):
   def __init__(self, writer):

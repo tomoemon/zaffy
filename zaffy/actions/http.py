@@ -2,6 +2,7 @@
 import requests
 from baseaction import BaseAction
 
+
 class Http(BaseAction):
   """ Http アクション
   port は url パラメータで http://hoge.com:8000/ のように指定する
@@ -49,42 +50,42 @@ class Http(BaseAction):
     @param allow_redirects 自動でリダイレクトするか
     @param timeout タイムアウト時間（ダウンロードに要する時間は除く）
     """
-    method_params = locals();
+    method_params = locals()
     del method_params['self']
     self._http_method("get", **method_params)
 
   def do_post(self, url, headers={}, cookies={}, params={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ post """
-    method_params = locals();
+    method_params = locals()
     del method_params['self']
     self._http_method("post", **method_params)
 
   def do_put(self, url, headers={}, cookies={}, params={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ put """
-    method_params = locals();
+    method_params = locals()
     del method_params['self']
     self._http_method("put", **method_params)
 
   def do_delete(self, url, headers={}, cookies={}, params={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ delete """
-    method_params = locals();
+    method_params = locals()
     del method_params['self']
     self._http_method("delete", **method_params)
 
   def do_head(self, url, headers={}, cookies={}, params={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ head """
-    method_params = locals();
+    method_params = locals()
     del method_params['self']
     self._http_method("head", **method_params)
 
   def do_patch(self, url, headers={}, cookies={}, params={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ patch """
-    method_params = locals();
+    method_params = locals()
     del method_params['self']
     self._http_method("patch", **method_params)
 

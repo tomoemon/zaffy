@@ -3,7 +3,7 @@
 try:
   import sys
   sys.setdefaultencoding('utf-8')
-except:
+except AttributeError:
   pass
 finally:
   import site
@@ -15,6 +15,7 @@ from aggregator import Aggregator
 from scenariorunner import ScenarioRunner
 from formatter.tap import Tap
 from writer.stdout import Stdout
+
 
 def init(formatter):
   action_loader.load_actions()
@@ -31,6 +32,7 @@ def init(formatter):
   env.update(action_loader.get_all_action_map())
   return env
 
+
 def main():
   formatter = Tap(Stdout())
   global_env = init(formatter)
@@ -43,10 +45,12 @@ def main():
 
   teardown()
 
+
 def teardown():
   for action_klass in action_loader.get_all_action_map().values():
     teardown_method = type.__getattribute__(action_klass, 'teardown')
     teardown_method()
+
 
 if __name__ == '__main__':
   main()

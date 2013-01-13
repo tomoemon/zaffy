@@ -4,6 +4,7 @@ from datetime import datetime
 import shutil
 from baseaction import BaseAction
 
+
 class File(BaseAction):
   """ File アクション
   ファイルに関する検査などを行なう

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 
+
 def is_json_equal(left_value, right_value):
   left_str = unicode(left_value)
   right_str = unicode(right_value)

@@ -4,11 +4,13 @@ import traceback
 from template import assert_test, TemplateFormatException
 from assertionfailed import AssertionFailed
 
+
 class ActionException(Exception):
   def __init__(self, exception, stack_trace):
     self.original = exception
     self.stack_trace = stack_trace
     self.action_index = None
+
 
 class BaseAction(object):
 
@@ -79,7 +81,7 @@ class BaseAction(object):
     variables.update({
       "ex": self.exception.original,
       "this": self.__dict__
-      })
+    })
     for assert_index, assert_str in enumerate(self.setting.assertex_list):
       try:
         assert_test(assert_str, variables)
@@ -95,7 +97,7 @@ class BaseAction(object):
     variables.update({
       "res": self.result,
       "this": self.__dict__
-      })
+    })
     for assert_index, assert_str in enumerate(self.setting.assert_list):
       try:
         assert_test(assert_str, variables)

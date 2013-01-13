@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
 
+
 class Local(BaseAction):
   """ Localアクション
   scenario単位のローカル変数を保存するアクション

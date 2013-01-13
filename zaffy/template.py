@@ -7,6 +7,7 @@ import types
 env = Environment(block_start_string='<%', block_end_string='%>',
     variable_start_string='<<', variable_end_string='>>')
 
+
 def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
   plugins, error_list = load_module_dir(custom_plugin_dir)
   for module in plugins:
@@ -23,6 +24,7 @@ def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
 add_plugin(env.tests, "customtests", "is_")
 add_plugin(env.filters, "customfilters", "do_")
 
+
 class CustomTest(object):
   failed = []
 
@@ -38,11 +40,14 @@ class CustomTest(object):
 for name, testfunc in env.tests.items():
   env.tests[name] = CustomTest(testfunc)
 
+
 class TemplateFormatException(Exception):
   pass
 
+
 class AssertFormatException(TemplateFormatException):
   pass
+
 
 def assert_test(assertion, variable_map):
   """
@@ -67,6 +72,7 @@ def assert_test(assertion, variable_map):
   except UndefinedError as e:
     raise AssertFormatException(unicode(e) + "\n" + assertion)
 
+
 def run_raw_template(template_str, variable_map):
   """
   >>> run_raw_template("<% if hoge.x == 10 %>true<% else %>false<% endif %>", {"hoge": {"x":10}})
@@ -74,6 +80,7 @@ def run_raw_template(template_str, variable_map):
   """
   template = env.from_string(template_str)
   return template.render(variable_map)
+
 
 def expand(template_str, variable_map):
   try:

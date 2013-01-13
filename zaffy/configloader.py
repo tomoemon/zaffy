@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import yaml
 
+
 class ConfigLoader(object):
   def __init__(self, config_file):
     self.filename = config_file

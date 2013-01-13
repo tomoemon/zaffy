@@ -3,6 +3,7 @@ import os
 from os import path
 import argparse
 
+
 def _parse():
   parser = argparse.ArgumentParser(description='テストツールです')
   parser.add_argument('-c', '--config', action='store', dest='config_file', default=None)

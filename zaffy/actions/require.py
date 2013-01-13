@@ -3,6 +3,7 @@ from baseaction import BaseAction
 from scenarioloader import scenario_loader
 import os
 
+
 class Require(BaseAction):
   """ require アクション
   """

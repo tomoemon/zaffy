@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
+
 class ScenarioSetting(object):
   def __init__(self, doc="", filename=""):
     self.doc = doc

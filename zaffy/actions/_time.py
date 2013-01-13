@@ -3,8 +3,10 @@ import time
 from datetime import datetime, timedelta
 from baseaction import BaseAction
 
+
 def _adddate(day=0, hour=0, min=0, sec=0, msec=0):
   return datetime.now() + timedelta(days=day, hours=hour, minutes=min, seconds=sec, milliseconds=msec)
+
 
 class Time(BaseAction):
   """ Time アクション
