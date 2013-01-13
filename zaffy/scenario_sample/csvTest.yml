@@ -1,0 +1,18 @@
+- csvテスト
+
+- action: local
+  csvdata: |
+    author,title,price
+    hiroshi yuki,数学ガール,1200
+    yumi unita,うさぎドロップ,800
+    yoshihiro togashi,HUNTER HUNTER,480
+
+- action: debug
+  data: <<local.csvdata>>
+
+- action: debug
+  row1: <<(local.csvdata|ascsv)[0]>>
+  row2: <<(local.csvdata|ascsv)[1][0]>>
+  row3: <<(local.csvdata|ascsv)[1][1]>>
+  row4: <<(local.csvdata|ascsv)[1][2]>>
+
