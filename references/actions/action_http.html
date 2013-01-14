@@ -1,0 +1,187 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>http アクション &mdash; zaffy 2013-01-12 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2013-01-12',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
+    <link rel="up" title="Action リファレンス" href="index.html" />
+    <link rel="next" title="local アクション" href="action_local.html" />
+    <link rel="prev" title="file アクション" href="action_file.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="action_local.html" title="local アクション"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="action_file.html" title="file アクション"
+             accesskey="P">前へ</a> |</li>
+        <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="action_file.html"
+                        title="前の章へ">file アクション</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="action_local.html"
+                        title="次の章へ">local アクション</a></p>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/references/actions/action_http.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-actions.http">
+<span id="http-アクション"></span><h1>http アクション<a class="headerlink" href="#module-actions.http" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="class">
+<dt id="actions.http.Http">
+<em class="property">class </em><tt class="descclassname">actions.http.</tt><tt class="descname">Http</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions.http.Http" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Http アクション</p>
+<p>http リクエストに関する処理を行なう</p>
+<dl class="method">
+<dt id="actions.http.Http.do_delete">
+<tt class="descname">do_delete</tt><big>(</big><em>url</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions.http.Http.do_delete" title="この定義へのパーマリンク">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>no_content</strong> (<em>bool</em>) &#8211; True にすると header のみ取得する</li>
+<li><strong>binary_content</strong> (<em>bool</em>) &#8211; content をバイナリとして取得する</li>
+<li><strong>save_file</strong> (<em>string</em>) &#8211; content をファイルに保存してメモリ上に持たない (binary_content=Trueとして扱う)</li>
+<li><strong>ssl_verify</strong> (<em>bool</em>) &#8211; SSL 証明書のチェックをするか（自己証明書の場合はFalseじゃないと通らない）</li>
+<li><strong>allow_redirects</strong> (<em>bool</em>) &#8211; 自動でリダイレクトするか</li>
+<li><strong>timeout</strong> (<em>int</em>) &#8211; タイムアウト時間を秒数で指定する（content のダウンロードに要する時間は除く）</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>status</strong> (<em>int</em>) - http response status</li>
+<li><strong>content</strong> (<em>string</em>) - http body</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions.http.Http.do_get">
+<tt class="descname">do_get</tt><big>(</big><em>url</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions.http.Http.do_get" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>get</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions.http.Http.do_head">
+<tt class="descname">do_head</tt><big>(</big><em>url</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions.http.Http.do_head" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>head</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions.http.Http.do_patch">
+<tt class="descname">do_patch</tt><big>(</big><em>url</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions.http.Http.do_patch" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>patch</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions.http.Http.do_post">
+<tt class="descname">do_post</tt><big>(</big><em>url</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions.http.Http.do_post" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>post</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions.http.Http.do_put">
+<tt class="descname">do_put</tt><big>(</big><em>url</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions.http.Http.do_put" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>put</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Pythonモジュール索引"
+             >モジュール</a> |</li>
+        <li class="right" >
+          <a href="action_local.html" title="local アクション"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="action_file.html" title="file アクション"
+             >前へ</a> |</li>
+        <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, tomoemon.
+      このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3 で生成しました。
+    </div>
+  </body>
+</html>
