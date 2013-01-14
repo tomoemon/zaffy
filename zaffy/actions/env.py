@@ -3,14 +3,14 @@ from baseaction import BaseAction
 import os
 
 
-class MetaConst(type):
+class _MetaConst(type):
   def __getattribute__(cls, name):
     return type.__getattribute__(cls, 'get')(name, None)
 
 
 class Env(BaseAction):
   """ 環境変数にアクセスするためのアクション """
-  __metaclass__ = MetaConst
+  __metaclass__ = _MetaConst
 
   @classmethod
   def get(cls, name, default=None):

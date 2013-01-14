@@ -13,13 +13,16 @@ class Time(BaseAction):
   """
   @classmethod
   def now(cls, day=0, hour=0, min=0, sec=0, msec=0):
+    """ now """
     return _adddate(day, hour, min, sec, msec)
 
   @classmethod
   def timestamp(cls, day=0, hour=0, min=0, sec=0, msec=0):
+    """ timestamp """
     return int(time.mktime(_adddate(day, hour, min, sec, msec).timetuple()))
 
   @classmethod
-  def format(cls, format, day=0, hour=0, min=0, sec=0, msec=0):
-    return _adddate(day, hour, min, sec, msec).strftime(format)
+  def format(cls, fmt, day=0, hour=0, min=0, sec=0, msec=0):
+    """ format """
+    return _adddate(day, hour, min, sec, msec).strftime(fmt)
 
