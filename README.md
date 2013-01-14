@@ -3,6 +3,8 @@ Zaffy
 
 Zaffy は yaml ベースのシンプルなフォーマットでテストシナリオを記述できる機能テストツールです。Web や Database、ファイルシステムなどの「外部システム」に対する入力とその応答チェックを共通の形式で記述することができます。種々の機能を組み合わせた自動化ツールとして使うことも可能です。
 
+http://tomoemon.github.com/zaffy/
+
 setup
 --------------
     # requirements for installing `lxml` package (parsing XML and HTML)
