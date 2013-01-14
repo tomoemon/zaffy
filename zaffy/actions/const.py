@@ -2,13 +2,13 @@
 from baseaction import BaseAction
 
 
-class MetaConst(type):
+class _MetaConst(type):
   def __getattribute__(cls, name):
     return type.__getattribute__(cls, 'const_params')[name]
 
 
 class Const(BaseAction):
-  __metaclass__ = MetaConst
+  __metaclass__ = _MetaConst
 
   const_params = {}
 

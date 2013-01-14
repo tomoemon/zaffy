@@ -4,11 +4,6 @@ from baseaction import BaseAction
 from moduleloader import load_module_dir
 
 drivers = {}
-modules, errors = load_module_dir(path.join("actions", "sqldrivers"))
-for module in modules:
-  klass = getattr(module, module.__name__.title())
-  drivers[module.__name__] = klass()
-
 
 class Sql(BaseAction):
 
@@ -18,7 +13,11 @@ class Sql(BaseAction):
 
   @classmethod
   def setup(cls, config):
-    pass
+    global drivers
+    modules, errors = load_module_dir(path.join("actions", "sqldrivers"))
+    for module in modules:
+      klass = getattr(module, module.__name__.title())
+      drivers[module.__name__] = klass()
 
   @classmethod
   def teardown(cls):

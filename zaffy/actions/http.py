@@ -5,7 +5,8 @@ from baseaction import BaseAction
 
 class Http(BaseAction):
   """ Http アクション
-  port は url パラメータで http://hoge.com:8000/ のように指定する
+
+  http リクエストに関する処理を行なう
   """
   def _create_result(self, response, no_content, binary_content, save_file):
     result = {}
@@ -40,16 +41,25 @@ class Http(BaseAction):
           timeout=timeout)
     self.result = self._create_result(r, no_content, binary_content, save_file)
 
-  def do_get(self, url, headers={}, cookies={}, params={}, no_content=False,
+  def do_delete(self, url, headers={}, cookies={}, params={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """
-    @param no_content True にすると header のみ取得する
-    @param binary_content content をバイナリとして取得する
-    @param save_file content をファイルに保存してメモリ上に持たない (binary_content=Trueとして扱う)
-    @param ssl_verify SSL証明書のチェックをするか（自己証明書の場合はFalseじゃないと通らない）
-    @param allow_redirects 自動でリダイレクトするか
-    @param timeout タイムアウト時間（ダウンロードに要する時間は除く）
+    :param bool no_content: True にすると header のみ取得する
+    :param bool binary_content: content をバイナリとして取得する
+    :param string save_file: content をファイルに保存してメモリ上に持たない (binary_content=Trueとして扱う)
+    :param bool ssl_verify: SSL 証明書のチェックをするか（自己証明書の場合はFalseじゃないと通らない）
+    :param bool allow_redirects: 自動でリダイレクトするか
+    :param int timeout: タイムアウト時間を秒数で指定する（content のダウンロードに要する時間は除く）
+    :return: - **status** (*int*) - http response status
+             - **content** (*string*) - http body
     """
+    method_params = locals()
+    del method_params['self']
+    self._http_method("delete", **method_params)
+
+  def do_get(self, url, headers={}, cookies={}, params={}, no_content=False,
+      binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
+    """ get """
     method_params = locals()
     del method_params['self']
     self._http_method("get", **method_params)
@@ -67,13 +77,6 @@ class Http(BaseAction):
     method_params = locals()
     del method_params['self']
     self._http_method("put", **method_params)
-
-  def do_delete(self, url, headers={}, cookies={}, params={}, no_content=False,
-      binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
-    """ delete """
-    method_params = locals()
-    del method_params['self']
-    self._http_method("delete", **method_params)
 
   def do_head(self, url, headers={}, cookies={}, params={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
