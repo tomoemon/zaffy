@@ -11,8 +11,8 @@ class Require(BaseAction):
   root_path = ""
 
   @classmethod
-  def setup(cls, root_path=""):
-    cls.root_path = root_path
+  def setup(cls, config):
+    cls.root_path = config.get('root_path', '')
 
   def __init__(self, setting):
     super(Require, self).__init__(setting)
