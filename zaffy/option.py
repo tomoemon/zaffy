@@ -6,7 +6,7 @@ import argparse
 def _parse():
   parser = argparse.ArgumentParser(description='テストツールです')
   parser.add_argument('-c', '--config', action='store', dest='config_file', default=None)
-  parser.add_argument('scenarios', nargs='+')
+  parser.add_argument('scenarios', nargs='*')
   return parser.parse_args()
 
 __result = _parse()

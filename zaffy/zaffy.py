@@ -43,11 +43,14 @@ def main():
   formatter = Tap(Stdout())
   global_env = init(formatter)
 
-  agg = Aggregator()
-  agg.add_files(option.targets)
-
-  runner = ScenarioRunner(agg, formatter)
-  runner.run(global_env)
+  if option.targets:
+    agg = Aggregator()
+    agg.add_files(option.targets)
+    runner = ScenarioRunner(agg, formatter)
+    runner.run(global_env)
+  else:
+    import console
+    console.run(global_env)
 
   teardown()
 
