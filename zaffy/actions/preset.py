@@ -2,7 +2,7 @@
 from baseaction import BaseAction
 
 
-class PresetApplier(object):
+class _PresetApplier(object):
   DEFAULT_NAME = 'default'
 
   def __init__(self, action_name, preset_name, is_merge):
@@ -53,7 +53,7 @@ class Preset(BaseAction):
 
   @classmethod
   def get_applier(cls, action_name, preset_name, is_merge):
-    return PresetApplier(action_name, preset_name, is_merge)
+    return _PresetApplier(action_name, preset_name, is_merge)
 
   @classmethod
   def reset(cls):
