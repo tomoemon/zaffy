@@ -6,4 +6,5 @@ argparse
 python-dateutil
 lxml
 ssh
+pyreadline
 
