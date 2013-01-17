@@ -17,7 +17,8 @@
   result: <<last.result>>
   local: <<local>>
   assert:
-    - last.result.a is eq 11
+    - last.result.a is eq 10
+    - last.result.c is eq 30
     - last.result.d is eq 300
-    - local.z is eq 6001
+    - local.z is eq 6000
 
