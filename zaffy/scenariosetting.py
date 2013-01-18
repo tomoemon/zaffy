@@ -10,7 +10,7 @@ class ScenarioSetting(object):
     self.body = body
 
   def read(self):
-    if self.filename and os.access(self.filename, os.R_OK):
+    if self.filename:
       with open(self.filename) as fp:
         self.body = fp.read()
     return self.body
