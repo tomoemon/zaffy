@@ -63,7 +63,7 @@ usage
       assert:
        - >
         res.rows[0] ==
-          [1, "nanoha", "2012-04-10 15:57:26"|todatetime, "2012-04-10 15:57:26"|todatetime]
+          [1, "nanoha", "2012-04-10 15:57:26"|todate, "2012-04-10 15:57:26"|todate]
 
     # preset 機能を使うことで接続情報などを省略したシンプルな記述が可能
     - action: sql.update
