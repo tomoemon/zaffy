@@ -11,18 +11,24 @@ setup
 ### requirements
 
 * python 2.7
-* python setuptools (http://peak.telecommunity.com/dist/ez_setup.py)
+* python setuptools
+
+        wget http://peak.telecommunity.com/dist/ez_setup.py
+        python ez_setup.py
+        easy_install pip
+
 * python packages
 
-    # requirements for installing `lxml` package (parsing XML and HTML)
-    #   on linux
-    #     (ubuntu) sudo apt-get install python-dev libxslt-dev
-    #     (centos) sudo yum install libxslt-devel
-    #   on windows http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
-    # requirements for installing `ssh` package
-    # on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
+        # requirements for installing `lxml` package (parsing XML and HTML)
+        #   on linux
+        #     (ubuntu) sudo apt-get install python-dev libxslt-dev
+        #     (centos) sudo yum install libxslt-devel
+        #   on windows http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
+        # requirements for installing `ssh` package
+        # on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
 
-    pip install -r required_packages.txt
+        pip install -r required_packages.txt
+
 
 usage
 --------------
