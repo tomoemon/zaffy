@@ -9,8 +9,8 @@ setup
 --------------
     # requirements for installing `lxml` package (parsing XML and HTML)
     #   on linux
-    #     (ubuntu) apt-get install libxslt-dev
-    #     (centos) yum install libxslt-devel
+    #     (ubuntu) sudo apt-get install python-dev libxslt-dev
+    #     (centos) sudo yum install libxslt-devel
     #   on windows http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
     # requirements for installing `ssh` package
     #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
