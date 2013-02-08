@@ -7,7 +7,7 @@ env = Environment(block_start_string='<%', block_end_string='%>',
                   variable_start_string='<<', variable_end_string='>>')
 
 
-def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
+def load_plugin(plugin_dict, custom_plugin_dir, prefix=""):
   plugins, load_error = load_module_dir(custom_plugin_dir)
   for module in plugins:
     name_list = [name for name in dir(module) if name.startswith(prefix) and len(name) > len(prefix)]
@@ -22,16 +22,16 @@ def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
   return load_error
 
 
-def init_customtests():
-  load_error = add_plugin(env.tests, "customtests", "is_")
+def load_customtests():
+  load_error = load_plugin(env.tests, "customtests", "is_")
   for name, testfunc in env.tests.items():
     env.tests[name] = CustomTest(testfunc)
   if load_error:
     raise load_error
 
 
-def init_customfilters():
-  load_error = add_plugin(env.filters, "customfilters", "do_")
+def load_customfilters():
+  load_error = load_plugin(env.filters, "customfilters", "do_")
   if load_error:
     raise load_error
 

@@ -30,12 +30,12 @@ def init(formatter):
     print_error_list(formatter, "action import: ", e)
 
   try:
-    template.init_customtests()
+    template.load_customtests()
   except LoadError as e:
     print_error_list(formatter, "customtests import: ", e)
 
   try:
-    template.init_customfilters()
+    template.load_customfilters()
   except LoadError as e:
     print_error_list(formatter, "customfilters import: ", e)
 
