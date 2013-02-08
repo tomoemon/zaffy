@@ -14,9 +14,6 @@ class Require(BaseAction):
   def setup(cls, config):
     cls.root_path = config.get('root_path', '')
 
-  def __init__(self, setting):
-    super(Require, self).__init__(setting)
-
   def __getitem__(self, index):
     return self.result['actions'][index]
 

@@ -6,7 +6,7 @@ from actionloader import action_loader
 
 class ScenarioLoader(object):
 
-  def check_circular_reference(self, filename, parent):
+  def _check_circular_reference(self, filename, parent):
     """ 循環参照チェック """
     refer_list = [filename]
     while parent:
@@ -19,10 +19,10 @@ class ScenarioLoader(object):
 
   def load(self, setting, parent=None):
     if setting.filename and parent:
-      self.check_circular_reference(setting.filename, parent)
+      self._check_circular_reference(setting.filename, parent)
 
-    raw_scenario = list(self.load_yaml(setting.read()))
-    doc, raw_actions = self.parse(raw_scenario)
+    raw_scenario = list(yaml.load_all(setting.read()))
+    doc, raw_actions = self._parse(raw_scenario)
 
     return Scenario(
         setting,
@@ -30,23 +30,19 @@ class ScenarioLoader(object):
         self.create_actions(raw_actions),
         parent)
 
-  def parse(self, content):
+  def _parse(self, content):
     raw_actions = content[0]
     doc = raw_actions.pop(0)
     if not isinstance(doc, basestring):
       raise Exception("Scenario should have a description at first element: " + str(content))
     return doc, raw_actions
 
-  def load_yaml(self, content):
-    """ string でも file でも同じメソッドで読みこめる """
-    #print(getattr(content, 'name', content))
-    return yaml.load_all(content)
-
   def create_actions(self, actions):
     result = []
     for action in actions:
       result.append(action_loader.create_action(action))
     return result
+
 
 scenario_loader = ScenarioLoader()
 

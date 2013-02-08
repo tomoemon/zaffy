@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import template
 import ast
+import inspect
 
 
 class DotDict(dict):
@@ -12,16 +13,21 @@ class DotDict(dict):
 
 
 class ActionParams(object):
-  def __init__(self, argspec, raw_params, preset):
-    self.raw_params = raw_params
-    self.preset = preset
-    self.argspec = argspec
+
+  def __init__(self, setting, action_klass, preset):
+
+    method = type.__getattribute__(action_klass, 'do_' + setting.method_name)
+    self._argspec = inspect.getargspec(method)
+    self._preset = preset
+    self._raw_params = setting.params
+
     self.params = None
     self.assert_list = None
     self.assertex_list = None
 
   def expand(self, global_env):
-    self.params = self.preset.apply(self.raw_params)
+    self.params = self._preset.apply(self._raw_params)
+
     for key, value in self.params.items():
       self._expand_params(self.params, key, value, global_env)
 
@@ -40,7 +46,7 @@ class ActionParams(object):
     #
     # params 設定の取得
     #
-    argspec = self.argspec
+    argspec = self._argspec
     # instance method は "self" が付いてるので除く
     args = argspec.args[1:]
     if argspec.defaults:
@@ -71,6 +77,8 @@ class ActionParams(object):
     if not allow_any_params and exists_keys:
       raise Exception("unknown param: " + exists_keys[0])
     self.params = DotDict(self.params)
+
+    return self.params
 
   def _expand_params(self, parent, key, value, global_env):
     # 文字列の場合はテンプレートとして扱い、
