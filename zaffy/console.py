@@ -32,6 +32,7 @@ class CUI(cmd.Cmd):
         if method.startswith('do_') and callable(method_obj):
           args = inspect.getargspec(method_obj).args
           args = self.remove_item(args, ['self', 'scenario', 'global_env'])
+          args.extend(["assert", "assertex"])
           method = method.replace('do_', '')
 
           if method == action_name:
