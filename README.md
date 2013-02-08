@@ -6,16 +6,29 @@ Zaffy は yaml ベースのシンプルなフォーマットでテストシナ�
 http://tomoemon.github.com/zaffy/
 
 setup
---------------
-    # requirements for installing `lxml` package (parsing XML and HTML)
-    #   on linux
-    #     (ubuntu) apt-get install libxslt-dev
-    #     (centos) yum install libxslt-devel
-    #   on windows http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
-    # requirements for installing `ssh` package
-    #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
+-------------
 
-    pip install -r required_packages.txt
+### requirements
+
+* python 2.7
+* python setuptools
+
+        wget http://peak.telecommunity.com/dist/ez_setup.py
+        python ez_setup.py
+        easy_install pip
+
+* python packages
+
+        # requirements for installing `lxml` package (parsing XML and HTML)
+        #   on linux
+        #     (ubuntu) sudo apt-get install python-dev libxslt-dev
+        #     (centos) sudo yum install python-devel libxslt-devel
+        #   on windows http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
+        # requirements for installing `ssh` package
+        #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
+
+        pip install -r required_packages.txt
+
 
 usage
 --------------
@@ -63,7 +76,7 @@ usage
       assert:
        - >
         res.rows[0] ==
-          [1, "nanoha", "2012-04-10 15:57:26"|todatetime, "2012-04-10 15:57:26"|todatetime]
+          [1, "nanoha", "2012-04-10 15:57:26"|todate, "2012-04-10 15:57:26"|todate]
 
     # preset 機能を使うことで接続情報などを省略したシンプルな記述が可能
     - action: sql.update
