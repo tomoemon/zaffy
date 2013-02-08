@@ -8,7 +8,7 @@ env = Environment(block_start_string='<%', block_end_string='%>',
 
 
 def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
-  plugins, error_list = load_module_dir(custom_plugin_dir)
+  plugins, load_error = load_module_dir(custom_plugin_dir)
   for module in plugins:
     name_list = [name for name in dir(module) if name.startswith(prefix) and len(name) > len(prefix)]
     overridable = getattr(module, prefix + "override", [])
@@ -19,19 +19,21 @@ def add_plugin(plugin_dict, custom_plugin_dir, prefix=""):
         if plugin_name in plugin_dict and name not in overridable:
           raise Exception(name + " is already defined")
         plugin_dict[plugin_name] = obj
-  return error_list
+  return load_error
 
 
 def init_customtests():
-  error_list = add_plugin(env.tests, "customtests", "is_")
+  load_error = add_plugin(env.tests, "customtests", "is_")
   for name, testfunc in env.tests.items():
     env.tests[name] = CustomTest(testfunc)
-  return error_list
+  if load_error:
+    raise load_error
 
 
 def init_customfilters():
-  error_list = add_plugin(env.filters, "customfilters", "do_")
-  return error_list
+  load_error = add_plugin(env.filters, "customfilters", "do_")
+  if load_error:
+    raise load_error
 
 
 class CustomTest(object):

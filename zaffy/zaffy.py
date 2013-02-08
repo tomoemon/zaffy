@@ -15,18 +15,29 @@ from aggregator import Aggregator
 from scenariorunner import ScenarioRunner
 from formatter.tap import Tap
 from writer.stdout import Stdout
+from moduleloader import LoadError
 import template
 
+
+def print_error_list(formatter, prefix, error):
+  for error in error.error_list:
+    formatter.debug(prefix + unicode(error))
+
 def init(formatter):
-  action_loader.load_actions()
-  for error in action_loader.load_error_list:
-    formatter.debug("action import: " + unicode(error))
+  try:
+    action_loader.load_actions()
+  except LoadError as e:
+    print_error_list(formatter, "action import: ", e)
 
-  for error in template.init_customtests():
-    formatter.debug("customtests import: " + unicode(error))
+  try:
+    template.init_customtests()
+  except LoadError as e:
+    print_error_list(formatter, "customtests import: ", e)
 
-  for error in template.init_customfilters():
-    formatter.debug("customfilters import: " + unicode(error))
+  try:
+    template.init_customfilters()
+  except LoadError as e:
+    print_error_list(formatter, "customfilters import: ", e)
 
   if option.config_file:
     formatter.debug("config file: " + option.config_file)

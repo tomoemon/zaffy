@@ -12,7 +12,6 @@ class ActionLoader(object):
 
   def __init__(self):
     self.action_klasses = {}
-    self.load_error_list = []
 
   def create_action(self, raw_obj):
     if 'action' not in raw_obj or not raw_obj['action']:
@@ -51,7 +50,7 @@ class ActionLoader(object):
     return match.groupdict()
 
   def load_actions(self):
-    module_list, self.load_error_list = load_module_dir("actions")
+    module_list, error = load_module_dir("actions")
     for module in module_list:
       # action に使いたいモジュール名がすでに使われている場合にprefixに "_" を付ける
       module_name = module.__name__.lstrip('_')
@@ -60,6 +59,9 @@ class ActionLoader(object):
         # BaseAction クラスを継承していないクラスがあったらエラー
         raise Exception(module_name.title() + " class must extend BaseAction")
       self.action_klasses[module_name] = action_klass
+
+    if error:
+      raise error
 
   def get_all_action_map(self):
     return self.action_klasses

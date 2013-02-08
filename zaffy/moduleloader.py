@@ -4,6 +4,9 @@ import os
 from os import path
 import environment
 
+class LoadError(Exception):
+  def __init__(self, error_list):
+    self.error_list = error_list
 
 def load_module(module_name, basepath):
   """ モジュールをロードして返す
@@ -31,7 +34,8 @@ def load_modules(basepath):
         plugin_list.append(m)
     except ImportError as e:
       error_list.append((filename, e))
-  return plugin_list, error_list
+  error = LoadError(error_list) if error_list else None
+  return plugin_list, error
 
 
 def load_module_dir(module_name):
