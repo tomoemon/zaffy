@@ -29,19 +29,20 @@ class Http(BaseAction):
         return response.content if binary_content else response.text
     return ''
 
-  def _http_method(self, method, url, headers, cookies, params,
+  def _http_method(self, method, url, headers, cookies, params, data,
       no_content, binary_content, save_file, ssl_verify, allow_redirects, timeout):
 
     r = getattr(requests, method)(url,
           headers=headers,
           cookies=cookies,
           params=params,
+          data=data,
           verify=ssl_verify,
           allow_redirects=allow_redirects,
           timeout=timeout)
     self.result = self._create_result(r, no_content, binary_content, save_file)
 
-  def do_delete(self, url, headers={}, cookies={}, params={}, no_content=False,
+  def do_delete(self, url, headers={}, cookies={}, params={}, data={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """
     :param bool no_content: True にすると header のみ取得する
@@ -57,35 +58,35 @@ class Http(BaseAction):
     del method_params['self']
     self._http_method("delete", **method_params)
 
-  def do_get(self, url, headers={}, cookies={}, params={}, no_content=False,
+  def do_get(self, url, headers={}, cookies={}, params={}, data={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ get """
     method_params = locals()
     del method_params['self']
     self._http_method("get", **method_params)
 
-  def do_post(self, url, headers={}, cookies={}, params={}, no_content=False,
+  def do_post(self, url, headers={}, cookies={}, params={}, data={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ post """
     method_params = locals()
     del method_params['self']
     self._http_method("post", **method_params)
 
-  def do_put(self, url, headers={}, cookies={}, params={}, no_content=False,
+  def do_put(self, url, headers={}, cookies={}, params={}, data={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ put """
     method_params = locals()
     del method_params['self']
     self._http_method("put", **method_params)
 
-  def do_head(self, url, headers={}, cookies={}, params={}, no_content=False,
+  def do_head(self, url, headers={}, cookies={}, params={}, data={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ head """
     method_params = locals()
     del method_params['self']
     self._http_method("head", **method_params)
 
-  def do_patch(self, url, headers={}, cookies={}, params={}, no_content=False,
+  def do_patch(self, url, headers={}, cookies={}, params={}, data={}, no_content=False,
       binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ patch """
     method_params = locals()
