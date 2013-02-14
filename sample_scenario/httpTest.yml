@@ -1,8 +1,3 @@
-#type: http_setting
-#
-#url_base: "http://hogefuga.com/piyo/"
-#
-#---
 - HTTP テスト
 
 - action: const.set
@@ -23,7 +18,7 @@
 
 - action: http.post
   url: http://<<const.url>>:80/
-  params:
+  data:
     hoge: 10
     fuga: piyo
 
