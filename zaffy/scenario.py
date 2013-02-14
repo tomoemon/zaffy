@@ -16,6 +16,11 @@ class Scenario(object):
     return getattr(self.setting, item)
 
   def run(self, global_env):
+    # 一時対応
+    if not self.parent:
+      type.__getattribute__(global_env["const"], 'init_scenario')()
+    # ここまで
+
     global_env["scenario"] = self
     global_env["local"] = self.localvar
 
