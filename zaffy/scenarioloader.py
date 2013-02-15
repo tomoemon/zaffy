@@ -6,7 +6,7 @@ from actionloader import action_loader
 
 class ScenarioLoader(object):
 
-  def _check_circular_reference(self, filename, parent):
+  def _assert_no_circular_reference(self, filename, parent):
     """ 循環参照チェック """
     refer_list = [filename]
     while parent:
@@ -19,7 +19,7 @@ class ScenarioLoader(object):
 
   def load(self, setting, parent=None):
     if setting.filename and parent:
-      self._check_circular_reference(setting.filename, parent)
+      self._assert_no_circular_reference(setting.filename, parent)
 
     raw_scenario = list(yaml.load_all(setting.read()))
     doc, raw_actions = self._parse(raw_scenario)
