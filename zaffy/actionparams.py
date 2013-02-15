@@ -2,6 +2,7 @@
 import template
 import ast
 import inspect
+import util
 
 
 class DotDict(dict):
@@ -26,57 +27,38 @@ class ActionParams(object):
     self.assertex_list = None
 
   def expand(self, global_env):
-    self.params = self._preset.apply(self._raw_params)
+    params = self._preset.apply(self._raw_params)
 
-    for key, value in self.params.items():
-      self._expand_params(self.params, key, value, global_env)
+    for key, value in params.items():
+      self._expand_params(params, key, value, global_env)
 
     #
     # assert 設定の取得
     #
-    self.assert_list = self.params.get('assert', [])
+    self.assert_list = params.get('assert', [])
     if isinstance(self.assert_list, basestring):
       self.assert_list = [self.assert_list]
-    self.assertex_list = self.params.get('assertex', [])
+    self.assertex_list = params.get('assertex', [])
     if isinstance(self.assertex_list, basestring):
       self.assertex_list = [self.assertex_list]
-    self.params.pop('assert', None)
-    self.params.pop('assertex', None)
+    params.pop('assert', None)
+    params.pop('assertex', None)
 
     #
     # params 設定の取得
     #
-    argspec = self._argspec
     # instance method は "self" が付いてるので除く
-    args = argspec.args[1:]
-    if argspec.defaults:
-      no_default_key_count = len(args) - len(argspec.defaults)
-      required_keys = args[:no_default_key_count]
-      optional_params = dict(zip(args[no_default_key_count:], argspec.defaults))
-    else:
-      required_keys = args
-      optional_params = {}
-    allow_any_params = bool(argspec.keywords)
-    if "scenario" in args:
-      self.params["scenario"] = global_env['scenario']
-    if "global_env" in args:
-      self.params["global_env"] = global_env
+    argspec = self._argspec
+    argspec.args.pop(0)
 
-    exists_keys = self.params.keys()
-    for required_param in required_keys:
-      if required_param not in self.params:
-        raise Exception("required: " + required_param)
-      exists_keys.remove(required_param)
+    if "scenario" in argspec.args:
+      params["scenario"] = global_env['scenario']
+    if "global_env" in argspec.args:
+      params["global_env"] = global_env
 
-    for optional_param, value in optional_params.items():
-      if optional_param in self.params:
-        exists_keys.remove(optional_param)
-      else:
-        self.params[optional_param] = value
+    params = util.filter_args(argspec, params)
 
-    if not allow_any_params and exists_keys:
-      raise Exception("unknown param: " + exists_keys[0])
-    self.params = DotDict(self.params)
+    self.params = DotDict(params)
 
     return self.params
 
