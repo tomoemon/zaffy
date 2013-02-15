@@ -20,7 +20,7 @@
 
 # 別のシナリオで local.hoge に保存しても影響しない
 - action: require
-  path: localRequireTest.yml
+  path: localRequire.yml
   params:
     piyo: arg value
 
