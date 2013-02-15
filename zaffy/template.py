@@ -2,8 +2,9 @@
 from jinja2 import Environment, TemplateSyntaxError, UndefinedError
 from moduleloader import load_module_dir
 from assertionfailed import AssertionFailed
+import util
 
-env = Environment(block_start_string='<%', block_end_string='%>',
+_env = Environment(block_start_string='<%', block_end_string='%>',
                   variable_start_string='<<', variable_end_string='>>')
 
 
@@ -23,15 +24,15 @@ def load_plugin(plugin_dict, custom_plugin_dir, prefix=""):
 
 
 def load_customtests():
-  load_error = load_plugin(env.tests, "customtests", "is_")
-  for name, testfunc in env.tests.items():
-    env.tests[name] = CustomTest(testfunc)
+  load_error = load_plugin(_env.tests, "customtests", "is_")
+  for name, testfunc in _env.tests.items():
+    _env.tests[name] = CustomTest(testfunc)
   if load_error:
     raise load_error
 
 
 def load_customfilters():
-  load_error = load_plugin(env.filters, "customfilters", "do_")
+  load_error = load_plugin(_env.filters, "customfilters", "do_")
   if load_error:
     raise load_error
 
@@ -64,7 +65,8 @@ def assert_test(assertion, variable_map):
   >>> assert_test('hoge == "fuga"', {"hoge": "piyo"})
   False
   """
-  assertion = unicode(assertion)
+  print repr(assertion)
+  assertion = util.unicode(assertion)
   # assert 文の中で if の制御構造を破壊されないように
   assertion = assertion.replace('<%','').replace('%>','')
 
@@ -76,9 +78,9 @@ def assert_test(assertion, variable_map):
     if result != '1':
       raise AssertionFailed(assertion, CustomTest.failed)
   except TemplateSyntaxError as e:
-    raise AssertFormatException(unicode(e) + "\n" + assertion)
+    raise AssertFormatException(util.unicode(e) + "\n" + assertion)
   except UndefinedError as e:
-    raise AssertFormatException(unicode(e) + "\n" + assertion)
+    raise AssertFormatException(util.unicode(e) + "\n" + assertion)
 
 
 def run_raw_template(template_str, variable_map):
@@ -86,7 +88,7 @@ def run_raw_template(template_str, variable_map):
   >>> run_raw_template("<% if hoge.x == 10 %>true<% else %>false<% endif %>", {"hoge": {"x":10}})
   u'true'
   """
-  template = env.from_string(template_str)
+  template = _env.from_string(template_str)
   return template.render(variable_map)
 
 
@@ -94,9 +96,10 @@ def expand(template_str, variable_map):
   try:
     return run_raw_template(template_str, variable_map)
   except TemplateSyntaxError as e:
-    raise TemplateFormatException(unicode(e) + "\n" + template_str)
+    raise TemplateFormatException(util.unicode(e) + "\n" + template_str)
   except UndefinedError as e:
-    raise TemplateFormatException(unicode(e) + "\n" + template_str)
+    raise TemplateFormatException(util.unicode(e) + "\n" + template_str)
+
 
 if __name__ == "__main__":
   import doctest

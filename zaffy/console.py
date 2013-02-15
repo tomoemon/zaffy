@@ -2,6 +2,7 @@
 import sys
 import cmd
 import inspect
+import util
 from pprint import pformat
 from actionloader import action_loader
 from scenarioloader import scenario_loader
@@ -72,7 +73,7 @@ class CUI(cmd.Cmd):
       result = eval(line, self.global_env)
       sys.stdout.write(pformat(result, indent=2))
     except Exception as e:
-      sys.stdout.write(unicode(e))
+      sys.stdout.write(util.unicode(e))
     sys.stdout.write("\n\n")
 
   def run_scenario(self, lines):

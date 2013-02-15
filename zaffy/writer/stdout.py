@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
+import util
 
 
 class Stdout(object):
@@ -7,7 +8,8 @@ class Stdout(object):
     pass
 
   def write(self, data):
-    sys.stdout.write(unicode(data))
+    data = util.unicode(data, errors='ignore')
+    sys.stdout.write(data.encode(sys.stdout.encoding, errors='replace'))
 
   def close(self):
     pass

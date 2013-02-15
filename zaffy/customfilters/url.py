@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from urlparse import urlsplit, parse_qs, parse_qsl, SplitResult
+import util
 
 
 def do_asurl(value):
-  parsed = urlsplit(unicode(value))
+  parsed = urlsplit(util.unicode(value))
   response = SplitResultWithQuery(parsed.scheme, parsed.netloc,
                                   parsed.path, parsed.query, parsed.fragment)
   return response
@@ -24,9 +25,9 @@ class SplitResultWithQuery(SplitResult):
 
 
 def do_asurlquery(value):
-  return parse_qs(unicode(value), True)
+  return parse_qs(util.unicode(value), True)
 
 
 def do_asurlquerylist(value):
-  return parse_qsl(unicode(value), True)
+  return parse_qsl(util.unicode(value), True)
 

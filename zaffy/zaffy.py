@@ -17,11 +17,12 @@ from formatter.tap import Tap
 from writer.stdout import Stdout
 from moduleloader import LoadError
 import template
+import util
 
 
 def print_error_list(formatter, prefix, error):
   for error in error.error_list:
-    formatter.debug(prefix + unicode(error))
+    formatter.debug(prefix + error)
 
 def init(formatter):
   try:
@@ -74,3 +75,4 @@ def teardown():
 
 if __name__ == '__main__':
   main()
+

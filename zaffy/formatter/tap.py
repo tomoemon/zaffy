@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import util
 
 
 def _i(prefix, output_string, postfix="\n"):
@@ -22,7 +23,7 @@ class Tap(object):
 
   def debug(self, debug_str):
     writer = self.writer
-    writer.write(_i("  # ", unicode(debug_str)))
+    writer.write(_i("  # ", util.unicode(debug_str, errors='replace')))
 
   def start(self, scenario):
     self.current = scenario
