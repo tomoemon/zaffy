@@ -17,7 +17,15 @@ class Require(BaseAction):
   def __getitem__(self, index):
     return self.result['actions'][index]
 
-  def do_require(self, path, global_env, scenario, params=None):
+  def do_require(self, path, global_env, scenario):
+    new_scenario = self._load(path, global_env, scenario, None)
+    self.result = new_scenario.actions[-1].result
+
+  def do_call(self, path, global_env, scenario, params=None):
+    new_scenario = self._load(path, global_env, scenario, params)
+    self.result = new_scenario.actions[-1].result
+
+  def _load(self, path, global_env, scenario, params):
     path = path.strip()
     if not path:
       raise Exception(path + " not exists")
@@ -31,5 +39,5 @@ class Require(BaseAction):
     new_scenario = scenario_loader.load(ScenarioSetting(path), scenario)
     new_scenario.localvar = params if params else {}
     new_scenario.run(global_env)
-    self.result = new_scenario.actions[-1].result
+    return new_scenario
 
