@@ -65,7 +65,6 @@ def assert_test(assertion, variable_map):
   >>> assert_test('hoge == "fuga"', {"hoge": "piyo"})
   False
   """
-  print repr(assertion)
   assertion = util.unicode(assertion)
   # assert 文の中で if の制御構造を破壊されないように
   assertion = assertion.replace('<%','').replace('%>','')
