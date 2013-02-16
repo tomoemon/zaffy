@@ -14,8 +14,8 @@ setup
 * python setuptools
 
         wget http://peak.telecommunity.com/dist/ez_setup.py
-        python ez_setup.py
-        easy_install pip
+        sudo python ez_setup.py
+        sudo easy_install pip
 
 * python packages
 
@@ -27,12 +27,12 @@ setup
         # requirements for installing `ssh` package
         #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
 
-        pip install -r required_packages.txt
+        sudo pip install -r required_packages.txt
 
 
 usage
 --------------
-    $ python zaffy.py scenario_sample/httpTest.yml
+    $ python zaffy/zaffy.py sample_scenario/httpTest.yml
       # using config file: zaffy.yml
     1..1
     ok 1 - HTTP テスト
@@ -44,7 +44,7 @@ usage
 `UnicodeEncodeError` や `UnicodeDecodeError` が出る場合は `sitecustomize.py` で
 デフォルトエンコーディングの設定を行うか、下記のように `-S` オプションを付けて実行してみてください
 
-    $ python -S zaffy.py scenario_sample/httpTest.yml
+    $ python -S zaffy/zaffy.py sample_scenario/httpTest.yml
 
 シナリオ記述例
 --------------
