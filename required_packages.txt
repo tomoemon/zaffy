@@ -2,7 +2,6 @@ Jinja2
 PyMySQL
 PyYAML
 requests
-argparse
 python-dateutil
 pyreadline
 lxml
