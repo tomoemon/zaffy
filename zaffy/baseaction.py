@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 import traceback
-from template import assert_test, TemplateFormatException
+from template import assert_all, TemplateFormatException
 from assertionfailed import AssertionFailed
 
 
@@ -81,12 +81,7 @@ class BaseAction(object):
       "ex": self.exception.original,
       "this": self.__dict__
     })
-    for assert_index, assert_str in enumerate(self._params.assertex_list):
-      try:
-        assert_test(assert_str, variables)
-      except AssertionFailed as e:
-        e.assert_index = assert_index
-        raise e
+    assert_all(self._params.assertex_list, variables)
 
   def _test_assert(self, global_env):
     if not self._params.assert_list:
@@ -97,10 +92,5 @@ class BaseAction(object):
       "res": self.result,
       "this": self.__dict__
     })
-    for assert_index, assert_str in enumerate(self._params.assert_list):
-      try:
-        assert_test(assert_str, variables)
-      except AssertionFailed as e:
-        e.assert_index = assert_index
-        raise e
+    assert_all(self._params.assert_list, variables)
 
