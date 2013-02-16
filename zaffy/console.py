@@ -116,11 +116,9 @@ class CUI(cmd.Cmd):
     except AssertionFailed as e:
       print(e.__class__.__name__)
       print(e.__dict__)
-      self.scenario.finished_action_count += 1
     except ActionException as e:
       print(e.original.__class__.__name__)
       print(e.original)
-      self.scenario.finished_action_count += 1
     except Exception as e:
       print(e.__class__.__name__)
       print(e)
