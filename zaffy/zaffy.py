@@ -53,18 +53,17 @@ def init(formatter):
 def main():
   formatter = Tap(Stdout())
   global_env = init(formatter)
-
   if option.targets:
     agg = Aggregator()
     agg.add_files(option.targets)
     runner = ScenarioRunner(agg, formatter)
-    runner.run(global_env)
+    failed = runner.run(global_env)
   else:
     import console
     console.run(global_env)
-
   teardown()
-
+  if failed:
+      sys.exit()
 
 def teardown():
   for action_klass in action_loader.get_all_action_map().values():
