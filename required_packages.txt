@@ -1,9 +1,6 @@
 Jinja2
-PyMySQL
 PyYAML
 requests
 python-dateutil
 pyreadline
-lxml
-ssh
 
