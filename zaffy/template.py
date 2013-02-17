@@ -66,8 +66,7 @@ def assert_test(assertion, variable_map):
   False
   """
   assertion = util.unicode(assertion)
-  # assert 文の中で if の制御構造を破壊されないように
-  assertion = assertion.replace('<%','').replace('%>','')
+  # TODO: safe assertion escaping
 
   CustomTest.failed = []
 
@@ -103,7 +102,7 @@ def set_param(filter_list, variable_map, target):
   variable_map['__target__'] = target
   for filter_set in filter_list:
     for key, value in filter_set.items():
-      # TODO: value escaping
+      # TODO: safe value escaping
       key = key.replace("'", "")
       template = "<<__target__.update({{'{0}': {1}}})>>".format(key, value)
       expand(template, variable_map)
