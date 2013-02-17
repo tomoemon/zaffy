@@ -38,8 +38,7 @@ def load_customfilters():
 
 
 class CustomTest(object):
-  test_index = 0
-  failed = {}
+  failed = []
 
   def __init__(self, testfunc):
     self.testfunc = testfunc
@@ -47,18 +46,8 @@ class CustomTest(object):
   def __call__(self, *args):
     result = self.testfunc(*args)
     if not result:
-      self.failed.setdefault(self.test_index, []).append(args)
+      self.failed.append(args)
     return result
-
-  @classmethod
-  def start_test(cls, test_index):
-    cls.test_index = test_index
-    return ""
-
-  @classmethod
-  def reset(cls):
-    cls.test_index = 0
-    cls.failed = {}
 
 
 class TemplateFormatException(Exception):
@@ -69,43 +58,28 @@ class AssertFormatException(TemplateFormatException):
   pass
 
 
-def assert_all(assertions, variable_map):
-  CustomTest.reset()
+def assert_test(assertion, variable_map):
+  """
+  >>> assert_test('hoge == "fuga"', {"hoge": "fuga"})
+  True
+  >>> assert_test('hoge == "fuga"', {"hoge": "piyo"})
+  False
+  """
+  assertion = util.unicode(assertion)
+  # assert 文の中で if の制御構造を破壊されないように
+  assertion = assertion.replace('<%','').replace('%>','')
 
-  assert_list = []
-  param_set_list = []
-  for index, assertion in enumerate(assertions):
-    if isinstance(assertion, dict):
-      for key, value in assertion.items():
-        param_set_list.append((key, value))
-    else:
-      assert_list.append((index, assertion))
+  CustomTest.failed = []
 
-  template_list = []
-  template_list.append(
-      # TODO: escape value
-      "".join(["<% set {0} = {1} %>".format(key, value) for key, value in param_set_list])
-  )
-  template_list.extend(
-      ["<<__CustomTest__.start_test({2})>><% if {0} %><% else %>{1}<% endif %>".format(assertion, index, index) for index, assertion in assert_list]
-  )
-
-  variable_map["__CustomTest__"] = CustomTest
-
+  assert_template = '<% if ' + assertion + ' %>1<% else %>0<% endif %>'
   try:
-    template = "\n".join(template_list)
-    result = run_raw_template(template, variable_map)
-    result_lines = result.split("\n")[1:]
-    for assert_result in result_lines:
-      if assert_result:
-        assert_index = int(assert_result)
-        raise AssertionFailed(assertions[assert_index], CustomTest.failed.get(assert_index, {}), assert_index)
+    result = run_raw_template(assert_template, variable_map)
+    if result != '1':
+      raise AssertionFailed(assertion, CustomTest.failed)
   except TemplateSyntaxError as e:
-    assert_str = "\n".join(["  " + str(a) for a in assertions])
-    raise AssertFormatException(util.unicode(e) + "\n" + assert_str)
+    raise AssertFormatException(util.unicode(e) + "\n" + assertion)
   except UndefinedError as e:
-    assert_str = "\n".join(["  " + str(a) for a in assertions])
-    raise AssertFormatException(util.unicode(e) + "\n" + assert_str)
+    raise AssertFormatException(util.unicode(e) + "\n" + assertion)
 
 
 def run_raw_template(template_str, variable_map):
