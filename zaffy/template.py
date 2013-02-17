@@ -99,6 +99,14 @@ def expand(template_str, variable_map):
   except UndefinedError as e:
     raise TemplateFormatException(util.unicode(e) + "\n" + template_str)
 
+def set_param(filter_list, variable_map, target):
+  variable_map['__target__'] = target
+  for filter_set in filter_list:
+    for key, value in filter_set.items():
+      # TODO: value escaping
+      key = key.replace("'", "")
+      template = "<<__target__.update({{'{0}': {1}}})>>".format(key, value)
+      expand(template, variable_map)
 
 if __name__ == "__main__":
   import doctest

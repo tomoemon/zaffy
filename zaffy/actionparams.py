@@ -23,6 +23,7 @@ class ActionParams(object):
     self._raw_params = setting.params
 
     self.params = None
+    self.filter_list = None
     self.assert_list = None
     self.assertex_list = None
 
@@ -31,6 +32,14 @@ class ActionParams(object):
 
     for key, value in params.items():
       self._expand_params(params, key, value, global_env)
+
+    #
+    # filter 設定の取得
+    #
+    self.filter_list = params.get('resfilter', [])
+    if isinstance(self.filter_list, dict):
+      self.filter_list = [self.filter_list]
+    params.pop('resfilter', None)
 
     #
     # assert 設定の取得
