@@ -63,7 +63,7 @@ def main():
     console.run(global_env)
   teardown()
   if failed:
-      sys.exit()
+      sys.exit(1)
 
 def teardown():
   for action_klass in action_loader.get_all_action_map().values():
