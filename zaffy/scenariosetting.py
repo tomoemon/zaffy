@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from os import path
+import util
 
 
 class ScenarioSetting(object):
@@ -11,7 +12,7 @@ class ScenarioSetting(object):
 
   def read(self):
     if self.filename:
-      with open(self.filename) as fp:
+      with util.open_yaml(self.filename) as fp:
         self.body = fp.read()
     return self.body
 

@@ -8,5 +8,5 @@
   save_file: <<const.FILE_NAME>>
   assert:
    - file.size(const.FILE_NAME) > 100
-   - file.read(const.FILE_NAME, 10) == '<!DOCTYPE '
+   - file.read(const.FILE_NAME, size=10, encoding='utf-8') is eq '<!DOCTYPE '
 

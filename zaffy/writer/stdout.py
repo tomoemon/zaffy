@@ -8,8 +8,10 @@ class Stdout(object):
     pass
 
   def write(self, data):
-    data = util.unicode(data, errors='ignore')
-    sys.stdout.write(data.encode(sys.stdout.encoding, errors='replace'))
+    data = util.unicode(data, errors='replace')
+    # normalizing for output
+    data = data.encode(sys.stdout.encoding, errors='replace').decode(sys.stdout.encoding)
+    sys.stdout.write(data)
 
   def close(self):
     pass

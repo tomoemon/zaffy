@@ -27,11 +27,11 @@ fuga=piyo
 x= 10
 y=
 """
-  print do_asini(d)
+  print(do_asini(d))
 
   d = """
 fuga=piyo
 x= 10
 y=
 """
-  print do_asini(d)
+  print(do_asini(d))

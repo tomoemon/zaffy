@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-from urlparse import urlsplit, parse_qs, parse_qsl, SplitResult
+try:
+  # python2
+  from urlparse import urlsplit, parse_qs, parse_qsl, SplitResult
+except ImportError:
+  # python3
+  from urllib.parse import urlsplit, parse_qs, parse_qsl, SplitResult
 import util
 
 

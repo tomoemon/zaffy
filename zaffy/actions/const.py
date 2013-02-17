@@ -8,8 +8,6 @@ class _MetaConst(type):
 
 
 class Const(BaseAction):
-  __metaclass__ = _MetaConst
-
   const_params = {}
   default_params = {}
 
@@ -33,3 +31,5 @@ class Const(BaseAction):
 
     self.result = self.const_params
 
+# metaclass for 2 and 3
+Const = _MetaConst('Const', (Const, ), {})

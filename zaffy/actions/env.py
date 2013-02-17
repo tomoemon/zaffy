@@ -22,3 +22,6 @@ class Env(BaseAction):
       else:
         raise Exception("Undefined environment variable: '" + name + "'")
 
+
+# metaclass for 2 and 3
+Env = _MetaConst('Env', (Env, ), {})

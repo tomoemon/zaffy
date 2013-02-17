@@ -3,6 +3,7 @@ from baseaction import BaseAction
 import datetime
 import pprint
 import re
+import util
 
 
 class Debug(BaseAction):
@@ -18,7 +19,7 @@ class Debug(BaseAction):
   def do_print(self, global_env, scenario, **params):
     dump = {}
     for key, value in params.items():
-      if isinstance(value, basestring):
+      if isinstance(value, util.basestring):
         try:
           # debug中で任意のコードが実行されないように、
           # ビルトイン関数を無効にしてリテラルと一部の式だけ解釈できるようにする

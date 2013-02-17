@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
-try:
-  import sys
+import sys
+if sys.getdefaultencoding() == 'ascii':
+  reload(sys)
   sys.setdefaultencoding('utf-8')
-except AttributeError:
-  pass
-finally:
-  import site
+  delattr(sys, 'setdefaultencoding')
 
 import option
 from configloader import ConfigLoader
@@ -22,7 +20,7 @@ import util
 
 def print_error_list(formatter, prefix, error):
   for error in error.error_list:
-    formatter.debug(prefix + error)
+    formatter.debug(prefix + str(error))
 
 def init(formatter):
   try:

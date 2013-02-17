@@ -45,10 +45,10 @@ class ActionParams(object):
     # assert 設定の取得
     #
     self.assert_list = params.get('assert', [])
-    if isinstance(self.assert_list, basestring):
+    if isinstance(self.assert_list, util.basestring):
       self.assert_list = [self.assert_list]
     self.assertex_list = params.get('assertex', [])
-    if isinstance(self.assertex_list, basestring):
+    if isinstance(self.assertex_list, util.basestring):
       self.assertex_list = [self.assertex_list]
     params.pop('assert', None)
     params.pop('assertex', None)
@@ -75,9 +75,9 @@ class ActionParams(object):
     # 文字列の場合はテンプレートとして扱い、
     # 辞書、リストの場合はさらにその中の要素を展開する。
     # ここで指定していない数値等の型はそのまま
-    if isinstance(value, basestring):
+    if isinstance(value, util.basestring):
       new_value = template.expand(value, global_env)
-      if isinstance(key, basestring) and key.startswith('+'):
+      if isinstance(key, util.basestring) and key.startswith('+'):
         original_key = key.lstrip('+')
         parent[original_key] = ast.literal_eval(new_value)
         del parent[key]
