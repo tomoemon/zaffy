@@ -10,7 +10,7 @@ setup
 
 ### requirements
 
-* python 2.7
+* python 2.7 or later
 * python setuptools
 
         wget http://peak.telecommunity.com/dist/ez_setup.py
@@ -41,10 +41,6 @@ usage
 
 標準でTAP(Test Anything Protocol)形式による出力を行います
 
-`UnicodeEncodeError` や `UnicodeDecodeError` が出る場合は `sitecustomize.py` で
-デフォルトエンコーディングの設定を行うか、下記のように `-S` オプションを付けて実行してみてください
-
-    $ python -S zaffy/zaffy.py sample_scenario/httpTest.yml
 
 シナリオ記述例
 --------------
