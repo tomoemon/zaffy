@@ -60,9 +60,12 @@ def main():
   else:
     import console
     console.run(global_env)
+    failed = False
+
   teardown()
+
   if failed:
-      sys.exit(1)
+    sys.exit(1)
 
 def teardown():
   for action_klass in action_loader.get_all_action_map().values():
