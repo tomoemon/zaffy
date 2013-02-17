@@ -22,6 +22,8 @@ setup
 
         sudo pip install -r required_packages.txt
 
+* python packages (optional)
+
         # requirements for installing `lxml` package (parsing XML and HTML)
         #   on linux
         #     (ubuntu) sudo apt-get install python-dev libxslt-dev
@@ -29,10 +31,10 @@ setup
         #   on windows http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
         sudo pip instal lxml
 
-        # requirements for mysql
+        # requirements for sql(mysql) action
         sudo pip install PyMySQL
 
-        # requirements for ssh
+        # requirements for ssh action
         #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
         sudo pip install ssh
 
