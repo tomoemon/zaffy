@@ -13,6 +13,7 @@ setup
 * python 2.7 or later
 * python setuptools
 
+        # on python 2.7
         wget http://peak.telecommunity.com/dist/ez_setup.py
         sudo python ez_setup.py
         sudo easy_install pip
