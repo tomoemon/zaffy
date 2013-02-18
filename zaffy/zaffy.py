@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
-try:
-  import sys
+import sys
+if sys.getdefaultencoding() == 'ascii':
+  reload(sys)
   sys.setdefaultencoding('utf-8')
-except AttributeError:
-  pass
-finally:
-  import site
+  delattr(sys, 'setdefaultencoding')
 
 import option
 from configloader import ConfigLoader
@@ -17,11 +15,12 @@ from formatter.tap import Tap
 from writer.stdout import Stdout
 from moduleloader import LoadError
 import template
+import util
 
 
 def print_error_list(formatter, prefix, error):
   for error in error.error_list:
-    formatter.debug(prefix + unicode(error))
+    formatter.debug(prefix + str(error))
 
 def init(formatter):
   try:
@@ -53,18 +52,20 @@ def init(formatter):
 def main():
   formatter = Tap(Stdout())
   global_env = init(formatter)
-
   if option.targets:
     agg = Aggregator()
     agg.add_files(option.targets)
     runner = ScenarioRunner(agg, formatter)
-    runner.run(global_env)
+    failed = runner.run(global_env)
   else:
     import console
     console.run(global_env)
+    failed = False
 
   teardown()
 
+  if failed:
+    sys.exit(1)
 
 def teardown():
   for action_klass in action_loader.get_all_action_map().values():
@@ -74,3 +75,4 @@ def teardown():
 
 if __name__ == '__main__':
   main()
+

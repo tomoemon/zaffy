@@ -8,8 +8,6 @@ class _MetaConst(type):
 
 
 class Const(BaseAction):
-  __metaclass__ = _MetaConst
-
   const_params = {}
   default_params = {}
 
@@ -28,9 +26,10 @@ class Const(BaseAction):
   def do_set(self, **kwargs):
     for key, value in kwargs.items():
       if key in self.const_params:
-        print 3, id(self.const_params)
         raise Exception("cannot overridden const key '{0}', value '{1}'".format(key, value))
       self.const_params[key] = value
 
     self.result = self.const_params
 
+# metaclass for 2 and 3
+Const = _MetaConst('Const', (Const, ), {})

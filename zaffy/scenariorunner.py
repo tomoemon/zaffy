@@ -17,6 +17,7 @@ class ScenarioRunner(object):
     start_time = time.time()
     formatter = self.formatter
     formatter.start_test(len(self.aggregator))
+    failed = False
     for scenario in self.aggregator:
       formatter.start(scenario)
       try:
@@ -24,7 +25,9 @@ class ScenarioRunner(object):
         formatter.succeed()
       except ActionException as e:
         formatter.error(e)
+        failed = True
       except AssertionFailed as e:
         formatter.fail(e)
+        failed = True
     formatter.end_test(time.time() - start_time)
-
+    return failed

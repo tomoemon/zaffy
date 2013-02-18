@@ -10,29 +10,38 @@ setup
 
 ### requirements
 
-* python 2.7
+* python 2.7 or later
 * python setuptools
 
+        # on python 2.7
         wget http://peak.telecommunity.com/dist/ez_setup.py
-        python ez_setup.py
-        easy_install pip
+        sudo python ez_setup.py
+        sudo easy_install pip
 
 * python packages
+
+        sudo pip install -r required_packages.txt
+
+* python packages (optional)
 
         # requirements for installing `lxml` package (parsing XML and HTML)
         #   on linux
         #     (ubuntu) sudo apt-get install python-dev libxslt-dev
         #     (centos) sudo yum install python-devel libxslt-devel
         #   on windows http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
-        # requirements for installing `ssh` package
-        #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
+        sudo pip instal lxml
 
-        pip install -r required_packages.txt
+        # requirements for sql(mysql) action
+        sudo pip install PyMySQL
+
+        # requirements for ssh action
+        #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
+        sudo pip install ssh
 
 
 usage
 --------------
-    $ python zaffy.py scenario_sample/httpTest.yml
+    $ python zaffy/zaffy.py sample_scenario/httpTest.yml
       # using config file: zaffy.yml
     1..1
     ok 1 - HTTP テスト
@@ -41,10 +50,6 @@ usage
 
 標準でTAP(Test Anything Protocol)形式による出力を行います
 
-`UnicodeEncodeError` や `UnicodeDecodeError` が出る場合は `sitecustomize.py` で
-デフォルトエンコーディングの設定を行うか、下記のように `-S` オプションを付けて実行してみてください
-
-    $ python -S zaffy.py scenario_sample/httpTest.yml
 
 シナリオ記述例
 --------------

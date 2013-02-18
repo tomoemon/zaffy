@@ -7,13 +7,18 @@ class Scenario(object):
   def __init__(self, setting, doc, actions, parent=None):
     self.setting = setting
     self.doc = doc
-    self.actions = actions
-    self.finished_action_count = 0
     self.parent = parent
     self.localvar = {}
 
+    self._action_queue = actions
+    self._finished_actions = []
+
   def __getattr__(self, item):
     return getattr(self.setting, item)
+
+  @property
+  def actions(self):
+    return self._finished_actions
 
   def run(self, global_env):
     # 一時対応
@@ -24,34 +29,30 @@ class Scenario(object):
     global_env["scenario"] = self
     global_env["local"] = self.localvar
 
-    while self.finished_action_count < len(self.actions):
-      action = self.actions[self.finished_action_count]
-      self._run_action(global_env, action)
-      self.finished_action_count += 1
+    while self._action_queue:
+      self._run_action(global_env)
 
     if self.parent:
       global_env["scenario"] = self.parent
       global_env["local"] = self.parent.localvar
 
   def add_action(self, action):
-    self.actions.append(action)
+    self._action_queue.append(action)
 
-  def _last_action(self):
-    if self.finished_action_count > 0:
-      return self.actions[self.finished_action_count - 1]
-    return None
+  def _run_action(self, global_env):
+    action = self._action_queue.pop(0)
+    finished_actions = self._finished_actions
 
-  def _run_action(self, global_env, action):
-    finished_count = self.finished_action_count
-
-    global_env["actions"] = self.actions[0:finished_count]
-    global_env["action_index"] = finished_count
-    global_env["last"] = self._last_action()
+    global_env["actions"] = finished_actions
+    global_env["action_index"] = len(finished_actions)
     global_env["this"] = action
+    global_env["last"] = finished_actions[-1] if finished_actions else None
     try:
       action.run_action(global_env)
       action.run_assert(global_env)
     except (ActionException, AssertionFailed) as e:
-      e.action_index = finished_count
+      e.action_index = len(finished_actions)
       raise e
+    finally:
+      finished_actions.append(action)
 

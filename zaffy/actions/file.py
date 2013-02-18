@@ -46,10 +46,16 @@ class File(BaseAction):
     return datetime.fromtimestamp(stat_value.st_ctime)
 
   @classmethod
-  def read(cls, filepath, size=-1, offset=0):
-    with open(filepath, "rb") as fp:
-      fp.seek(offset)
-      return fp.read(size)
+  def read(cls, filepath, size=-1, offset=0, encoding=None):
+    import codecs
+    if encoding:
+      with codecs.open(filepath, encoding=encoding) as fp:
+        fp.seek(offset)
+        return fp.read(size)
+    else:
+      with open(filepath, "rb") as fp:
+        fp.seek(offset)
+        return fp.read(size)
 
   def do_copy(self, path, to):
     shutil.copy(path, to)

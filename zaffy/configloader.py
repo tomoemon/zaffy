@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import util
 import yaml
 
 
@@ -6,7 +7,7 @@ class ConfigLoader(object):
   def __init__(self, config_file):
     self.filename = config_file
     if config_file:
-      self.config = self.load_yaml(file(config_file))
+      self.config = self.load_yaml(util.open_yaml(config_file))
     else:
       self.config = {}
 

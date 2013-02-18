@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 import traceback
-from template import assert_test, TemplateFormatException
+import template
 from assertionfailed import AssertionFailed
 
 
@@ -43,6 +43,7 @@ class BaseAction(object):
       # const で定義する変数などアクション実行中に値が変わるものがあるので、直前じゃないとダメ
       self.params = self._params.expand(global_env)
       self._run()
+      self._filter()
     except ActionException as e:
       self.exception = e
     except Exception as e:
@@ -55,11 +56,18 @@ class BaseAction(object):
     method = getattr(self, "do_" + self._setting.method_name)
     method(**self.params)
 
+  def _filter(self):
+    variables = {
+      "res": self.result,
+      "this": self.__dict__
+    }
+    template.set_param(self._params.filter_list, variables, self.result)
+
   def run_assert(self, global_env):
     try:
       self._test_assertex(global_env)
       self._test_assert(global_env)
-    except TemplateFormatException as e:
+    except template.TemplateFormatException as e:
       raise ActionException(e, traceback.format_exc())
 
   def _test_assertex(self, global_env):
@@ -83,7 +91,7 @@ class BaseAction(object):
     })
     for assert_index, assert_str in enumerate(self._params.assertex_list):
       try:
-        assert_test(assert_str, variables)
+        template.assert_test(assert_str, variables)
       except AssertionFailed as e:
         e.assert_index = assert_index
         raise e
@@ -99,7 +107,7 @@ class BaseAction(object):
     })
     for assert_index, assert_str in enumerate(self._params.assert_list):
       try:
-        assert_test(assert_str, variables)
+        template.assert_test(assert_str, variables)
       except AssertionFailed as e:
         e.assert_index = assert_index
         raise e

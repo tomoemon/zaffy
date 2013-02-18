@@ -15,7 +15,7 @@
 
 # 別のシナリオで const.hoge を参照可能
 - action: require
-  path: constRequireTest.yml
+  path: constRequired.yml
 
 # 別のシナリオでセットした const.required を参照可能
 - action: debug

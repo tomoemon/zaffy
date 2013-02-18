@@ -22,11 +22,11 @@ def load_modules(basepath):
   plugin_list = []
   error_list = []
   for filename in os.listdir(basepath):
-    if filename.startswith('.'):
+    if filename.startswith('.') or filename.startswith('__'):
       continue
 
     try:
-      if not filename.startswith('__') and filename.endswith(".py"):
+      if filename.endswith(".py"):
         m = load_module(filename.replace(".py", ""), basepath)
         plugin_list.append(m)
       elif os.path.isdir(filename):

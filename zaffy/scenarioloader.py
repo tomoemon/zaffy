@@ -2,6 +2,7 @@
 import yaml
 from scenario import Scenario
 from actionloader import action_loader
+import util
 
 
 class ScenarioLoader(object):
@@ -33,7 +34,7 @@ class ScenarioLoader(object):
   def _parse(self, content):
     raw_actions = content[0]
     doc = raw_actions.pop(0)
-    if not isinstance(doc, basestring):
+    if not isinstance(doc, util.basestring):
       raise Exception("Scenario should have a description at first element: " + str(content))
     return doc, raw_actions
 

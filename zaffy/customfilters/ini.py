@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import util
 try:
   import configparser
 except ImportError:
@@ -11,7 +12,7 @@ def do_asini(value):
   dummy_section = "__{0}__".format(id(value))
   value = "[{0}]\n".format(dummy_section) + value
   config = configparser.SafeConfigParser()
-  config.readfp(io.StringIO(unicode(value)))
+  config.readfp(io.StringIO(util.unicode(value)))
 
   if len(config.sections()) == 1:
     result = dict(config.items(dummy_section))
@@ -26,11 +27,11 @@ fuga=piyo
 x= 10
 y=
 """
-  print do_asini(d)
+  print(do_asini(d))
 
   d = """
 fuga=piyo
 x= 10
 y=
 """
-  print do_asini(d)
+  print(do_asini(d))

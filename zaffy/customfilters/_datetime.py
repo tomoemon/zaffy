@@ -2,6 +2,7 @@
 import time
 import dateutil.parser
 from datetime import date, datetime, timedelta
+import util
 
 
 def _adddate(value, day=0, hour=0, min=0, sec=0, msec=0):
@@ -13,7 +14,7 @@ def _todatetime(dateobj, format=None):
     return dateobj
   elif isinstance(dateobj, date):
     return datetime(dateobj.year, dateobj.month, dateobj.day)
-  elif isinstance(dateobj, basestring):
+  elif isinstance(dateobj, util.basestring):
     if format is None:
       return dateutil.parser.parse(dateobj)
     return datetime.strptime(dateobj, format)
