@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
+
 if sys.stdout.isatty():
   default_encoding = sys.getdefaultencoding()
 else:
@@ -14,6 +15,7 @@ if sys.version[:1] == '2':
 else:
   basestring = str
   _unicode = str
+
 
 def unicode(value, encoding=default_encoding, errors='strict'):
   if isinstance(value, _unicode):
