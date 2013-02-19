@@ -43,7 +43,7 @@ class BaseAction(object):
       # const で定義する変数などアクション実行中に値が変わるものがあるので、直前じゃないとダメ
       self.params = self._params.expand(global_env)
       self._run()
-      self._filter()
+      self._filter(global_env)
     except ActionException as e:
       self.exception = e
     except Exception as e:
@@ -56,11 +56,12 @@ class BaseAction(object):
     method = getattr(self, "do_" + self._setting.method_name)
     method(**self.params)
 
-  def _filter(self):
-    variables = {
+  def _filter(self, global_env):
+    variables = dict(global_env)
+    variables.update({
       "res": self.result,
       "this": self.__dict__
-    }
+    })
     template.set_param(self._params.filter_list, variables, self.result)
 
   def run_assert(self, global_env):
