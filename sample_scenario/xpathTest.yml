@@ -19,5 +19,5 @@
 - action: http.get
   url: http://yahoo.co.jp
   assert:
-  - res.content|ashtml|xpath('/html/head/title/text()', {}) is eq 'Yahoo! JAPAN'
+  - res.content|ashtml|xpath('/html/head/title/text()') is eq 'Yahoo! JAPAN'
 
