@@ -24,6 +24,7 @@ class Scenario(object):
     # 一時対応
     if not self.parent:
       type.__getattribute__(global_env["const"], 'init_scenario')()
+      type.__getattribute__(global_env["preset"], 'init_scenario')()
     # ここまで
 
     global_env["scenario"] = self

@@ -42,10 +42,16 @@ class _PresetApplier(object):
 
 class Preset(BaseAction):
   _presets = {}
+  _default_presets = {}
 
   @classmethod
   def setup(cls, config):
-    cls._presets = config
+    cls._default_presets = config
+
+  @classmethod
+  def init_scenario(cls):
+    # 一時対応
+    cls._presets = dict(cls._default_presets)
 
   @classmethod
   def get_preset_params(cls, action_name):
