@@ -6,22 +6,26 @@ import os
 
 
 class Require(BaseAction):
-  """ require アクション
+  """ Require アクション
+
+  外部のシナリオファイルを読み込む
   """
-  root_path = ""
+  _root_path = ""
 
   @classmethod
   def setup(cls, config):
-    cls.root_path = config.get('root_path', '')
+    cls._root_path = config.get('root_path', '')
 
   def __getitem__(self, index):
     return self.result['actions'][index]
 
   def do_require(self, path, global_env, scenario):
+    """ パラメータなしの呼び出し """
     new_scenario = self._load(path, global_env, scenario, None)
     self.result = new_scenario.actions[-1].result
 
   def do_call(self, path, global_env, scenario, params=None):
+    """ call パラメータ付き呼び出し """
     new_scenario = self._load(path, global_env, scenario, params)
     self.result = new_scenario.actions[-1].result
 
@@ -31,8 +35,8 @@ class Require(BaseAction):
       raise Exception(path + " not exists")
 
     if not os.path.isabs(path):
-      if self.root_path:
-        path = os.path.join(self.root_path, path)
+      if self._root_path:
+        path = os.path.join(self._root_path, path)
       else:
         path = os.path.join(scenario.dir, path)
 

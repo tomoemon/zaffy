@@ -13,7 +13,10 @@ class _MetaEnv(type):
 
 
 class Env(with_metaclass(_MetaEnv, BaseAction)):
-  """ 環境変数にアクセスするためのアクション """
+  """ Env アクション
+
+  環境変数へのアクセスを行なう
+  """
   _loaded = False
 
   @classmethod

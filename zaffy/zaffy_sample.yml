@@ -1,3 +1,11 @@
+#
+# zaffy 用のサンプル設定ファイル
+#
+# 下記のように設定ファイルを指定して実行するか
+# python zaffy.py -c zaffy_sample.yml
+#
+# デフォルトの設定ファイル (zaffy.yml) として配置すると読み込まれる
+# mv zaffy_sample.yml zaffy.yml
 
 actions:
   const:

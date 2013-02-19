@@ -10,6 +10,8 @@ def _adddate(day=0, hour=0, min=0, sec=0, msec=0):
 
 class Time(BaseAction):
   """ Time アクション
+
+  現在時刻の取得、日時のフォーマットを行なう
   """
   @classmethod
   def now(cls, day=0, hour=0, min=0, sec=0, msec=0):

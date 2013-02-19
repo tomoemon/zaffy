@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# sphinx 設定ファイル（日本語文字化け用）
 #
 # zaffy documentation build configuration file, created by
 # sphinx-quickstart on Sat Jan 12 15:30:57 2013.
@@ -250,7 +251,7 @@ sys.path.insert(0, os.path.abspath('exts'))
 sys.path.insert(0, os.path.abspath('../zaffy'))
 
 keep_warnings = True
-autodoc_default_flags = ['members', 'undoc-members']
+autodoc_default_flags = ['members', 'no-undoc-members']
 
 
 import glob
@@ -263,10 +264,12 @@ for action in glob.glob('../zaffy/actions/*.py'):
   title_bar = '=' * len(action_title) * 2
   with open('references/actions/action_{0}.rst'.format(action_strip), 'wb') as fp:
     fp.write('''
+.. _references-actions-{3}-label:
+
 {0}
 {1}
 {0}
 
 .. automodule:: actions.{2}
-'''.format(title_bar, action_title, action))
+'''.format(title_bar, action_title, action, action_strip))
 

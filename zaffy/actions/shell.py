@@ -7,12 +7,15 @@ from baseaction import BaseAction
 
 class Shell(BaseAction):
   """ Shell アクション
-  プロセスの実行などを行なう
+
+  シェルを通してプロセスの実行などを行なう
   """
   def do_shell(self, cmd, stdin=None, curdir=None):
+    """ do_run の省略呼び出し """
     self.do_run(cmd, stdin, curdir)
 
   def do_run(self, cmd, stdin=None, curdir=None):
+    """ run """
     before_curdir = path.abspath(os.curdir)
 
     if curdir:

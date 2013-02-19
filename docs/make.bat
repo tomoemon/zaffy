@@ -5,8 +5,8 @@ REM Command file for Sphinx documentation
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=c:\application\python27\scripts\sphinx-build
 )
-REM set BUILDDIR=_build
-set BUILDDIR=..\..\zaffy_pages
+set BUILDDIR=_build
+REM set BUILDDIR=..\..\zaffy_pages
 set ALLSPHINXOPTS=-d %BUILDDIR%/doctrees %SPHINXOPTS% .
 set I18NSPHINXOPTS=%SPHINXOPTS% .
 if NOT "%PAPER%" == "" (

@@ -13,6 +13,7 @@ zaffy は pure python 製の振る舞いテストツールです。もし、あ�
 .. toctree::
    :maxdepth: 2
 
+   install/index
    tutorial/index
    references/actions/index
 

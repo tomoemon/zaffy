@@ -41,6 +41,10 @@ class _PresetApplier(object):
 
 
 class Preset(BaseAction):
+  """ Preset アクション
+
+  アクション実行時のパラメータプリセットを保持する
+  """
   _presets = {}
   _default_presets = {}
 
@@ -66,6 +70,7 @@ class Preset(BaseAction):
     cls._presets = {}
 
   def do_preset(self, **params):
+    """ preset """
     for target_action, presets in params.items():
       self._presets[target_action] = presets
 

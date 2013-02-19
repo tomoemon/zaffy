@@ -6,8 +6,12 @@ from moduleloader import load_module_dir
 drivers = {}
 
 class Sql(BaseAction):
+  """ Sql アクション
 
-  DEFAULT_PORT = 3306
+  SQL に準拠した DB に対してクエリを実行する
+  """
+
+  _DEFAULT_PORT = 3306
 
   is_pool_connection = False
 
@@ -23,7 +27,8 @@ class Sql(BaseAction):
   def teardown(cls):
     pass
 
-  def do_select(self, driver, host, db, user, password, sql, port=DEFAULT_PORT):
+  def do_select(self, driver, host, db, user, password, sql, port=_DEFAULT_PORT):
+    """ select """
     driver = drivers[driver]
     conn = driver.connect(host=host, port=port, db=db,
                           user=user, password=password)
@@ -37,7 +42,8 @@ class Sql(BaseAction):
     # connectionManager的なのを作ったら個別のcloseはしない
     conn.close()
 
-  def do_selectdict(self, driver, host, db, user, password, sql, port=DEFAULT_PORT):
+  def do_selectdict(self, driver, host, db, user, password, sql, port=_DEFAULT_PORT):
+    """ dict 形式で結果を取得する select """
     driver = drivers[driver]
     conn = driver.connect(host=host, port=port, db=db,
                           user=user, password=password)
@@ -51,7 +57,8 @@ class Sql(BaseAction):
     # connectionManager的なのを作ったら個別のcloseはしない
     conn.close()
 
-  def do_update(self, driver, host, db, user, password, sql, port=DEFAULT_PORT):
+  def do_update(self, driver, host, db, user, password, sql, port=_DEFAULT_PORT):
+    """ update (delete, insert 等の更新系クエリ) """
     driver = drivers[driver]
 
     # update 文は複数実行できるようにする

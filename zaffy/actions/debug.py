@@ -7,16 +7,21 @@ import util
 
 
 class Debug(BaseAction):
-  """ debug アクション
+  """ Debug アクション
+
+  アクションの実行結果などデバッグ用の出力を行なう
   """
 
   def do_rawprint(self, global_env, scenario, **params):
+    """ rawprint """
     self._write(global_env, scenario, params)
 
   def do_debug(self, global_env, scenario, **params):
+    """ do_rawprint の省略呼び出し """
     self.do_rawprint(global_env, scenario, **params)
 
   def do_print(self, global_env, scenario, **params):
+    """ print """
     dump = {}
     for key, value in params.items():
       if isinstance(value, util.basestring):
