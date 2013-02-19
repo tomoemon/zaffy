@@ -1,27 +1,22 @@
 # -*- coding: utf-8 -*-
 from baseaction import BaseAction
 import os
+from six import with_metaclass
 
 
-class _MetaConst(type):
+class _MetaEnv(type):
   def __getattribute__(cls, name):
-    return type.__getattribute__(cls, 'get')(name, None)
+    if not type.__getattribute__(cls, '_loaded'):
+      # document 作成時は __doc__ などの属性にそのままアクセスさせる必要がある
+      return type.__getattribute__(cls, name)
+    return os.environ[name]
 
 
-class Env(BaseAction):
+class Env(with_metaclass(_MetaEnv, BaseAction)):
   """ 環境変数にアクセスするためのアクション """
-  __metaclass__ = _MetaConst
+  _loaded = False
 
   @classmethod
-  def get(cls, name, default=None):
-    if name in os.environ:
-      return os.environ[name]
-    else:
-      if default:
-        return default
-      else:
-        raise Exception("Undefined environment variable: '" + name + "'")
+  def setup(cls, config):
+    type.__setattr__(cls, '_loaded', True)
 
-
-# metaclass for 2 and 3
-Env = _MetaConst('Env', (Env, ), {})

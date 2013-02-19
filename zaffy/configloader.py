@@ -19,8 +19,6 @@ class ConfigLoader(object):
   def setup_klass(self, klasses):
     action_configs = self.config.get('actions', {})
     for name, klass in klasses.items():
-      if name not in action_configs:
-        continue
       setup_method = type.__getattribute__(klass, 'setup')
-      setup_method(action_configs[name])
+      setup_method(action_configs.get(name, {}))
 
