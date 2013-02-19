@@ -31,5 +31,5 @@
   path: test_renamed.txt
   to: test_renamed_copy.txt
 
-- action: file.remove
+- action: file.delete
   path: test_renamed.txt
