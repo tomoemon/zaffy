@@ -2,6 +2,9 @@
 import util
 
 
+_u = lambda x: util.unicode(x, errors='replace')
+
+
 def _i(prefix, output_string, postfix="\n"):
   """ 行先頭に "ok" 等の文字が出力されないようにフォーマットする
   """
@@ -23,7 +26,7 @@ class Tap(object):
 
   def debug(self, debug_str):
     writer = self.writer
-    writer.write(_i("  # ", util.unicode(debug_str, errors='replace')))
+    writer.write(_i("  # ", _u(debug_str)))
 
   def start(self, scenario):
     self.current = scenario
@@ -32,7 +35,7 @@ class Tap(object):
     writer = self.writer
 
     self.succeeded += 1
-    writer.write("ok {0} - {1}\n".format(
+    writer.write(_u("ok {0} - {1}\n").format(
       self.total_elapsed(), self.current.doc))
 
   def fail(self, exception):
@@ -43,17 +46,17 @@ class Tap(object):
 
     self.failed += 1
     self.not_ok_list.append(self.total_elapsed())
-    writer.write("not ok {0} - {1}\n".format(
+    writer.write(_u("not ok {0} - {1}\n").format(
       self.total_elapsed(), self.current.doc))
     writer.write("  ------------------------------------------------------------\n")
-    writer.write(_i("  ", "filename: {0}".format(self.current.setting.filename)))
-    writer.write(_i("  ", "action_index: {0}".format(exception.action_index)))
-    writer.write(_i("  ", "assert_index: {0}".format(exception.assert_index)))
-    writer.write(_i("  ", "assertion: {0}".format(exception.assertion)))
-    writer.write(_i("  ", "compared: "))
+    writer.write(_i("  ", _u("filename: {0}").format(self.current.setting.filename)))
+    writer.write(_i("  ", _u("action_index: {0}").format(exception.action_index)))
+    writer.write(_i("  ", _u("assert_index: {0}").format(exception.assert_index)))
+    writer.write(_i("  ", _u("assertion: {0}").format(exception.assertion)))
+    writer.write(_i("  ", _u("compared: ")))
     for i, items in enumerate(exception.compared):
       for j, item in enumerate(items):
-        writer.write(_i(u"    ", "{0}-{1}: {2}".format(i, j, item)))
+        writer.write(_i("    ", _u("{0}-{1}: {2}").format(i, j, item)))
     writer.write("  ------------------------------------------------------------\n")
 
   def error(self, exception):
@@ -64,12 +67,12 @@ class Tap(object):
 
     self.errored += 1
     self.not_ok_list.append(self.total_elapsed())
-    writer.write("not ok {0} - {1}\n".format(
+    writer.write(_u("not ok {0} - {1}\n").format(
       self.total_elapsed(), self.current.doc))
     writer.write("  ------------------------------------------------------------\n")
-    writer.write(_i("  ", "filename: {0}".format(self.current.setting.filename)))
-    writer.write(_i("  ", "action_index: {0}".format(exception.action_index)))
-    writer.write(_i("  ", exception.stack_trace))
+    writer.write(_i("  ", _u("filename: {0}").format(self.current.setting.filename)))
+    writer.write(_i("  ", _u("action_index: {0}").format(exception.action_index)))
+    writer.write(_i("  ", _u(exception.stack_trace)))
     writer.write("  ------------------------------------------------------------\n")
 
   def start_test(self, test_count):
@@ -84,7 +87,7 @@ class Tap(object):
     writer.write("\n")
     if self.not_ok_list:
       writer.write("FAILED tests {0}\n".format(
-        ", ".join([str(e) for e in self.not_ok_list])))
+        ", ".join([_u(e) for e in self.not_ok_list])))
       writer.write("Failed {0}/{1} tests, {2:.2f}% ok ({3:.3f} sec elapsed)\n".format(
         len(self.not_ok_list), self.test_count,
         float(self.succeeded) / self.test_count * 100,

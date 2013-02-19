@@ -3,6 +3,14 @@ import sys
 import util
 
 
+if sys.stdout.encoding:
+  # redirect された場合などに None になる
+  default_out_encoding = sys.stdout.encoding
+else:
+  # 基本的には sys.stdout.encoding と同じ
+  default_out_encoding = sys.getfilesystemencoding()
+
+
 class Stdout(object):
   def open(self):
     pass
@@ -10,7 +18,7 @@ class Stdout(object):
   def write(self, data):
     data = util.unicode(data, errors='replace')
     # normalizing for output
-    data = data.encode(sys.stdout.encoding, errors='replace').decode(sys.stdout.encoding)
+    data = data.encode(default_out_encoding, errors='replace').decode(default_out_encoding, errors='replace')
     sys.stdout.write(data)
 
   def close(self):
