@@ -17,6 +17,10 @@ class Scenario(object):
     return getattr(self.setting, item)
 
   @property
+  def queue(self):
+    return self._action_queue
+
+  @property
   def actions(self):
     return self._finished_actions
 
@@ -31,7 +35,7 @@ class Scenario(object):
     global_env["local"] = self.localvar
 
     while self._action_queue:
-      self._run_action(global_env)
+      self.run_action(global_env)
 
     if self.parent:
       global_env["scenario"] = self.parent
@@ -40,7 +44,7 @@ class Scenario(object):
   def add_action(self, action):
     self._action_queue.append(action)
 
-  def _run_action(self, global_env):
+  def run_action(self, global_env):
     action = self._action_queue.pop(0)
     finished_actions = self._finished_actions
 

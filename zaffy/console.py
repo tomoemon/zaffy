@@ -87,8 +87,8 @@ class CUI(cmd.Cmd):
       self.scenario = new_scenario
       self.scenario.run(self.global_env)
     else:
-      self.scenario.add_action(new_scenario.actions[0])
-      self.scenario.run(self.global_env)
+      self.scenario.add_action(new_scenario.queue[0])
+      self.scenario.run_action(self.global_env)
 
   def action_hook(func):
     """ decorator function """
