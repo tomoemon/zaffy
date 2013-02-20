@@ -18,7 +18,7 @@ class Const(with_metaclass(_MetaConst, BaseAction)):
 
   また、config ファイルで事前に共通の定数を定義しておくことも可能。詳しくは ``zaffy/zaffy_sample.yml`` を参照。
 
-  ::
+  サンプルシナリオ::
 
     - sample
     - action: const

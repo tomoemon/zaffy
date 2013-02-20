@@ -7,7 +7,7 @@ class Python(BaseAction):
 
   任意の python コードを実行する
 
-  ::
+  サンプルシナリオ::
 
     - sample
     - action: local

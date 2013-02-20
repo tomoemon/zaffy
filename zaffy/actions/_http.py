@@ -8,7 +8,7 @@ class Http(BaseAction):
 
   http リクエストを行なう
 
-  ::
+  サンプルシナリオ::
 
     - sample
     - action: http.get
