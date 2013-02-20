@@ -255,21 +255,30 @@ autodoc_default_flags = ['members', 'no-undoc-members']
 
 
 import glob
+import six
 
-for action in glob.glob('../zaffy/actions/*.py'):
-  action = os.path.basename(action).replace('.py', '')
-  if os.path.isdir(action) or action.startswith('__'): continue
-  action_strip = action.lstrip('_')
-  action_title = action_strip + u' アクション'
-  title_bar = '=' * len(action_title) * 2
-  with open('references/actions/action_{0}.rst'.format(action_strip), 'wb') as fp:
-    fp.write('''
-.. _references-actions-{3}-label:
+def find_module(glob_path):
+  for module in glob.glob(glob_path):
+    module = os.path.basename(module).replace('.py', '')
+    if os.path.isdir(module) or module.startswith('__'):
+      continue
+    yield module
+
+def create_module_doc(target_module_dir, name):
+  for module in find_module('../zaffy/{0}/*.py'.format(target_module_dir)):
+    stripped = module.lstrip('_')
+    title = stripped
+    title_bar = '=' * len(title) * 2
+    with open('references/{0}/{1}_{2}.rst'.format(target_module_dir, name, stripped), 'wb') as fp:
+      fp.write('''
+.. _references-{4}-{3}-label:
 
 {0}
 {1}
 {0}
 
-.. automodule:: actions.{2}
-'''.format(title_bar, action_title, action, action_strip))
+.. automodule:: {4}.{2}
+'''.format(title_bar, title, module, stripped, target_module_dir))
 
+create_module_doc("customfilters", "filter")
+create_module_doc("actions", "action")

@@ -16,6 +16,7 @@ zaffy は pure python 製の振る舞いテストツールです。もし、あ�
    install/index
    tutorial/index
    references/actions/index
+   references/customfilters/index
 
 
 
