@@ -8,9 +8,10 @@ class Http(BaseAction):
 
   http リクエストを行なう
 
-  サンプルシナリオ::
+  .. code-block:: yaml
 
-    - sample
+    - サンプルシナリオ
+
     - action: http.get
       url: http://yahoo.co.jp/
       params:

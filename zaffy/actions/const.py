@@ -18,17 +18,20 @@ class Const(with_metaclass(_MetaConst, BaseAction)):
 
   また、config ファイルで事前に共通の定数を定義しておくことも可能。詳しくは ``zaffy/zaffy_sample.yml`` を参照。
 
-  サンプルシナリオ::
 
-    - sample
-    - action: const
-      user: taro
-      pass: taropass
-    - action: http.get
-      url: http://yahoo.co.jp/
-      params:
-        user: <<const.user>>
-        pass: <<const.pass>>
+  .. code-block:: yaml
+
+     - サンプルシナリオ
+
+     - action: const
+       user: taro
+       pass: taropass
+
+     - action: http.get
+       url: http://yahoo.co.jp/
+       params:
+         user: <<const.user>>
+         pass: <<const.pass>>
   """
   _loaded = False
   _const_params = {}

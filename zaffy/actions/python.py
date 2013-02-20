@@ -7,9 +7,10 @@ class Python(BaseAction):
 
   任意の python コードを実行する
 
-  サンプルシナリオ::
+  .. code-block:: yaml
 
-    - sample
+    - サンプルシナリオ
+
     - action: local
       x: 4
 
