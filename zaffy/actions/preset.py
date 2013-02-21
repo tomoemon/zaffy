@@ -43,7 +43,17 @@ class _PresetApplier(object):
 class Preset(BaseAction):
   """ Preset アクション
 
-  任意のアクションに対する実行時のパラメータプリセットを定義する。アクションに対して多数のパラメータを繰り返し適用する場合にプリセットとして定義しておくことでシナリオをシンプルにできる。Const アクションと同様にシナリオ実行単位でグローバルに参照可能。
+  任意のアクションに対する実行時のパラメータプリセットを定義する。アクションに対して多数のパラメータを繰り返し適用する場合、事前にプリセットを定義しておくことでシナリオをシンプルにできる。:ref:`references-actions-const-label` アクションと同様にシナリオ実行単位でグローバルに参照可能。
+
+  定義の上書き
+    あるアクションについて、すでに定義済みのプリセット名と同じ名前で定義した場合、後から定義したパラメータセットで完全に上書きされる。
+
+  遅延評価
+    preset のパラメータセットの中で :ref:`references-actions-const-label` 定数や :ref:`references-actions-local-label` 変数の使用、または関数呼び出しを記述していた場合、実際のアクション実行時まで評価が遅延される（preset アクションを実行した後に、:ref:`references-actions-const-label` アクションで定義した定数も使用できる）
+
+  .. note::
+    YAML 形式がもともと備えているエイリアス・アンカーといった機能をシナリオ内で使うことも可能
+    http://jp.rubyist.net/magazine/?0009-YAML#l10
 
   .. code-block:: yaml
 
