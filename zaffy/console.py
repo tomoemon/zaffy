@@ -55,6 +55,7 @@ class CUI(cmd.Cmd):
     if hasattr(CUI, 'do_action:'):
       delattr(CUI, "do_action:")
       setattr(CUI, "do_action: ", self._do_action)
+    return stop
 
   @staticmethod
   def remove_item(item_list, remove_items):
@@ -138,7 +139,11 @@ class CUI(cmd.Cmd):
     return [a for a in self.action_complete if a.startswith(args[1].split()[1])]
 
 def run(global_env):
-  CUI(global_env).cmdloop()
+  try:
+    CUI(global_env).cmdloop()
+  except KeyboardInterrupt:
+    sys.stdout.write("exit\n")
+    sys.exit()
 
 if __name__ == '__main__':
   action_loader.load_actions()
