@@ -28,7 +28,7 @@ class Python(BaseAction):
   def do_run(self, code, global_env):
     """
     :param string code: python として実行可能なコード
-    :return dict: コード上のローカル変数の値が辞書形式でセットされる
+    :return: (*dict*) コード上のローカル変数の値が辞書形式でセットされる
     """
     local_dict = {'local': global_env['local']}
     global_dict = dict(global_env)

@@ -43,7 +43,32 @@ class _PresetApplier(object):
 class Preset(BaseAction):
   """ Preset アクション
 
-  アクション実行時のパラメータプリセットを保持する
+  任意のアクションに対する実行時のパラメータプリセットを定義する。アクションに対して多数のパラメータを繰り返し適用する場合にプリセットとして定義しておくことでシナリオをシンプルにできる。Const アクションと同様にシナリオ実行単位でグローバルに参照可能。
+
+  .. code-block:: yaml
+
+     - サンプルシナリオ
+
+     - action: preset
+       http:
+         default:
+           url: http://yahoo.co.jp/
+
+     # default preset の適用
+     #   アクションに対して何も渡していないが default プリセットがあるので
+     #   url: http://yahoo.co.jp/ に対して http get する
+     - action: http
+
+     - action: preset
+       http:
+         assert404:
+           assert:
+             - res.status is 404
+
+     # named preset の適用
+     #   assert を定義していないが status が 404 であることをテストしている
+     - action: http.get < assert404
+       url: http://yahoo.co.jp/hogehoge
   """
   _presets = {}
   _default_presets = {}
@@ -70,7 +95,11 @@ class Preset(BaseAction):
     cls._presets = {}
 
   def do_preset(self, **params):
-    """ preset """
+    """ preset を定義する
+
+    :param any (any): 1階層目には存在するアクション名、2階層目にプリセット名、3階層目以降に定義するパラメータセットを辞書形式で指定する
+    :return: None
+    """
     for target_action, presets in params.items():
       self._presets[target_action] = presets
 
