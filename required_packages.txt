@@ -1,7 +1,7 @@
 six
 Jinja2
 PyYAML
-requests
+requests==0.14.0 # SSL occured with version 0.14.1 or later
 python-dateutil
 pyreadline
 
