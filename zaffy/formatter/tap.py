@@ -21,7 +21,7 @@ class Tap(object):
     self.not_ok_list = []
     self.current = None
 
-  def total_elapsed(self):
+  def finished(self):
     return self.succeeded + self.failed + self.errored
 
   def debug(self, debug_str):
@@ -31,12 +31,15 @@ class Tap(object):
   def start(self, scenario):
     self.current = scenario
 
+  def _write_header(self, succeeded):
+    self.writer.write("{0} {1}".format(succeeded, self.finished()))
+    self.writer.write(_i(" - ", _u("{0}").format(self.current.doc.strip())))
+
   def succeed(self):
     writer = self.writer
 
     self.succeeded += 1
-    writer.write(_u("ok {0} - {1}\n").format(
-      self.total_elapsed(), self.current.doc))
+    self._write_header('ok')
 
   def fail(self, exception):
     """
@@ -45,9 +48,8 @@ class Tap(object):
     writer = self.writer
 
     self.failed += 1
-    self.not_ok_list.append(self.total_elapsed())
-    writer.write(_u("not ok {0} - {1}\n").format(
-      self.total_elapsed(), self.current.doc))
+    self.not_ok_list.append(self.finished())
+    self._write_header('not ok')
     writer.write("  ------------------------------------------------------------\n")
     writer.write(_i("  ", _u("filename: {0}").format(self.current.setting.filename)))
     writer.write(_i("  ", _u("action_index: {0}").format(exception.action_index)))
@@ -66,9 +68,8 @@ class Tap(object):
     writer = self.writer
 
     self.errored += 1
-    self.not_ok_list.append(self.total_elapsed())
-    writer.write(_u("not ok {0} - {1}\n").format(
-      self.total_elapsed(), self.current.doc))
+    self.not_ok_list.append(self.finished())
+    self._write_header('not ok')
     writer.write("  ------------------------------------------------------------\n")
     writer.write(_i("  ", _u("filename: {0}").format(self.current.setting.filename)))
     writer.write(_i("  ", _u("action_index: {0}").format(exception.action_index)))
