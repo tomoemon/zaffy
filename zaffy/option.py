@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
 import argparse
+import util
 
 
 def _parse():
-  parser = argparse.ArgumentParser(description='テストツールです')
+  parser = argparse.ArgumentParser()
   parser.add_argument('-c', '--config', action='store', dest='config_file', default=None)
-  parser.add_argument('scenarios', nargs='*')
+  parser.add_argument('scenarios', nargs='*', help="test files")
   return parser.parse_args()
 
 __result = _parse()
