@@ -29,7 +29,7 @@ class CUI(cmd.Cmd):
     self.action_param_complete = {}
     for action_name, action_klass in action_loader.get_all_action_map().items():
       for method in dir(action_klass):
-        method_obj = getattr(action_klass, method)
+        method_obj = type.__getattribute__(action_klass, method)
         if method.startswith('do_') and callable(method_obj):
           args = inspect.getargspec(method_obj).args
           args = self.remove_item(args, ['self', 'scenario', 'global_env'])

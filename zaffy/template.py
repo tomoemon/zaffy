@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from jinja2 import Environment, TemplateSyntaxError, UndefinedError
+from jinja2 import Environment, TemplateSyntaxError, UndefinedError, Undefined
 from moduleloader import load_module_dir
 from assertionfailed import AssertionFailed
 import util
