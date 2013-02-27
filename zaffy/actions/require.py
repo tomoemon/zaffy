@@ -14,7 +14,8 @@ class Require(BaseAction):
 
   @classmethod
   def setup(cls, config):
-    cls._root_path = config.get('root_path', '')
+    if 'root_path' in config:
+      cls._root_path = os.path.abspath(config['root_path'])
 
   def __getitem__(self, index):
     return self.result['actions'][index]
@@ -29,15 +30,23 @@ class Require(BaseAction):
     new_scenario = self._load(path, global_env, scenario, params)
     self.result = new_scenario.actions[-1].result
 
+  @staticmethod
+  def _replace_root(src_path, new_root):
+    split = os.path.split
+    head = tail = src_path
+    while tail:
+      head, tail = split(head)
+    return os.path.join(new_root, src_path[len(head):])
+
   def _load(self, path, global_env, scenario, params):
     path = path.strip()
     if not path:
       raise Exception(path + " not exists")
 
-    if not os.path.isabs(path):
+    if os.path.isabs(path):
       if self._root_path:
-        path = os.path.join(self._root_path, path)
-      else:
+        path = self._replace_root(path, self._root_path)
+    else:
         path = os.path.join(scenario.dir, path)
 
     new_scenario = scenario_loader.load(ScenarioSetting(path), scenario)
