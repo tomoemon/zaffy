@@ -57,7 +57,7 @@ class Scenario(object):
       action.run_assert(global_env)
     except (ActionException, AssertionFailed) as e:
       e.action_index = len(finished_actions)
-      raise e
+      raise
     finally:
       finished_actions.append(action)
 

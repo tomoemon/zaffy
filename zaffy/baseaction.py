@@ -40,7 +40,7 @@ class BaseAction(object):
     self.start_time = time.time()
     try:
       # 変数を jinja2 で展開する
-      # const で定義する変数などアクション実行中に値が変わるものがあるので、直前じゃないとダメ
+      # local 変数などアクション実行中に値が変わるものがあるので直前にやる必要がある
       self.params = self._params.expand(global_env)
       self._run()
       self._filter(global_env)
@@ -95,7 +95,7 @@ class BaseAction(object):
         template.assert_test(assert_str, variables)
       except AssertionFailed as e:
         e.assert_index = assert_index
-        raise e
+        raise
 
   def _test_assert(self, global_env):
     if not self._params.assert_list:
@@ -111,5 +111,5 @@ class BaseAction(object):
         template.assert_test(assert_str, variables)
       except AssertionFailed as e:
         e.assert_index = assert_index
-        raise e
+        raise
 
