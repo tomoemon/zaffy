@@ -1,4 +1,5 @@
 - required sample
 - action: debug
   sample: required called
+  local: <<local>>
 

@@ -3,3 +3,8 @@
 - action: require
   path: required.yml
 
+- action: require.repeat
+  path: required.yml
+  params:
+    - 100
+    - 200

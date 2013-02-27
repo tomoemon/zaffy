@@ -31,6 +31,11 @@ class Require(BaseAction):
     new_scenario = self._load(path, global_env, scenario, params)
     self.result = new_scenario.actions[-1].result
 
+  def do_repeat(self, path, global_env, scenario, params):
+    """ call 繰り返し呼び出し """
+    for param in params:
+      self.do_call(path, global_env, scenario, param)
+
   @staticmethod
   def _replace_root(src_path, new_root):
     split = os.path.split
@@ -45,7 +50,7 @@ class Require(BaseAction):
       return params
     elif isinstance(params, list):
       return dict(enumerate(params))
-    elif isinstance(params, util.basestring):
+    elif isinstance(params, (util.basestring, int, bool)):
       return {0: params}
     return {}
 
