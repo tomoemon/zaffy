@@ -3,6 +3,7 @@ from baseaction import BaseAction
 from scenarioloader import scenario_loader
 from scenariosetting import ScenarioSetting
 import os
+import util
 
 
 class Require(BaseAction):
@@ -38,6 +39,16 @@ class Require(BaseAction):
       head, tail = split(head)
     return os.path.join(new_root, src_path[len(head):])
 
+  @staticmethod
+  def _to_dict(params):
+    if isinstance(params, dict):
+      return params
+    elif isinstance(params, list):
+      return dict(enumerate(params))
+    elif isinstance(params, util.basestring):
+      return {0: params}
+    return {}
+
   def _load(self, path, global_env, scenario, params):
     path = path.strip()
     if not path:
@@ -50,7 +61,7 @@ class Require(BaseAction):
         path = os.path.join(scenario.dir, path)
 
     new_scenario = scenario_loader.load(ScenarioSetting(path), scenario)
-    new_scenario.localvar = params if params else {}
+    new_scenario.localvar = self._to_dict(params)
     new_scenario.run(global_env)
     return new_scenario
 
