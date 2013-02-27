@@ -18,8 +18,7 @@ class Stdout(object):
   def write(self, data):
     data = util.unicode(data, errors='replace')
     # normalizing for output
-    data = data.encode(default_out_encoding, 'replace').decode(default_out_encoding, 'replace')
-    sys.stdout.write(data)
+    sys.stdout.write(util.normalize_write_string(data, default_out_encoding))
 
   def close(self):
     pass

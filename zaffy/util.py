@@ -12,9 +12,14 @@ else:
 if sys.version[:1] == '2':
   basestring = basestring
   _unicode = unicode
+  def normalize_write_string(value, encoding):
+    # python26 だと encode して出さないと文字化けした
+    return value.encode(encoding, 'replace')
 else:
   basestring = str
   _unicode = str
+  def normalize_write_string(value, encoding):
+    return value.encode(encoding, 'replace').decode(encoding, 'replace')
 
 
 def unicode(value, encoding=default_encoding, errors='strict'):
