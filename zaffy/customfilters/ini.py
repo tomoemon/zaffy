@@ -18,7 +18,7 @@ def do_asini(value):
     result = dict(config.items(dummy_section))
   else:
     config.remove_section(dummy_section)
-    result = {section: dict(config.items(section)) for section in config.sections()}
+    result = dict((section, dict(config.items(section))) for section in config.sections())
   return result
 
 if __name__ == '__main__':
