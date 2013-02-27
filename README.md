@@ -10,7 +10,7 @@ setup
 
 ### requirements
 
-* python 2.7 or later
+* python 2.6 or later
 * python setuptools
 
         # on python 2.7
