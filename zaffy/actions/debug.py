@@ -9,11 +9,32 @@ import util
 class Debug(BaseAction):
   """ Debug アクション
 
-  アクションの実行結果などデバッグ用の出力を行なう
+  アクションの実行結果などデバッグ用の出力を行なう。
+  事前に実行した別アクションの実行結果や関数実行結果の出力に用いる。
+
+  .. code-block:: yaml
+
+     - サンプルシナリオ
+
+     - action: http.get
+       url: http://yahoo.co.jp/
+
+     # 直前のアクションの実行結果から HTTP STATUS を取得して表示
+     - action: debug
+       res: <<last.res.status>> #=> 200 と表示
   """
 
   def do_rawprint(self, global_env, scenario, **params):
-    """ rawprint """
+    """ 与えられた値を文字列化して表示する
+
+    .. code-block:: yaml
+
+       - サンプルシナリオ
+
+       - action: debug  # 省略時は rawprint の呼び出し
+         v1: "1 + 2 + 3" #=> 1 + 2 + 3 と表示
+
+    """
     self._write(global_env, scenario, params)
 
   def do_debug(self, global_env, scenario, **params):
@@ -21,7 +42,16 @@ class Debug(BaseAction):
     self.do_rawprint(global_env, scenario, **params)
 
   def do_print(self, global_env, scenario, **params):
-    """ print """
+    """ python の基本データ型のリテラルとして解釈した後に print する
+
+    .. code-block:: yaml
+
+       - サンプルシナリオ
+
+       - action: debug.print
+         v1: "1 + 2 + 3" #=> 6 と表示
+         v2: "[1, 2] + [3, 4]" #=> [1, 2, 3, 4] と表示
+    """
     dump = {}
     for key, value in params.items():
       if isinstance(value, util.basestring):
@@ -30,7 +60,7 @@ class Debug(BaseAction):
           # ビルトイン関数を無効にしてリテラルと一部の式だけ解釈できるようにする
           dump[key] = eval(value, {'__builtins__':{}}, {})
         except Exception:
-          dump[key] = str(value)
+          dump[key] = util.unicode(value)
       else:
         dump[key] = value
     self._write(global_env, scenario, dump)

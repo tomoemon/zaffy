@@ -16,7 +16,11 @@ class Const(with_metaclass(_MetaConst, BaseAction)):
 
   上書き不可能なグローバル定数をシナリオ実行単位内で定義する。シナリオ A が、シナリオ B (Const アクションを実行する) を :ref:`references-actions-require-label` すると、シナリオ A でも定数を参照することができる (=シナリオ実行単位でグローバル)。
 
-  また、config ファイルで事前に共通の定数を定義しておくことも可能。詳しくは ``zaffy/zaffy_sample.yml`` を参照。
+  また、config ファイルで事前に共通の定数を定義しておくことも可能。詳しくは
+
+    ``zaffy/zaffy_sample.yml``
+
+  を参照。
 
 
   .. code-block:: yaml

@@ -15,7 +15,7 @@ class _MetaEnv(type):
 class Env(with_metaclass(_MetaEnv, BaseAction)):
   """ Env アクション
 
-  環境変数を取得する
+  システムの環境変数を取得する。存在しない環境変数名を指定した場合は ``Undefined`` を返す
 
   .. code-block:: yaml
 

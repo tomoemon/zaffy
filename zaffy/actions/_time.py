@@ -18,7 +18,6 @@ class Time(BaseAction):
      - サンプルシナリオ
 
      - action: debug
-       # debug 出力の都合上、now() が返す値が文字列になっている
        t1: <<time.now()>> #=> '2013-02-22 01:35:42.100000'
        t2: <<time.now(days=2,hours=3)>> #=> '2013-02-24 04:35:42.100000'
        t3: <<time.timestamp()>> #=> 1361464681
