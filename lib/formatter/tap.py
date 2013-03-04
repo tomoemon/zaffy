@@ -41,9 +41,21 @@ class Tap(object):
     self.succeeded += 1
     self._write_header('ok')
 
+  @staticmethod
+  def _stacktrace(writer, exception):
+    parent = exception
+    indent = "  "
+    arrow = ""
+    while parent and hasattr(parent, 'original'):
+      writer.write(_i(indent, _u(arrow + "filename: {0}").format(parent.scenario.setting.filename)))
+      writer.write(_i(indent, _u(arrow + "action_index: {0}").format(parent.action_index)))
+      parent = parent.original
+      indent += " "
+      arrow = '-> '
+
   def fail(self, exception):
     """
-    @param exception AssertionFailed
+    @param exception ActionAssertionFailed
     """
     writer = self.writer
 
@@ -51,8 +63,7 @@ class Tap(object):
     self.not_ok_list.append(self.finished())
     self._write_header('not ok')
     writer.write("  ------------------------------------------------------------\n")
-    writer.write(_i("  ", _u("filename: {0}").format(self.current.setting.filename)))
-    writer.write(_i("  ", _u("action_index: {0}").format(exception.action_index)))
+    self._stacktrace(writer, exception)
     writer.write(_i("  ", _u("assert_index: {0}").format(exception.assert_index)))
     writer.write(_i("  ", _u("assertion: {0}").format(exception.assertion)))
     writer.write(_i("  ", _u("compared: ")))
@@ -71,9 +82,8 @@ class Tap(object):
     self.not_ok_list.append(self.finished())
     self._write_header('not ok')
     writer.write("  ------------------------------------------------------------\n")
-    writer.write(_i("  ", _u("filename: {0}").format(self.current.setting.filename)))
-    writer.write(_i("  ", _u("action_index: {0}").format(exception.action_index)))
-    writer.write(_i("  ", _u(exception.stack_trace)))
+    self._stacktrace(writer, exception)
+    writer.write(_i("  ", _u(exception.root.stack_trace)))
     writer.write("  ------------------------------------------------------------\n")
 
   def start_test(self, test_count):

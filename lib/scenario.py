@@ -54,9 +54,9 @@ class Scenario(object):
     global_env["last"] = finished_actions[-1] if finished_actions else None
     try:
       action.run_action(global_env)
-      action.run_assert(global_env)
-    except (ActionException, AssertionFailed) as e:
+    except ActionException as e:
       e.action_index = len(finished_actions)
+      e.scenario = self
       raise
     finally:
       finished_actions.append(action)

@@ -5,19 +5,14 @@ import inspect
 import util
 
 
-class DotDict(dict):
-  def __setattr__(self, name, value):
-    self[name] = value
-
-  def __getattr__(self, name):
-    return self.get(name, None)
-
-
 class ActionParams(object):
 
   def __init__(self, setting, action_klass, preset):
 
-    method = type.__getattribute__(action_klass, 'do_' + setting.method_name)
+    try:
+      method = type.__getattribute__(action_klass, 'do_' + setting.method_name)
+    except AttributeError as e:
+      raise Exception("'{0}' action has no '{1}' method".format(setting.action_name, setting.method_name))
     self._argspec = inspect.getargspec(method)
     self._preset = preset
     self._raw_params = setting.params
@@ -65,9 +60,7 @@ class ActionParams(object):
     if "global_env" in argspec.args:
       params["global_env"] = global_env
 
-    params = util.filter_args(argspec, params)
-
-    self.params = DotDict(params)
+    self.params = util.filter_args(argspec, params)
 
     return self.params
 

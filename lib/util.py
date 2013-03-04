@@ -44,6 +44,14 @@ def open_yaml(filename):
   return codecs.open(filename, encoding='utf-8')
 
 
+class ArgMatchException(Exception):
+  def __init__(self, error_param, error_reason):
+    self.param = error_param
+    self.reason = error_reason
+
+  def __str__(self):
+    return repr(self.__dict__)
+
 def filter_args(argspec, _params):
   """ 関数の引数に適用するためのパラメータを抽出する
   argspec ArgSpec: inspect.getargspec の結果
@@ -64,7 +72,7 @@ def filter_args(argspec, _params):
   exists_keys = list(params.keys())
   for required_param in required_keys:
     if required_param not in params:
-      raise Exception("required: " + required_param)
+      raise ArgMatchException(required_param, "required")
     exists_keys.remove(required_param)
 
   for optional_param_name, value in optional_params.items():
@@ -74,7 +82,7 @@ def filter_args(argspec, _params):
       params[optional_param_name] = value
 
   if not allow_any_params and exists_keys:
-    raise Exception("unknown param: " + exists_keys[0])
+    raise ArgMatchException(exists_keys[0], "unknown")
 
   return params
 

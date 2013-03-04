@@ -10,6 +10,28 @@ class ActionException(Exception):
     self.original = exception
     self.stack_trace = stack_trace
     self.action_index = None
+    self.scenario = None
+
+  @property
+  def root(self):
+    instance = self
+    while isinstance(instance.original, ActionException):
+      instance = instance.original
+    return instance
+
+  def __getattr__(self, key):
+    return getattr(self.original, key)
+
+#  def get_root(self, instance=None):
+#    instance = instance if instance else self
+#    if isinstance(instance.original, ActionException):
+#      return self.get_root(instance.original)
+#    return instance.original
+
+
+class ActionAssertionFailed(ActionException):
+  def __init__(self, exception, stack_trace):
+    super(ActionAssertionFailed, self).__init__(exception, stack_trace)
 
 
 class BaseAction(object):
@@ -44,13 +66,15 @@ class BaseAction(object):
       self.params = self._params.expand(global_env)
       self._run()
       self._filter(global_env)
-    except ActionException as e:
-      self.exception = e
+    except ActionAssertionFailed as e:
+      self.exception = ActionAssertionFailed(e, traceback.format_exc())
     except Exception as e:
       self.exception = ActionException(e, traceback.format_exc())
     finally:
       self.end_time = time.time()
       self.result["execution_time"] = self.end_time - self.start_time
+
+    self._assert(global_env)
 
   def _run(self):
     method = getattr(self, "do_" + self._setting.method_name)
@@ -64,10 +88,12 @@ class BaseAction(object):
     })
     template.set_param(self._params.filter_list, variables, self.result)
 
-  def run_assert(self, global_env):
+  def _assert(self, global_env):
     try:
       self._test_assertex(global_env)
       self._test_assert(global_env)
+    except AssertionFailed as e:
+      raise ActionAssertionFailed(e, traceback.format_exc())
     except template.TemplateFormatException as e:
       raise ActionException(e, traceback.format_exc())
 

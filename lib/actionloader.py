@@ -6,22 +6,29 @@ from actionparams import ActionParams
 import inspect
 
 
+class InvalidActionException(Exception):
+  pass
+
+
 class ActionLoader(object):
 
   def __init__(self):
     self.action_klasses = {}
 
   def create_action(self, raw_obj):
-    setting = ActionSetting(raw_obj)
-
-    action_klass = self.get_action_klass(setting.action_name)
-    param_obj = ActionParams(
-        setting,
-        action_klass,
-        self.get_action_klass('preset').get_applier(
-          setting.action_name, setting.preset_name, False
-        )
-    )
+    try:
+      setting = ActionSetting(raw_obj)
+      preset = self.get_action_klass('preset').get_applier(
+        setting.action_name, setting.preset_name, False
+      )
+      action_klass = self.get_action_klass(setting.action_name)
+      param_obj = ActionParams(
+          setting,
+          action_klass,
+          preset
+      )
+    except Exception as e:
+      raise InvalidActionException(str(e))
     return action_klass(setting, param_obj)
 
   def load_actions(self):

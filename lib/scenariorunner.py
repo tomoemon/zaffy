@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from baseaction import ActionException
-from assertionfailed import AssertionFailed
+from baseaction import ActionException, ActionAssertionFailed
 import time
 
 
@@ -23,11 +22,11 @@ class ScenarioRunner(object):
       try:
         scenario.run(global_env)
         formatter.succeed()
+      except ActionAssertionFailed as e:
+        formatter.fail(e)
+        failed = True
       except ActionException as e:
         formatter.error(e)
-        failed = True
-      except AssertionFailed as e:
-        formatter.fail(e)
         failed = True
     formatter.end_test(time.time() - start_time)
     return failed
