@@ -248,7 +248,7 @@ texinfo_documents = [
 #texinfo_show_urls = 'footnote'
 
 sys.path.insert(0, os.path.abspath('exts'))
-sys.path.insert(0, os.path.abspath('../zaffy'))
+sys.path.insert(0, os.path.abspath('../lib'))
 
 keep_warnings = True
 autodoc_default_flags = ['members', 'no-undoc-members']
@@ -265,7 +265,7 @@ def find_module(glob_path):
     yield module
 
 def create_module_doc(target_module_dir, name):
-  for module in find_module('../zaffy/{0}/*.py'.format(target_module_dir)):
+  for module in find_module('../lib/{0}/*.py'.format(target_module_dir)):
     stripped = module.lstrip('_')
     title = stripped
     title_bar = '=' * len(title) * 2
