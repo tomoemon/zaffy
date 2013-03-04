@@ -12,15 +12,19 @@ else:
 if sys.version[:1] == '2':
   basestring = basestring
   _unicode = unicode
+  _unichr = unichr
   def normalize_write_string(value, encoding):
     # python26 だと encode して出さないと文字化けした
     return value.encode(encoding, 'replace')
 else:
   basestring = str
   _unicode = str
+  _unichr = chr
   def normalize_write_string(value, encoding):
     return value.encode(encoding, 'replace').decode(encoding, 'replace')
 
+def unichr(value):
+  return _unichr(value)
 
 def unicode(value, encoding=default_encoding, errors='strict'):
   if isinstance(value, _unicode):

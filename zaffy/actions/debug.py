@@ -5,6 +5,7 @@ import pprint
 import re
 import util
 
+_UNICODE_REGEXP = re.compile(r"\\u([0-9a-f]{4})")
 
 class Debug(BaseAction):
   """ Debug アクション
@@ -78,5 +79,5 @@ class Debug(BaseAction):
     # 以下のように文字コードで表示されてしまうため置換する
     # 'row1': u'\u6570\u5b66\u30ac\u30fc\u30eb'
     pstr = pprint.pformat(obj, width=80, indent=2)
-    return re.sub(r"\\u([0-9a-f]{4})",
-                  lambda x: unichr(int("0x" + x.group(1), 16)), pstr)
+    return _UNICODE_REGEXP.sub(lambda x: util.unichr(int("0x" + x.group(1), 16)), pstr)
+
