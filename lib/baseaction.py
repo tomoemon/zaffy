@@ -22,12 +22,6 @@ class ActionException(Exception):
   def __getattr__(self, key):
     return getattr(self.original, key)
 
-#  def get_root(self, instance=None):
-#    instance = instance if instance else self
-#    if isinstance(instance.original, ActionException):
-#      return self.get_root(instance.original)
-#    return instance.original
-
 
 class ActionAssertionFailed(ActionException):
   def __init__(self, exception, stack_trace):
