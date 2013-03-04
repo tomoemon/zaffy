@@ -13,7 +13,7 @@ setup
 * python 2.6 or later
 * python setuptools
 
-        # on python 2.7
+        # on python 2.x
         wget http://peak.telecommunity.com/dist/ez_setup.py
         sudo python ez_setup.py
         sudo easy_install pip
@@ -41,7 +41,7 @@ setup
 
 usage
 --------------
-    $ python zaffy/zaffy.py sample_scenario/httpTest.yml
+    $ python lib/zaffy.py sample_scenario/httpTest.yml
       # using config file: zaffy.yml
     1..1
     ok 1 - HTTP テスト
