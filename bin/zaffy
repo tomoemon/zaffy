@@ -1,2 +1,2 @@
 #!/bin/sh
-python "`dirname $0`/../zaffy/zaffy.py" $@
+python "`dirname $0`/../lib/zaffy.py" $@
