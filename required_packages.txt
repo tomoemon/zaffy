@@ -5,4 +5,5 @@ PyYAML
 requests==0.14.0 # SSLError occured with version 0.14.1 or later on Ubuntu 12.04
 python-dateutil
 pyreadline
+colorama
 

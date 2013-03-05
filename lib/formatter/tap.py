@@ -31,15 +31,15 @@ class Tap(object):
   def start(self, scenario):
     self.current = scenario
 
-  def _write_header(self, succeeded):
-    self.writer.write("{0} {1}".format(succeeded, self.finished()))
-    self.writer.write(_i(" - ", _u("{0}").format(self.current.doc.strip())))
+  def _write_header(self, succeeded, style):
+    self.writer.write("{0} {1}".format(succeeded, self.finished()), {"style": style})
+    self.writer.write(_i(" - ", _u("{0}").format(self.current.doc.strip())), {"style": style})
 
   def succeed(self):
     writer = self.writer
 
     self.succeeded += 1
-    self._write_header('ok')
+    self._write_header('ok', "success")
 
   @staticmethod
   def _stacktrace(writer, exception):
@@ -61,7 +61,7 @@ class Tap(object):
 
     self.failed += 1
     self.not_ok_list.append(self.finished())
-    self._write_header('not ok')
+    self._write_header('not ok', "error")
     writer.write("  ------------------------------------------------------------\n")
     self._stacktrace(writer, exception)
     writer.write(_i("  ", _u("assert_index: {0}").format(exception.assert_index)))
@@ -80,7 +80,7 @@ class Tap(object):
 
     self.errored += 1
     self.not_ok_list.append(self.finished())
-    self._write_header('not ok')
+    self._write_header('not ok', "error")
     writer.write("  ------------------------------------------------------------\n")
     self._stacktrace(writer, exception)
     writer.write(_i("  ", _u(exception.root.stack_trace)))
@@ -98,16 +98,18 @@ class Tap(object):
     writer.write("\n")
     if self.not_ok_list:
       writer.write("FAILED tests {0}\n".format(
-        ", ".join([_u(e) for e in self.not_ok_list])))
+        ", ".join([_u(e) for e in self.not_ok_list])), {"style": "error_result"})
       writer.write("Failed {0}/{1} tests, {2:.2f}% ok ({3:.3f} sec elapsed)\n".format(
         len(self.not_ok_list), self.test_count,
         float(self.succeeded) / self.test_count * 100,
-        elapsed_time))
+        elapsed_time), {"style": "error_result"})
+      writer.write("\n")
     else:
       if self.test_count == 1:
-        writer.write("1 test succeeded ({0:.3f} sec elapsed)\n".format(
-          elapsed_time))
+        writer.write("1 test passed ({0:.3f} sec elapsed)\n".format(
+          elapsed_time), {"style": "success_result"})
       else:
-        writer.write("{0} tests all succeeded ({1:.3f} sec elapsed)\n".format(
-          self.test_count, elapsed_time))
+        writer.write("{0} tests all passed ({1:.3f} sec elapsed)\n".format(
+          self.test_count, elapsed_time), {"style": "success_result"})
+      writer.write("\n")
 
