@@ -39,14 +39,21 @@ class ColoredStdout(Stdout):
 
   def write(self, data, option={}):
     style = option.get('style', "")
-    s = ""
+    start = ""
+    end = Back.RESET + Style.RESET_ALL
     if style == 'error':
-      s = Fore.RED + Style.BRIGHT
+      start = Fore.RED + Style.BRIGHT
     elif style == 'error_result':
-      s = Fore.WHITE + Back.RED + Style.BRIGHT
+      start = Fore.WHITE + Back.RED + Style.BRIGHT
     elif style == 'success':
-      s = Fore.GREEN + Style.BRIGHT
+      start = Fore.GREEN + Style.BRIGHT
     elif style == 'success_result':
-      s = Fore.WHITE + Back.GREEN + Style.BRIGHT
-    super(ColoredStdout, self).write(s + data)
+      start = Fore.WHITE + Back.GREEN + Style.BRIGHT
+    else:
+      start = Fore.RESET + Back.RESET + Style.RESET_ALL
+
+    stripped = data.rstrip("\n")
+    strip_count = len(data) - len(stripped)
+
+    super(ColoredStdout, self).write(start + stripped + end + "\n" * strip_count)
 
