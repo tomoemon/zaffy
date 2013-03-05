@@ -29,7 +29,7 @@ class Stdout(object):
 class ColoredStdout(Stdout):
   def __init__(self):
     super(ColoredStdout, self).__init__()
-    colorama.init(autoreset=True)
+    colorama.init()
 
   def _reset_style(self):
     self._set_style(Fore.RESET + Back.RESET + Style.RESET_ALL)
@@ -40,7 +40,7 @@ class ColoredStdout(Stdout):
   def write(self, data, option={}):
     style = option.get('style', "")
     start = ""
-    end = Back.RESET + Style.RESET_ALL
+    end = Fore.RESET + Back.RESET + Style.RESET_ALL
     if style == 'error':
       start = Fore.RED + Style.BRIGHT
     elif style == 'error_result':
@@ -55,5 +55,7 @@ class ColoredStdout(Stdout):
     stripped = data.rstrip("\n")
     strip_count = len(data) - len(stripped)
 
-    super(ColoredStdout, self).write(start + stripped + end + "\n" * strip_count)
+    sys.stdout.write(start)
+    super(ColoredStdout, self).write(stripped)
+    sys.stdout.write(end + "\n" * strip_count)
 
