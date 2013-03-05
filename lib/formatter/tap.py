@@ -103,7 +103,6 @@ class Tap(object):
         len(self.not_ok_list), self.test_count,
         float(self.succeeded) / self.test_count * 100,
         elapsed_time), {"style": "error_result"})
-      writer.write("\n")
     else:
       if self.test_count == 1:
         writer.write("1 test passed ({0:.3f} sec elapsed)\n".format(
@@ -111,5 +110,4 @@ class Tap(object):
       else:
         writer.write("{0} tests all passed ({1:.3f} sec elapsed)\n".format(
           self.test_count, elapsed_time), {"style": "success_result"})
-      writer.write("\n")
 

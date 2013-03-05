@@ -43,7 +43,7 @@ class ColoredStdout(Stdout):
     if style == 'error':
       s = Fore.RED + Style.BRIGHT
     elif style == 'error_result':
-      s = Fore.BLACK + Back.RED + Style.BRIGHT
+      s = Fore.WHITE + Back.RED + Style.BRIGHT
     elif style == 'success':
       s = Fore.GREEN + Style.BRIGHT
     elif style == 'success_result':
