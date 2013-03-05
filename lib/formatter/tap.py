@@ -99,15 +99,15 @@ class Tap(object):
     if self.not_ok_list:
       writer.write("FAILED tests {0}\n".format(
         ", ".join([_u(e) for e in self.not_ok_list])), {"style": "error_result"})
-      writer.write("Failed {0}/{1} tests, {2:.2f}% ok ({3:.3f} sec elapsed)\n".format(
+      writer.write("Failed {0}/{1} tests, {2:.2f}% ok ({3:.3f} sec)\n".format(
         len(self.not_ok_list), self.test_count,
         float(self.succeeded) / self.test_count * 100,
         elapsed_time), {"style": "error_result"})
     else:
       if self.test_count == 1:
-        writer.write("1 test passed ({0:.3f} sec elapsed)\n".format(
+        writer.write("1 test passed ({0:.3f} sec)\n".format(
           elapsed_time), {"style": "success_result"})
       else:
-        writer.write("{0} tests all passed ({1:.3f} sec elapsed)\n".format(
+        writer.write("{0} tests all passed ({1:.3f} sec)\n".format(
           self.test_count, elapsed_time), {"style": "success_result"})
 
