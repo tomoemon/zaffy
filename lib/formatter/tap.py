@@ -83,7 +83,7 @@ class Tap(object):
     self._write_header('not ok', "error")
     writer.write("  ------------------------------------------------------------\n")
     self._stacktrace(writer, exception)
-    writer.write(_i("  ", _u(exception.root.stack_trace)))
+    writer.write(_i("  ", _u(exception.root.stack_trace).rstrip()))
     writer.write("  ------------------------------------------------------------\n")
 
   def start_test(self, test_count):
