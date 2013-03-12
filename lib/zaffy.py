@@ -13,7 +13,7 @@ from actionloader import action_loader
 from aggregator import Aggregator
 from scenariorunner import ScenarioRunner
 from formatter.tap import Tap
-from writer.stdout import ColoredStdout
+from writer.stdout import ColoredStdout, Stdout
 from moduleloader import LoadError
 import template
 import util
@@ -51,7 +51,11 @@ def init(formatter):
 
 
 def main():
-  formatter = Tap(ColoredStdout())
+  if option.enable_color:
+    stdout = ColoredStdout()
+  else:
+    stdout = Stdout()
+  formatter = Tap(stdout)
   global_env = init(formatter)
   if option.targets:
     agg = Aggregator()
