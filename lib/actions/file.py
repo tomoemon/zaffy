@@ -72,7 +72,7 @@ class File(BaseAction):
     shutil.copy(path, to)
 
   def do_delete(self, path):
-    """ remove """
+    """ delete file """
     if os.path.isdir(path):
       shutil.rmtree(path)
     else:

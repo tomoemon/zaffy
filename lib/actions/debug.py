@@ -43,7 +43,7 @@ class Debug(BaseAction):
     self.do_rawprint(global_env, scenario, **params)
 
   def do_print(self, global_env, scenario, **params):
-    """ python の基本データ型のリテラルとして解釈した後に print する
+    """ 与えられた文字列値を python の基本データ型のリテラルとして解釈した後に print する
 
     .. code-block:: yaml
 
