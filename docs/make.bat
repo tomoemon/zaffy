@@ -3,7 +3,7 @@
 REM Command file for Sphinx documentation
 
 if "%SPHINXBUILD%" == "" (
-	set SPHINXBUILD=c:\application\python27\scripts\sphinx-build
+	set SPHINXBUILD=sphinx-build
 )
 set BUILDDIR=_build
 REM set BUILDDIR=..\..\zaffy_pages
