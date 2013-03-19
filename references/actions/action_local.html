@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>local アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>local &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="preset アクション" href="action_preset.html" />
-    <link rel="prev" title="http アクション" href="action_http.html" /> 
+    <link rel="next" title="preset" href="action_preset.html" />
+    <link rel="prev" title="http" href="action_http.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_preset.html" title="preset アクション"
+          <a href="action_preset.html" title="preset"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_http.html" title="http アクション"
+          <a href="action_http.html" title="http"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_http.html"
-                        title="前の章へ">http アクション</a></p>
+                        title="前の章へ">http</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_preset.html"
-                        title="次の章へ">preset アクション</a></p>
+                        title="次の章へ">preset</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_local.txt"
@@ -86,21 +86,47 @@
           <div class="body">
             
   <div class="section" id="module-actions.local">
-<span id="local-アクション"></span><h1>local アクション<a class="headerlink" href="#module-actions.local" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="local"></span><span id="references-actions-local-label"></span><h1>local<a class="headerlink" href="#module-actions.local" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.local.Local">
-<em class="property">class </em><tt class="descclassname">actions.local.</tt><tt class="descname">Local</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions.local.Local" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Localアクション
-scenario単位のローカル変数を保存するアクション</p>
+<em class="property">class </em><tt class="descclassname">actions.local.</tt><tt class="descname">Local</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.local.Local" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Local アクション</p>
+<p>シナリオ単位のローカル変数を保存する</p>
+<p>上書き可能なローカル変数をシナリオ内で定義する。<a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> と異なるのは上書き可能な点と、シナリオ内でのみ有効な点。シナリオ A が、シナリオ B (local アクションを実行する) を <a class="reference internal" href="action_require.html#references-actions-require-label"><em>require</em></a> しても、シナリオ A から B のローカル変数を参照することはできない (<a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> なら参照可能)</p>
 <dl class="method">
 <dt id="actions.local.Local.do_local">
 <tt class="descname">do_local</tt><big>(</big><em>scenario</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#actions.local.Local.do_local" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>do_set の省略呼び出し</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions.local.Local.do_set">
 <tt class="descname">do_set</tt><big>(</big><em>scenario</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#actions.local.Local.do_set" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ローカル変数の定義</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">local</span>
+  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">taro</span>
+  <span class="l-Scalar-Plain">pass</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">taropass</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http.get</span>
+  <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://yahoo.co.jp/</span>
+  <span class="l-Scalar-Plain">params</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;local.user&gt;&gt;</span>
+    <span class="l-Scalar-Plain">pass</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;local.pass&gt;&gt;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>(any)</strong> (<em>any</em>) &#8211; 任意のキーで任意の値を指定する</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return dict:</th><td class="field-body">現在定義されているローカル変数の辞書を返す</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -122,10 +148,10 @@ scenario単位のローカル変数を保存するアクション</p>
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_preset.html" title="preset アクション"
+          <a href="action_preset.html" title="preset"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_http.html" title="http アクション"
+          <a href="action_http.html" title="http"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

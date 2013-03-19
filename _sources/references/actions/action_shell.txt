@@ -1,6 +1,8 @@
 
-======================
-shell アクション
-======================
+.. _references-actions-shell-label:
+
+==========
+shell
+==========
 
 .. automodule:: actions.shell

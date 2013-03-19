@@ -1,6 +1,8 @@
 
-==========================
-require アクション
-==========================
+.. _references-actions-require-label:
+
+==============
+require
+==============
 
 .. automodule:: actions.require

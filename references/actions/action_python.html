@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>python アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>python &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="require アクション" href="action_require.html" />
-    <link rel="prev" title="preset アクション" href="action_preset.html" /> 
+    <link rel="next" title="require" href="action_require.html" />
+    <link rel="prev" title="preset" href="action_preset.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_require.html" title="require アクション"
+          <a href="action_require.html" title="require"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_preset.html" title="preset アクション"
+          <a href="action_preset.html" title="preset"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_preset.html"
-                        title="前の章へ">preset アクション</a></p>
+                        title="前の章へ">preset</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_require.html"
-                        title="次の章へ">require アクション</a></p>
+                        title="次の章へ">require</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_python.txt"
@@ -86,21 +86,45 @@
           <div class="body">
             
   <div class="section" id="module-actions.python">
-<span id="python-アクション"></span><h1>python アクション<a class="headerlink" href="#module-actions.python" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="python"></span><span id="references-actions-python-label"></span><h1>python<a class="headerlink" href="#module-actions.python" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.python.Python">
-<em class="property">class </em><tt class="descclassname">actions.python.</tt><tt class="descname">Python</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions.python.Python" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Pythonアクション
-指定されたコードを実行する</p>
+<em class="property">class </em><tt class="descclassname">actions.python.</tt><tt class="descname">Python</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.python.Python" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Python アクション</p>
+<p>任意の python コードを実行する</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">local</span>
+  <span class="l-Scalar-Plain">x</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">4</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">python</span>
+  <span class="l-Scalar-Plain">code</span><span class="p-Indicator">:</span> <span class="p-Indicator">|</span>
+    <span class="no">import math</span>
+    <span class="no">z = math.factorial(local[&#39;x&#39;])</span>
+  <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">res.z is eq 24</span>
+</pre></div>
+</div>
 <dl class="method">
 <dt id="actions.python.Python.do_python">
 <tt class="descname">do_python</tt><big>(</big><em>code</em>, <em>global_env</em><big>)</big><a class="headerlink" href="#actions.python.Python.do_python" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>do_run の省略呼び出し</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions.python.Python.do_run">
 <tt class="descname">do_run</tt><big>(</big><em>code</em>, <em>global_env</em><big>)</big><a class="headerlink" href="#actions.python.Python.do_run" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>code</strong> (<em>string</em>) &#8211; python として実行可能なコード</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">(<em>dict</em>) コード上のローカル変数の値が辞書形式でセットされる</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -122,10 +146,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_require.html" title="require アクション"
+          <a href="action_require.html" title="require"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_preset.html" title="preset アクション"
+          <a href="action_preset.html" title="preset"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

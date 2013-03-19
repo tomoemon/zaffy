@@ -1,6 +1,8 @@
 
-======================
-sleep アクション
-======================
+.. _references-actions-sleep-label:
+
+==========
+sleep
+==========
 
 .. automodule:: actions.sleep

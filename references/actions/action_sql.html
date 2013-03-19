@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>sql アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>sql &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="ssh アクション" href="action_ssh.html" />
-    <link rel="prev" title="sleep アクション" href="action_sleep.html" /> 
+    <link rel="next" title="ssh" href="action_ssh.html" />
+    <link rel="prev" title="sleep" href="action_sleep.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_ssh.html" title="ssh アクション"
+          <a href="action_ssh.html" title="ssh"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_sleep.html" title="sleep アクション"
+          <a href="action_sleep.html" title="sleep"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_sleep.html"
-                        title="前の章へ">sleep アクション</a></p>
+                        title="前の章へ">sleep</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_ssh.html"
-                        title="次の章へ">ssh アクション</a></p>
+                        title="次の章へ">ssh</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_sql.txt"
@@ -86,44 +86,153 @@
           <div class="body">
             
   <div class="section" id="module-actions.sql">
-<span id="sql-アクション"></span><h1>sql アクション<a class="headerlink" href="#module-actions.sql" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="sql"></span><span id="references-actions-sql-label"></span><h1>sql<a class="headerlink" href="#module-actions.sql" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.sql.Sql">
-<em class="property">class </em><tt class="descclassname">actions.sql.</tt><tt class="descname">Sql</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions.sql.Sql" title="この定義へのパーマリンク">¶</a></dt>
-<dd><dl class="attribute">
-<dt id="actions.sql.Sql.DEFAULT_PORT">
-<tt class="descname">DEFAULT_PORT</tt><em class="property"> = 3306</em><a class="headerlink" href="#actions.sql.Sql.DEFAULT_PORT" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
+<em class="property">class </em><tt class="descclassname">actions.sql.</tt><tt class="descname">Sql</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.sql.Sql" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Sql アクション</p>
+<p>SQL に準拠した Database に対してクエリを実行する</p>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">接続先パスワードなどは <a class="reference internal" href="action_preset.html#references-actions-preset-label"><em>preset</em></a> で定義しておくと、毎回記述する必要がなくなります。</p>
+</div>
 <dl class="method">
 <dt id="actions.sql.Sql.do_select">
-<tt class="descname">do_select</tt><big>(</big><em>driver</em>, <em>host</em>, <em>db</em>, <em>user</em>, <em>password</em>, <em>sql</em>, <em>port=3306</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_select" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">do_select</tt><big>(</big><em>driver</em>, <em>sql</em>, <em>db</em>, <em>host=None</em>, <em>user=None</em>, <em>password=None</em>, <em>port=3306</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_select" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>参照系のクエリ(SELECT, SHOW など)を実行し、タプル形式で結果を取得する</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sql.select</span>
+  <span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mysql</span>
+  <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">localhost</span>
+  <span class="l-Scalar-Plain">db</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">user_db</span>
+  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">root</span>
+  <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hogehoge</span>
+  <span class="l-Scalar-Plain">sql</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">select * from user where user_id=1</span>
+  <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+   <span class="p-Indicator">-</span> <span class="p-Indicator">&gt;</span>
+    <span class="no">res.rows[0] is eq</span>
+      <span class="no">(1, &quot;nanoha&quot;, &quot;2012-04-10 15:57:26&quot;|todatetime, &quot;2012-04-10 15:57:26&quot;|todatetime)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>driver</strong> (<em>string</em>) &#8211; データベースのドライバ (<tt class="docutils literal"><span class="pre">mysql</span></tt> または <tt class="docutils literal"><span class="pre">sqlite</span></tt> のみ指定可能)</li>
+<li><strong>sql</strong> (<em>string</em>) &#8211; 実行するSQL文</li>
+<li><strong>db</strong> (<em>string</em>) &#8211; データベース名</li>
+<li><strong>host</strong> (<em>string</em>) &#8211; データベースホスト名 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>user</strong> (<em>string</em>) &#8211; DB接続のためのユーザ (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; DB接続のためのパスワード (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>port</strong> (<em>int</em>) &#8211; DB接続先のポート番号 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>rowcount</strong> (<em>int</em>) - 取得した行数</li>
+<li><strong>rows</strong> (<em>list</em>) - 取得した行(tuple)のリスト</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions.sql.Sql.do_selectdict">
-<tt class="descname">do_selectdict</tt><big>(</big><em>driver</em>, <em>host</em>, <em>db</em>, <em>user</em>, <em>password</em>, <em>sql</em>, <em>port=3306</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_selectdict" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">do_selectdict</tt><big>(</big><em>driver</em>, <em>sql</em>, <em>db</em>, <em>host=None</em>, <em>user=None</em>, <em>password=None</em>, <em>port=3306</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_selectdict" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>参照系のクエリ(SELECT, SHOW など)を実行し、辞書形式で結果を取得する</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sql.selectdict</span>
+  <span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mysql</span>
+  <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">localhost</span>
+  <span class="l-Scalar-Plain">db</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">user_db</span>
+  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">root</span>
+  <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hogehoge</span>
+  <span class="l-Scalar-Plain">sql</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">select * from user where user_id=1</span>
+  <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+   <span class="p-Indicator">-</span> <span class="p-Indicator">&gt;</span>
+    <span class="no">res.rows[0] is eq</span>
+      <span class="no">{</span>
+       <span class="no">&#39;user_id&#39;: 1,</span>
+       <span class="no">&#39;user_name&#39;: &quot;nanoha&quot;,</span>
+       <span class="no">&#39;created_date&#39;: &quot;2012-04-10 15:57:26&quot;|todatetime,</span>
+       <span class="no">&#39;updated_date&#39;: &quot;2012-04-10 15:57:26&quot;|todatetime</span>
+      <span class="no">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>driver</strong> (<em>string</em>) &#8211; データベースのドライバ (<tt class="docutils literal"><span class="pre">mysql</span></tt> または <tt class="docutils literal"><span class="pre">sqlite</span></tt> のみ指定可能)</li>
+<li><strong>sql</strong> (<em>string</em>) &#8211; 実行するSQL文</li>
+<li><strong>db</strong> (<em>string</em>) &#8211; データベース名</li>
+<li><strong>host</strong> (<em>string</em>) &#8211; データベースホスト名 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>user</strong> (<em>string</em>) &#8211; DB接続のためのユーザ (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; DB接続のためのパスワード (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>port</strong> (<em>int</em>) &#8211; DB接続先のポート番号 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>rowcount</strong> (<em>int</em>) - 取得した行数</li>
+<li><strong>rows</strong> (<em>list</em>) - 取得した行(dict)のリスト、行のキーはカラム名に対応する</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions.sql.Sql.do_update">
-<tt class="descname">do_update</tt><big>(</big><em>driver</em>, <em>host</em>, <em>db</em>, <em>user</em>, <em>password</em>, <em>sql</em>, <em>port=3306</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_update" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">do_update</tt><big>(</big><em>driver</em>, <em>sql</em>, <em>db</em>, <em>host=None</em>, <em>user=None</em>, <em>password=None</em>, <em>port=3306</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_update" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>更新系のクエリ(UPDATE, INSERT など)を実行する</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
-<dl class="attribute">
-<dt id="actions.sql.Sql.is_pool_connection">
-<tt class="descname">is_pool_connection</tt><em class="property"> = False</em><a class="headerlink" href="#actions.sql.Sql.is_pool_connection" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="actions.sql.Sql.setup">
-<em class="property">classmethod </em><tt class="descname">setup</tt><big>(</big><em>config</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.setup" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="actions.sql.Sql.teardown">
-<em class="property">classmethod </em><tt class="descname">teardown</tt><big>(</big><big>)</big><a class="headerlink" href="#actions.sql.Sql.teardown" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sql.update</span>
+  <span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mysql</span>
+  <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">localhost</span>
+  <span class="l-Scalar-Plain">db</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">user_db</span>
+  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">root</span>
+  <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hogehoge</span>
+  <span class="l-Scalar-Plain">sql</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">update user set user_name=&quot;fate&quot; where user_id=1</span>
+  <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+   <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">res.rowcount is eq 1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>driver</strong> (<em>string</em>) &#8211; データベースのドライバ  (<tt class="docutils literal"><span class="pre">mysql</span></tt> または <tt class="docutils literal"><span class="pre">sqlite</span></tt> のみ指定可能)</li>
+<li><strong>sql</strong> (<em>string|list</em>) &#8211; 実行するSQL文。リストを渡した場合は複数実行する</li>
+<li><strong>db</strong> (<em>string</em>) &#8211; データベース名</li>
+<li><strong>host</strong> (<em>string</em>) &#8211; データベースホスト名 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>user</strong> (<em>string</em>) &#8211; DB接続のためのユーザ (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; DB接続のためのパスワード (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>port</strong> (<em>int</em>) &#8211; DB接続先のポート番号 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>rowcount</strong> (<em>int</em>) - 更新した行数、<tt class="docutils literal"><span class="pre">sql</span></tt> に複数のSQL文を渡した場合は最後に実行した結果</li>
+<li><strong>rows</strong> (<em>list</em>) - 空リスト</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -145,10 +254,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_ssh.html" title="ssh アクション"
+          <a href="action_ssh.html" title="ssh"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_sleep.html" title="sleep アクション"
+          <a href="action_sleep.html" title="sleep"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ssh アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>ssh &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="time アクション" href="action_time.html" />
-    <link rel="prev" title="sql アクション" href="action_sql.html" /> 
+    <link rel="next" title="time" href="action_time.html" />
+    <link rel="prev" title="sql" href="action_sql.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_time.html" title="time アクション"
+          <a href="action_time.html" title="time"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_sql.html" title="sql アクション"
+          <a href="action_sql.html" title="sql"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_sql.html"
-                        title="前の章へ">sql アクション</a></p>
+                        title="前の章へ">sql</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_time.html"
-                        title="次の章へ">time アクション</a></p>
+                        title="次の章へ">time</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_ssh.txt"
@@ -86,31 +86,128 @@
           <div class="body">
             
   <div class="section" id="module-actions._ssh">
-<span id="ssh-アクション"></span><h1>ssh アクション<a class="headerlink" href="#module-actions._ssh" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="ssh"></span><span id="references-actions-ssh-label"></span><h1>ssh<a class="headerlink" href="#module-actions._ssh" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions._ssh.Ssh">
-<em class="property">class </em><tt class="descclassname">actions._ssh.</tt><tt class="descname">Ssh</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Ssh アクション
-SSH接続を通してプロセスの実行などを行なう</p>
+<em class="property">class </em><tt class="descclassname">actions._ssh.</tt><tt class="descname">Ssh</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Ssh アクション</p>
+<p>SSH接続を通してプロセスの実行などを行なう</p>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">接続先パスワードなどは <a class="reference internal" href="action_preset.html#references-actions-preset-label"><em>preset</em></a> で定義しておくと、毎回記述する必要がなくなります。</p>
+</div>
 <dl class="method">
 <dt id="actions._ssh.Ssh.do_get">
 <tt class="descname">do_get</tt><big>(</big><em>host</em>, <em>user</em>, <em>local</em>, <em>remote</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_get" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>scp でファイルを取得する</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ssh.get</span>
+  <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">localhost</span>
+  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">testuser</span>
+  <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hogehoge</span>
+  <span class="l-Scalar-Plain">remote</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/tmp/zaffy.py</span>
+  <span class="l-Scalar-Plain">local</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">zaffy2.py</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first last simple">
+<li><strong>host</strong> (<em>string</em>) &#8211; 接続先ホスト名、またはIPアドレス</li>
+<li><strong>user</strong> (<em>string</em>) &#8211; 接続先ホストにおけるユーザ名</li>
+<li><strong>local</strong> (<em>string</em>) &#8211; ローカルのファイル保存先</li>
+<li><strong>remote</strong> (<em>string</em>) &#8211; リモートのファイル取得先</li>
+<li><strong>port</strong> (<em>int</em>) &#8211; 接続先ポート番号</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; パスワード認証を行う場合のユーザのログインパスワード</li>
+<li><strong>key_file</strong> (<em>string</em>) &#8211; 公開鍵認証を行う場合の公開鍵ファイル</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions._ssh.Ssh.do_put">
 <tt class="descname">do_put</tt><big>(</big><em>host</em>, <em>user</em>, <em>local</em>, <em>remote</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_put" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>scp でファイルを送信する</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ssh.put</span>
+  <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">localhost</span>
+  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">testuser</span>
+  <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hogehoge</span>
+  <span class="l-Scalar-Plain">local</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">zaffy.py</span>
+  <span class="l-Scalar-Plain">remote</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/tmp/zaffy.py</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first last simple">
+<li><strong>host</strong> (<em>string</em>) &#8211; 接続先ホスト名、またはIPアドレス</li>
+<li><strong>user</strong> (<em>string</em>) &#8211; 接続先ホストにおけるユーザ名</li>
+<li><strong>local</strong> (<em>string</em>) &#8211; ローカルの送信ファイル</li>
+<li><strong>remote</strong> (<em>string</em>) &#8211; リモートのファイル保存先</li>
+<li><strong>port</strong> (<em>int</em>) &#8211; 接続先ポート番号</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; パスワード認証を行う場合のユーザのログインパスワード</li>
+<li><strong>key_file</strong> (<em>string</em>) &#8211; 公開鍵認証を行う場合の公開鍵ファイル</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions._ssh.Ssh.do_run">
 <tt class="descname">do_run</tt><big>(</big><em>host</em>, <em>user</em>, <em>cmd</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_run" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ssh 接続してコマンドを実行する</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ssh</span>
+  <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">localhost</span>
+  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">testuser</span>
+  <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hogehoge</span>
+  <span class="l-Scalar-Plain">cmd</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ls -l</span>
+  <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">res.returncode is eq 0</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>host</strong> (<em>string</em>) &#8211; 接続先ホスト名、またはIPアドレス</li>
+<li><strong>user</strong> (<em>string</em>) &#8211; 接続先ホストにおけるユーザ名</li>
+<li><strong>cmd</strong> (<em>string</em>) &#8211; 実行コマンド</li>
+<li><strong>port</strong> (<em>int</em>) &#8211; 接続先ポート番号</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; パスワード認証を行う場合のユーザのログインパスワード</li>
+<li><strong>key_file</strong> (<em>string</em>) &#8211; 公開鍵認証を行う場合の公開鍵ファイル</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>stdout</strong> (<em>string</em>) - 実行したコマンドの標準出力</li>
+<li><strong>stderr</strong> (<em>string</em>) - 実行したコマンドの標準エラー</li>
+<li><strong>returncode</strong> (<em>int</em>) - 実行したコマンドの終了ステータス</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions._ssh.Ssh.do_ssh">
 <tt class="descname">do_ssh</tt><big>(</big><em>host</em>, <em>user</em>, <em>cmd</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_ssh" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>do_run の省略呼び出し</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -132,10 +229,10 @@ SSH接続を通してプロセスの実行などを行なう</p>
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_time.html" title="time アクション"
+          <a href="action_time.html" title="time"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_sql.html" title="sql アクション"
+          <a href="action_sql.html" title="sql"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

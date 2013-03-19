@@ -1,6 +1,8 @@
 
-====================
-file アクション
-====================
+.. _references-actions-file-label:
+
+========
+file
+========
 
 .. automodule:: actions.file

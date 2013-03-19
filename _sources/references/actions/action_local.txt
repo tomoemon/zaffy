@@ -1,6 +1,8 @@
 
-======================
-local アクション
-======================
+.. _references-actions-local-label:
+
+==========
+local
+==========
 
 .. automodule:: actions.local

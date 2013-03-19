@@ -1,6 +1,8 @@
 
-====================
-http アクション
-====================
+.. _references-actions-http-label:
 
-.. automodule:: actions.http
+========
+http
+========
+
+.. automodule:: actions._http

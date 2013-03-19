@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>env アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>env &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="file アクション" href="action_file.html" />
-    <link rel="prev" title="debug アクション" href="action_debug.html" /> 
+    <link rel="next" title="file" href="action_file.html" />
+    <link rel="prev" title="debug" href="action_debug.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_file.html" title="file アクション"
+          <a href="action_file.html" title="file"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_debug.html" title="debug アクション"
+          <a href="action_debug.html" title="debug"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_debug.html"
-                        title="前の章へ">debug アクション</a></p>
+                        title="前の章へ">debug</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_file.html"
-                        title="次の章へ">file アクション</a></p>
+                        title="次の章へ">file</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_env.txt"
@@ -86,11 +86,21 @@
           <div class="body">
             
   <div class="section" id="module-actions.env">
-<span id="env-アクション"></span><h1>env アクション<a class="headerlink" href="#module-actions.env" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<dl class="attribute">
+<span id="env"></span><span id="references-actions-env-label"></span><h1>env<a class="headerlink" href="#module-actions.env" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="class">
 <dt id="actions.env.Env">
-<tt class="descclassname">actions.env.</tt><tt class="descname">Env</tt><a class="headerlink" href="#actions.env.Env" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><tt class="descclassname">actions.env.</tt><tt class="descname">Env</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.env.Env" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Env アクション</p>
+<p>システムの環境変数を取得する。存在しない環境変数名を指定した場合は <tt class="docutils literal"><span class="pre">Undefined</span></tt> を返す</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
+  <span class="l-Scalar-Plain">e1</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;env.PATH&gt;&gt;</span> <span class="c1">#=&gt; 環境変数の Path を取得</span>
+  <span class="l-Scalar-Plain">e2</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;env.HOGE&gt;&gt;</span> <span class="c1">#=&gt; 存在しないので Undefined を取得</span>
+  <span class="l-Scalar-Plain">e3</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;env.HOGE|d(&#39;xyz&#39;)&gt;&gt;</span> <span class="c1">#=&gt; デフォルト値 &#39;xyz&#39; を取得</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </div>
 
@@ -110,10 +120,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_file.html" title="file アクション"
+          <a href="action_file.html" title="file"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_debug.html" title="debug アクション"
+          <a href="action_debug.html" title="debug"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

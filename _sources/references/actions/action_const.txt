@@ -1,6 +1,8 @@
 
-======================
-const アクション
-======================
+.. _references-actions-const-label:
+
+==========
+const
+==========
 
 .. automodule:: actions.const

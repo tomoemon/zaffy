@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>sleep アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>sleep &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="sql アクション" href="action_sql.html" />
-    <link rel="prev" title="shell アクション" href="action_shell.html" /> 
+    <link rel="next" title="sql" href="action_sql.html" />
+    <link rel="prev" title="shell" href="action_shell.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_sql.html" title="sql アクション"
+          <a href="action_sql.html" title="sql"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_shell.html" title="shell アクション"
+          <a href="action_shell.html" title="shell"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_shell.html"
-                        title="前の章へ">shell アクション</a></p>
+                        title="前の章へ">shell</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_sql.html"
-                        title="次の章へ">sql アクション</a></p>
+                        title="次の章へ">sql</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_sleep.txt"
@@ -86,16 +86,39 @@
           <div class="body">
             
   <div class="section" id="module-actions.sleep">
-<span id="sleep-アクション"></span><h1>sleep アクション<a class="headerlink" href="#module-actions.sleep" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="sleep"></span><span id="references-actions-sleep-label"></span><h1>sleep<a class="headerlink" href="#module-actions.sleep" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.sleep.Sleep">
-<em class="property">class </em><tt class="descclassname">actions.sleep.</tt><tt class="descname">Sleep</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions.sleep.Sleep" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Sleep アクション
-指定した時間処理を停止する</p>
+<em class="property">class </em><tt class="descclassname">actions.sleep.</tt><tt class="descname">Sleep</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.sleep.Sleep" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Sleep アクション</p>
+<p>指定した時間、処理を停止する</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
+  <span class="l-Scalar-Plain">t1</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">start</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sleep</span>
+  <span class="l-Scalar-Plain">time</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">3000</span> <span class="c1"># =&gt; 3秒間停止する</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
+  <span class="l-Scalar-Plain">t2</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">end</span>
+</pre></div>
+</div>
 <dl class="method">
 <dt id="actions.sleep.Sleep.do_sleep">
 <tt class="descname">do_sleep</tt><big>(</big><em>time</em><big>)</big><a class="headerlink" href="#actions.sleep.Sleep.do_sleep" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>指定した時間、処理を停止する</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>time</strong> (<em>int</em>) &#8211; 停止する秒数(ミリ秒)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -117,10 +140,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_sql.html" title="sql アクション"
+          <a href="action_sql.html" title="sql"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_shell.html" title="shell アクション"
+          <a href="action_shell.html" title="shell"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

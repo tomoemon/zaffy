@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>require アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>require &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="shell アクション" href="action_shell.html" />
-    <link rel="prev" title="python アクション" href="action_python.html" /> 
+    <link rel="next" title="shell" href="action_shell.html" />
+    <link rel="prev" title="python" href="action_python.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_shell.html" title="shell アクション"
+          <a href="action_shell.html" title="shell"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_python.html" title="python アクション"
+          <a href="action_python.html" title="python"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_python.html"
-                        title="前の章へ">python アクション</a></p>
+                        title="前の章へ">python</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_shell.html"
-                        title="次の章へ">shell アクション</a></p>
+                        title="次の章へ">shell</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_require.txt"
@@ -86,25 +86,157 @@
           <div class="body">
             
   <div class="section" id="module-actions.require">
-<span id="require-アクション"></span><h1>require アクション<a class="headerlink" href="#module-actions.require" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="require"></span><span id="references-actions-require-label"></span><h1>require<a class="headerlink" href="#module-actions.require" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.require.Require">
-<em class="property">class </em><tt class="descclassname">actions.require.</tt><tt class="descname">Require</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions.require.Require" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>require アクション</p>
+<em class="property">class </em><tt class="descclassname">actions.require.</tt><tt class="descname">Require</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.require.Require" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Require アクション</p>
+<p>外部のシナリオファイルを読み込み、実行する</p>
+<p>config ファイル</p>
+<ul class="simple">
+<li><strong>root_path</strong> (<em>string</em>): 読み込みファイルを絶対パスで指定した際の基準ディレクトリ</li>
+</ul>
+<dl class="method">
+<dt id="actions.require.Require.do_call">
+<tt class="descname">do_call</tt><big>(</big><em>path</em>, <em>global_env</em>, <em>scenario</em>, <em>params=None</em><big>)</big><a class="headerlink" href="#actions.require.Require.do_call" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>パラメータ付き呼び出し</p>
+<ul class="simple">
+<li>A.yml</li>
+</ul>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">require.call</span>
+  <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">B.yml</span>
+  <span class="l-Scalar-Plain">params</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">x</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">100</span>
+    <span class="l-Scalar-Plain">y</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">200</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
+  <span class="l-Scalar-Plain">result</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;last.res.sum&gt;&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>B.yml</li>
+</ul>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">local</span>
+  <span class="l-Scalar-Plain">sum</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;local.x + local.y&gt;&gt;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>string</em>) &#8211; 読み込みシナリオファイル。相対パスの場合は現在のシナリオファイルからの相対パス。絶対パスの場合は <tt class="docutils literal"><span class="pre">root_path</span></tt> を基準ディレクトリとして使用する。</li>
+<li><strong>params</strong> (<em>any</em>) &#8211; 読み込みシナリオに渡すパラメータ。渡されたパラメータは読み込みシナリオのローカル変数として参照可能。辞書を渡した場合はサンプルのように <tt class="docutils literal"><span class="pre">local.x</span></tt> 形式で参照可能、リストを渡した場合は <tt class="docutils literal"><span class="pre">local.0</span></tt> や <tt class="docutils literal"><span class="pre">local[0]</span></tt> のようにアクセスする。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>any</strong> (<em>dict</em>) - 読み込んだシナリオの最後のアクションの result</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions.require.Require.do_repeat">
+<tt class="descname">do_repeat</tt><big>(</big><em>path</em>, <em>global_env</em>, <em>scenario</em>, <em>params</em><big>)</big><a class="headerlink" href="#actions.require.Require.do_repeat" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>パラメータ付き繰り返し呼び出し</p>
+<ul class="simple">
+<li>A.yml</li>
+</ul>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="c1"># B.yml を2回呼び出す</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">require.call</span>
+  <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">B.yml</span>
+  <span class="l-Scalar-Plain">params</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">x</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">100</span>
+      <span class="l-Scalar-Plain">y</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">200</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">x</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">50</span>
+      <span class="l-Scalar-Plain">y</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">20</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>B.yml</li>
+</ul>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">local</span>
+  <span class="l-Scalar-Plain">sum</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;local.x + local.y&gt;&gt;</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
+  <span class="l-Scalar-Plain">result</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;local.sum&gt;&gt;</span> <span class="c1"># 1度目は 300, 2度目は 70 を表示</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>string</em>) &#8211; 読み込みシナリオファイル。相対パスの場合は現在のシナリオファイルからの相対パス。絶対パスの場合は <tt class="docutils literal"><span class="pre">root_path</span></tt> を基準ディレクトリとして使用する。</li>
+<li><strong>params</strong> (<em>list</em>) &#8211; 読み込みシナリオに渡すパラメータ。リストの要素数が、繰り返し呼び出しを行なう回数になる。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>any</strong> (<em>dict</em>) - 読み込んだシナリオの最後のアクションの result</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="actions.require.Require.do_require">
-<tt class="descname">do_require</tt><big>(</big><em>path</em>, <em>global_env</em>, <em>scenario</em>, <em>params=None</em><big>)</big><a class="headerlink" href="#actions.require.Require.do_require" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">do_require</tt><big>(</big><em>path</em>, <em>global_env</em>, <em>scenario</em><big>)</big><a class="headerlink" href="#actions.require.Require.do_require" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>パラメータなしの呼び出し</p>
+<ul class="simple">
+<li>A.yml</li>
+</ul>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
-<dl class="attribute">
-<dt id="actions.require.Require.root_path">
-<tt class="descname">root_path</tt><em class="property"> = ''</em><a class="headerlink" href="#actions.require.Require.root_path" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">require</span>
+  <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">B.yml</span>
 
-<dl class="classmethod">
-<dt id="actions.require.Require.setup">
-<em class="property">classmethod </em><tt class="descname">setup</tt><big>(</big><em>root_path=''</em><big>)</big><a class="headerlink" href="#actions.require.Require.setup" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
+  <span class="l-Scalar-Plain">result</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;last.res.status&gt;&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>B.yml</li>
+</ul>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sleep</span>
+  <span class="l-Scalar-Plain">time</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1000</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http.get</span>
+  <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://yahoo.co.jp</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>path</strong> (<em>string</em>) &#8211; 読み込みシナリオファイル。相対パスの場合は現在のシナリオファイルからの相対パス。絶対パスの場合は <tt class="docutils literal"><span class="pre">root_path</span></tt> を基準ディレクトリとして使用する。</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><ul class="simple">
+<li><strong>any</strong> (<em>dict</em>) - 読み込んだシナリオの最後のアクションの result</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -126,10 +258,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_shell.html" title="shell アクション"
+          <a href="action_shell.html" title="shell"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_python.html" title="python アクション"
+          <a href="action_python.html" title="python"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

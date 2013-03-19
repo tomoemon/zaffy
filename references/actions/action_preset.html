@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>preset アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>preset &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="python アクション" href="action_python.html" />
-    <link rel="prev" title="local アクション" href="action_local.html" /> 
+    <link rel="next" title="python" href="action_python.html" />
+    <link rel="prev" title="local" href="action_local.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_python.html" title="python アクション"
+          <a href="action_python.html" title="python"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_local.html" title="local アクション"
+          <a href="action_local.html" title="local"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_local.html"
-                        title="前の章へ">local アクション</a></p>
+                        title="前の章へ">local</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_python.html"
-                        title="次の章へ">python アクション</a></p>
+                        title="次の章へ">python</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_preset.txt"
@@ -86,54 +86,65 @@
           <div class="body">
             
   <div class="section" id="module-actions.preset">
-<span id="preset-アクション"></span><h1>preset アクション<a class="headerlink" href="#module-actions.preset" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="preset"></span><span id="references-actions-preset-label"></span><h1>preset<a class="headerlink" href="#module-actions.preset" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.preset.Preset">
-<em class="property">class </em><tt class="descclassname">actions.preset.</tt><tt class="descname">Preset</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions.preset.Preset" title="この定義へのパーマリンク">¶</a></dt>
-<dd><dl class="method">
+<em class="property">class </em><tt class="descclassname">actions.preset.</tt><tt class="descname">Preset</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.preset.Preset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Preset アクション</p>
+<p>任意のアクションに対する実行時のパラメータプリセットを定義する。アクションに対して多数のパラメータを繰り返し適用する場合、事前にプリセットを定義しておくことでシナリオをシンプルにできる。<a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> アクションと同様にシナリオ実行単位でグローバルに参照可能。</p>
+<dl class="docutils">
+<dt>定義の上書き</dt>
+<dd>すでに定義済みのプリセット名と同じ名前で定義した場合、後から定義したパラメータセットで完全に上書きされる。異なるアクション間で同名のプリセット名を持つことは可能。</dd>
+<dt>評価のタイミング</dt>
+<dd><p class="first">preset アクションで定義したパラメータセットは、アクションが実行されたタイミングで評価される。パラメータセットの中で <a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> 定数や <a class="reference internal" href="action_local.html#references-actions-local-label"><em>local</em></a> 変数の使用、または関数呼び出しを記述していた場合、その時点での値でパラメータセットが確定する。評価を遅延させたい場合は</p>
+<p><tt class="docutils literal"><span class="pre">&lt;&lt;&quot;&lt;&lt;const.param1&gt;&gt;&quot;&gt;&gt;</span></tt></p>
+<p class="last">のように preset アクション実行時は後から展開可能な文字列として定義する。</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">YAML 形式がもともと備えているエイリアス・アンカーといった機能をシナリオ内で使うことも可能
+<a class="reference external" href="http://jp.rubyist.net/magazine/?0009-YAML#l10">http://jp.rubyist.net/magazine/?0009-YAML#l10</a></p>
+</div>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">preset</span>
+  <span class="l-Scalar-Plain">http</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://yahoo.co.jp/</span>
+
+<span class="c1"># default preset の適用</span>
+<span class="c1">#   アクションに対して何も渡していないが default プリセットがあるので</span>
+<span class="c1">#   url: http://yahoo.co.jp/ に対して http get する</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">preset</span>
+  <span class="l-Scalar-Plain">http</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">assert404</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">res.status is 404</span>
+
+<span class="c1"># named preset の適用</span>
+<span class="c1">#   assert を定義していないが status が 404 であることをテストしている</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http.get &lt; assert404</span>
+  <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://yahoo.co.jp/hogehoge</span>
+</pre></div>
+</div>
+<dl class="method">
 <dt id="actions.preset.Preset.do_preset">
 <tt class="descname">do_preset</tt><big>(</big><em>**params</em><big>)</big><a class="headerlink" href="#actions.preset.Preset.do_preset" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="actions.preset.Preset.get_applier">
-<em class="property">classmethod </em><tt class="descname">get_applier</tt><big>(</big><em>action_name</em>, <em>preset_name</em>, <em>is_merge</em><big>)</big><a class="headerlink" href="#actions.preset.Preset.get_applier" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="actions.preset.Preset.get_preset_params">
-<em class="property">classmethod </em><tt class="descname">get_preset_params</tt><big>(</big><em>action_name</em><big>)</big><a class="headerlink" href="#actions.preset.Preset.get_preset_params" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="actions.preset.Preset.reset">
-<em class="property">classmethod </em><tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#actions.preset.Preset.reset" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="actions.preset.Preset.setup">
-<em class="property">classmethod </em><tt class="descname">setup</tt><big>(</big><em>config</em><big>)</big><a class="headerlink" href="#actions.preset.Preset.setup" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
+<dd><p>preset を定義する</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>(any)</strong> (<em>any</em>) &#8211; 1階層目には存在するアクション名、2階層目にプリセット名、3階層目以降に定義するパラメータセットを辞書形式で指定する</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="class">
-<dt id="actions.preset.PresetApplier">
-<em class="property">class </em><tt class="descclassname">actions.preset.</tt><tt class="descname">PresetApplier</tt><big>(</big><em>action_name</em>, <em>preset_name</em>, <em>is_merge</em><big>)</big><a class="headerlink" href="#actions.preset.PresetApplier" title="この定義へのパーマリンク">¶</a></dt>
-<dd><dl class="attribute">
-<dt id="actions.preset.PresetApplier.DEFAULT_NAME">
-<tt class="descname">DEFAULT_NAME</tt><em class="property"> = 'default'</em><a class="headerlink" href="#actions.preset.PresetApplier.DEFAULT_NAME" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="actions.preset.PresetApplier.apply">
-<tt class="descname">apply</tt><big>(</big><em>action_params</em><big>)</big><a class="headerlink" href="#actions.preset.PresetApplier.apply" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="actions.preset.PresetApplier.apply_params">
-<em class="property">static </em><tt class="descname">apply_params</tt><big>(</big><em>before</em>, <em>after</em>, <em>is_merge</em><big>)</big><a class="headerlink" href="#actions.preset.PresetApplier.apply_params" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -155,10 +166,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_python.html" title="python アクション"
+          <a href="action_python.html" title="python"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_local.html" title="local アクション"
+          <a href="action_local.html" title="local"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

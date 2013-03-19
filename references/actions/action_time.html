@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>time アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>time &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,7 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="prev" title="ssh アクション" href="action_ssh.html" /> 
+    <link rel="next" title="Filter リファレンス" href="../customfilters/index.html" />
+    <link rel="prev" title="ssh" href="action_ssh.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,7 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_ssh.html" title="ssh アクション"
+          <a href="../customfilters/index.html" title="Filter リファレンス"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="action_ssh.html" title="ssh"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -51,7 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_ssh.html"
-                        title="前の章へ">ssh アクション</a></p>
+                        title="前の章へ">ssh</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="../customfilters/index.html"
+                        title="次の章へ">Filter リファレンス</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_time.txt"
@@ -79,25 +86,99 @@
           <div class="body">
             
   <div class="section" id="module-actions._time">
-<span id="time-アクション"></span><h1>time アクション<a class="headerlink" href="#module-actions._time" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="time"></span><span id="references-actions-time-label"></span><h1>time<a class="headerlink" href="#module-actions._time" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions._time.Time">
-<em class="property">class </em><tt class="descclassname">actions._time.</tt><tt class="descname">Time</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions._time.Time" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">actions._time.</tt><tt class="descname">Time</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions._time.Time" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Time アクション</p>
+<p>現在時刻の取得、日時のフォーマットを行なう</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
+  <span class="l-Scalar-Plain">t1</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;time.now()&gt;&gt;</span> <span class="c1">#=&gt; &#39;2013-02-22 01:35:42.100000&#39;</span>
+  <span class="l-Scalar-Plain">t2</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;time.now(days=2,hours=3)&gt;&gt;</span> <span class="c1">#=&gt; &#39;2013-02-24 04:35:42.100000&#39;</span>
+  <span class="l-Scalar-Plain">t3</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;time.timestamp()&gt;&gt;</span> <span class="c1">#=&gt; 1361464681</span>
+  <span class="l-Scalar-Plain">t4</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;time.format(&#39;%Y-%m-%d %H:%M:%S&#39;)&gt;&gt;</span> <span class="c1">#=&gt; &#39;2013-02-22 01:38:01&#39;</span>
+</pre></div>
+</div>
 <dl class="classmethod">
 <dt id="actions._time.Time.format">
 <em class="property">classmethod </em><tt class="descname">format</tt><big>(</big><em>fmt</em>, <em>day=0</em>, <em>hour=0</em>, <em>min=0</em>, <em>sec=0</em>, <em>msec=0</em><big>)</big><a class="headerlink" href="#actions._time.Time.format" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>現在日時を文字列フォーマットして返す</p>
+<dl class="docutils">
+<dt>フォーマット文字列</dt>
+<dd><a class="reference external" href="http://docs.python.jp/2/library/time.html#time.strftime">http://docs.python.jp/2/library/time.html#time.strftime</a></dd>
+</dl>
+<p>引数に正の値を渡すと未来の日時、負の値を渡すと過去の日時を取得する</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>day</strong> (<em>int</em>) &#8211; 現在日時に加える日数</li>
+<li><strong>hour</strong> (<em>int</em>) &#8211; 現在日時に加える時間</li>
+<li><strong>min</strong> (<em>int</em>) &#8211; 現在日時に加える分</li>
+<li><strong>sec</strong> (<em>int</em>) &#8211; 現在日時に加える秒</li>
+<li><strong>msec</strong> (<em>int</em>) &#8211; 現在日時にミリ秒</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">(<em>int</em>) - unix timestamp</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="actions._time.Time.now">
 <em class="property">classmethod </em><tt class="descname">now</tt><big>(</big><em>day=0</em>, <em>hour=0</em>, <em>min=0</em>, <em>sec=0</em>, <em>msec=0</em><big>)</big><a class="headerlink" href="#actions._time.Time.now" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>現在日時を Datetime オブジェクトで返す</p>
+<p>引数に正の値を渡すと未来の日時、負の値を渡すと過去の日時を取得する</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>day</strong> (<em>int</em>) &#8211; 現在日時に加える日数</li>
+<li><strong>hour</strong> (<em>int</em>) &#8211; 現在日時に加える時間</li>
+<li><strong>min</strong> (<em>int</em>) &#8211; 現在日時に加える分</li>
+<li><strong>sec</strong> (<em>int</em>) &#8211; 現在日時に加える秒</li>
+<li><strong>msec</strong> (<em>int</em>) &#8211; 現在日時にミリ秒</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">(<em>datetime</em>) - python datetime object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="actions._time.Time.timestamp">
 <em class="property">classmethod </em><tt class="descname">timestamp</tt><big>(</big><em>day=0</em>, <em>hour=0</em>, <em>min=0</em>, <em>sec=0</em>, <em>msec=0</em><big>)</big><a class="headerlink" href="#actions._time.Time.timestamp" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>現在日時を Unix タイムスタンプで返す</p>
+<p>引数に正の値を渡すと未来の日時、負の値を渡すと過去の日時を取得する</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>day</strong> (<em>int</em>) &#8211; 現在日時に加える日数</li>
+<li><strong>hour</strong> (<em>int</em>) &#8211; 現在日時に加える時間</li>
+<li><strong>min</strong> (<em>int</em>) &#8211; 現在日時に加える分</li>
+<li><strong>sec</strong> (<em>int</em>) &#8211; 現在日時に加える秒</li>
+<li><strong>msec</strong> (<em>int</em>) &#8211; 現在日時にミリ秒</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">(<em>int</em>) - unix timestamp</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -119,7 +200,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_ssh.html" title="ssh アクション"
+          <a href="../customfilters/index.html" title="Filter リファレンス"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="action_ssh.html" title="ssh"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

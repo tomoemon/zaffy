@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>debug アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>debug &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="env アクション" href="action_env.html" />
-    <link rel="prev" title="const アクション" href="action_const.html" /> 
+    <link rel="next" title="env" href="action_env.html" />
+    <link rel="prev" title="const" href="action_const.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_env.html" title="env アクション"
+          <a href="action_env.html" title="env"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_const.html" title="const アクション"
+          <a href="action_const.html" title="const"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_const.html"
-                        title="前の章へ">const アクション</a></p>
+                        title="前の章へ">const</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_env.html"
-                        title="次の章へ">env アクション</a></p>
+                        title="次の章へ">env</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_debug.txt"
@@ -86,25 +86,53 @@
           <div class="body">
             
   <div class="section" id="module-actions.debug">
-<span id="debug-アクション"></span><h1>debug アクション<a class="headerlink" href="#module-actions.debug" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="debug"></span><span id="references-actions-debug-label"></span><h1>debug<a class="headerlink" href="#module-actions.debug" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.debug.Debug">
-<em class="property">class </em><tt class="descclassname">actions.debug.</tt><tt class="descname">Debug</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions.debug.Debug" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>debug アクション</p>
+<em class="property">class </em><tt class="descclassname">actions.debug.</tt><tt class="descname">Debug</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.debug.Debug" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Debug アクション</p>
+<p>アクションの実行結果などデバッグ用の出力を行なう。
+事前に実行した別アクションの実行結果や関数実行結果の出力に用いる。</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http.get</span>
+  <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://yahoo.co.jp/</span>
+
+<span class="c1"># 直前のアクションの実行結果から HTTP STATUS を取得して表示</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
+  <span class="l-Scalar-Plain">res</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;last.res.status&gt;&gt;</span> <span class="c1">#=&gt; 200 と表示</span>
+</pre></div>
+</div>
 <dl class="method">
 <dt id="actions.debug.Debug.do_debug">
 <tt class="descname">do_debug</tt><big>(</big><em>global_env</em>, <em>scenario</em>, <em>**params</em><big>)</big><a class="headerlink" href="#actions.debug.Debug.do_debug" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>do_rawprint の省略呼び出し</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions.debug.Debug.do_print">
 <tt class="descname">do_print</tt><big>(</big><em>global_env</em>, <em>scenario</em>, <em>**params</em><big>)</big><a class="headerlink" href="#actions.debug.Debug.do_print" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>与えられた文字列値を python の基本データ型のリテラルとして解釈した後に print する</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug.print</span>
+  <span class="l-Scalar-Plain">v1</span><span class="p-Indicator">:</span> <span class="s">&quot;1</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">3&quot;</span> <span class="c1">#=&gt; 6 と表示</span>
+  <span class="l-Scalar-Plain">v2</span><span class="p-Indicator">:</span> <span class="s">&quot;[1,</span><span class="nv"> </span><span class="s">2]</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">[3,</span><span class="nv"> </span><span class="s">4]&quot;</span> <span class="c1">#=&gt; [1, 2, 3, 4] と表示</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions.debug.Debug.do_rawprint">
 <tt class="descname">do_rawprint</tt><big>(</big><em>global_env</em>, <em>scenario</em>, <em>**params</em><big>)</big><a class="headerlink" href="#actions.debug.Debug.do_rawprint" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>与えられた値を文字列化して表示する</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>  <span class="c1"># 省略時は rawprint の呼び出し</span>
+  <span class="l-Scalar-Plain">v1</span><span class="p-Indicator">:</span> <span class="s">&quot;1</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">3&quot;</span> <span class="c1">#=&gt; 1 + 2 + 3 と表示</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </dd></dl>
 
@@ -126,10 +154,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_env.html" title="env アクション"
+          <a href="action_env.html" title="env"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_const.html" title="const アクション"
+          <a href="action_const.html" title="const"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

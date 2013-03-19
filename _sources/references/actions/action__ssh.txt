@@ -1,0 +1,8 @@
+
+.. _references-actions-ssh-label:
+
+==================
+ssh アクション
+==================
+
+.. automodule:: actions._ssh

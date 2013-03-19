@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>shell アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>shell &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="sleep アクション" href="action_sleep.html" />
-    <link rel="prev" title="require アクション" href="action_require.html" /> 
+    <link rel="next" title="sleep" href="action_sleep.html" />
+    <link rel="prev" title="require" href="action_require.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_sleep.html" title="sleep アクション"
+          <a href="action_sleep.html" title="sleep"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_require.html" title="require アクション"
+          <a href="action_require.html" title="require"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_require.html"
-                        title="前の章へ">require アクション</a></p>
+                        title="前の章へ">require</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_sleep.html"
-                        title="次の章へ">sleep アクション</a></p>
+                        title="次の章へ">sleep</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_shell.txt"
@@ -86,21 +86,52 @@
           <div class="body">
             
   <div class="section" id="module-actions.shell">
-<span id="shell-アクション"></span><h1>shell アクション<a class="headerlink" href="#module-actions.shell" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="shell"></span><span id="references-actions-shell-label"></span><h1>shell<a class="headerlink" href="#module-actions.shell" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.shell.Shell">
-<em class="property">class </em><tt class="descclassname">actions.shell.</tt><tt class="descname">Shell</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions.shell.Shell" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Shell アクション
-プロセスの実行などを行なう</p>
+<em class="property">class </em><tt class="descclassname">actions.shell.</tt><tt class="descname">Shell</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.shell.Shell" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Shell アクション</p>
+<p>シェルを通してプロセスの実行などを行なう</p>
 <dl class="method">
 <dt id="actions.shell.Shell.do_run">
 <tt class="descname">do_run</tt><big>(</big><em>cmd</em>, <em>stdin=None</em>, <em>curdir=None</em><big>)</big><a class="headerlink" href="#actions.shell.Shell.do_run" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>コマンドの実行</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">shell</span>
+  <span class="l-Scalar-Plain">cmd</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ls -l /tmp</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
+  <span class="l-Scalar-Plain">result</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;last.res.stdout&gt;&gt;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>cmd</strong> (<em>string</em>) &#8211; 実行するコマンド</li>
+<li><strong>curdir</strong> (<em>string</em>) &#8211; 実行時のカレントディレクトリ。指定しない場合は zaffy 実行時のカレントディレクトリ</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>stdout</strong> (<em>string</em>) - 実行したコマンドの標準出力</li>
+<li><strong>stderr</strong> (<em>string</em>) - 実行したコマンドの標準エラー</li>
+<li><strong>returncode</strong> (<em>int</em>) - 実行したコマンドの終了ステータス</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions.shell.Shell.do_shell">
 <tt class="descname">do_shell</tt><big>(</big><em>cmd</em>, <em>stdin=None</em>, <em>curdir=None</em><big>)</big><a class="headerlink" href="#actions.shell.Shell.do_shell" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>do_run の省略呼び出し</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -122,10 +153,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_sleep.html" title="sleep アクション"
+          <a href="action_sleep.html" title="sleep"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_require.html" title="require アクション"
+          <a href="action_require.html" title="require"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

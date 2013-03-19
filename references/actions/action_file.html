@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>file アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>file &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="http アクション" href="action_http.html" />
-    <link rel="prev" title="env アクション" href="action_env.html" /> 
+    <link rel="next" title="http" href="action_http.html" />
+    <link rel="prev" title="env" href="action_env.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_http.html" title="http アクション"
+          <a href="action_http.html" title="http"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_env.html" title="env アクション"
+          <a href="action_env.html" title="env"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -55,10 +55,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_env.html"
-                        title="前の章へ">env アクション</a></p>
+                        title="前の章へ">env</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_http.html"
-                        title="次の章へ">http アクション</a></p>
+                        title="次の章へ">http</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_file.txt"
@@ -86,76 +86,242 @@
           <div class="body">
             
   <div class="section" id="module-actions.file">
-<span id="file-アクション"></span><h1>file アクション<a class="headerlink" href="#module-actions.file" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="file"></span><span id="references-actions-file-label"></span><h1>file<a class="headerlink" href="#module-actions.file" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.file.File">
-<em class="property">class </em><tt class="descclassname">actions.file.</tt><tt class="descname">File</tt><big>(</big><em>setting</em><big>)</big><a class="headerlink" href="#actions.file.File" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>File アクション
-ファイルに関する検査などを行なう</p>
+<em class="property">class </em><tt class="descclassname">actions.file.</tt><tt class="descname">File</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.file.File" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>File アクション</p>
+<p>ファイル操作やファイルに関する情報の取得を行なう</p>
 <dl class="classmethod">
 <dt id="actions.file.File.access_time">
 <em class="property">classmethod </em><tt class="descname">access_time</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.access_time" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルの最終アクセス日時を取得</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>filepath</strong> (<em>string</em>) &#8211; 対象のファイル</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">(<em>datetime</em>) - ファイルの最終アクセス日時</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="actions.file.File.create_time">
 <em class="property">classmethod </em><tt class="descname">create_time</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.create_time" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルの作成日時を取得</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>filepath</strong> (<em>string</em>) &#8211; 対象のファイル</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">(<em>datetime</em>) - ファイルの作成日時</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions.file.File.do_copy">
 <tt class="descname">do_copy</tt><big>(</big><em>path</em>, <em>to</em><big>)</big><a class="headerlink" href="#actions.file.File.do_copy" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルをコピーする</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>string</em>) &#8211; コピー元パス</li>
+<li><strong>to</strong> (<em>string</em>) &#8211; コピー先パス</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">(<em>None</em>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
-<dt id="actions.file.File.do_remove">
-<tt class="descname">do_remove</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#actions.file.File.do_remove" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dt id="actions.file.File.do_delete">
+<tt class="descname">do_delete</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#actions.file.File.do_delete" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファイルまたはディレクトリを削除する</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>path</strong> (<em>string</em>) &#8211; 削除対象パス</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">(<em>None</em>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions.file.File.do_rename">
 <tt class="descname">do_rename</tt><big>(</big><em>path</em>, <em>to</em><big>)</big><a class="headerlink" href="#actions.file.File.do_rename" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルをリネーム（移動）する</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>string</em>) &#8211; リネーム元パス</li>
+<li><strong>to</strong> (<em>string</em>) &#8211; リネーム先パス</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">(<em>None</em>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="actions.file.File.do_write">
 <tt class="descname">do_write</tt><big>(</big><em>path</em>, <em>data</em>, <em>mode='wb'</em><big>)</big><a class="headerlink" href="#actions.file.File.do_write" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルの書き込み</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>string</em>) &#8211; 対象のファイル</li>
+<li><strong>data</strong> (<em>string|byte</em>) &#8211; 対象データ</li>
+<li><strong>mode</strong> (<em>string</em>) &#8211; 書き込みモード</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">(<em>None</em>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="actions.file.File.executable">
 <em class="property">classmethod </em><tt class="descname">executable</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.executable" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルの実行権限チェック</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>filepath</strong> (<em>string</em>) &#8211; 対象のファイル</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">(<em>bool</em>) - 権限があれば True、なければ False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="actions.file.File.exists">
 <em class="property">classmethod </em><tt class="descname">exists</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.exists" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルの存在チェック</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>filepath</strong> (<em>string</em>) &#8211; 対象のファイル</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">(<em>bool</em>) - 存在する場合 True、なければ False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="actions.file.File.read">
-<em class="property">classmethod </em><tt class="descname">read</tt><big>(</big><em>filepath</em>, <em>size=-1</em>, <em>offset=0</em><big>)</big><a class="headerlink" href="#actions.file.File.read" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<em class="property">classmethod </em><tt class="descname">read</tt><big>(</big><em>filepath</em>, <em>size=-1</em>, <em>offset=0</em>, <em>encoding=None</em><big>)</big><a class="headerlink" href="#actions.file.File.read" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファイルの読み込み</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
+<li><strong>filepath</strong> (<em>string</em>) &#8211; 対象のファイル</li>
+<li><strong>size</strong> (<em>int</em>) &#8211; 取得するバイト数</li>
+<li><strong>offset</strong> (<em>int</em>) &#8211; 取得するバイトオフセット</li>
+<li><strong>encoding</strong> (<em>string</em>) &#8211; 対象ファイルの文字エンコーディング</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">(<em>string|byte</em>) - 取得したバイト列、もしくは文字列 (encoding 指定時)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="actions.file.File.readable">
 <em class="property">classmethod </em><tt class="descname">readable</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.readable" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルの読み込み権限チェック</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>filepath</strong> (<em>string</em>) &#8211; 対象のファイル</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">(<em>bool</em>) - 権限があれば True、なければ False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="actions.file.File.size">
 <em class="property">classmethod </em><tt class="descname">size</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.size" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルサイズ取得</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>filepath</strong> (<em>string</em>) &#8211; 対象のファイル</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">(<em>int</em>) - ファイルのバイト数</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="actions.file.File.update_time">
 <em class="property">classmethod </em><tt class="descname">update_time</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.update_time" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルの最終更新日時を取得</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>filepath</strong> (<em>string</em>) &#8211; 対象のファイル</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">(<em>datetime</em>) - ファイルの最終更新日時</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="classmethod">
 <dt id="actions.file.File.writable">
 <em class="property">classmethod </em><tt class="descname">writable</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.writable" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<dd><p>ファイルの書き込み権限チェック</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>filepath</strong> (<em>string</em>) &#8211; 対象のファイル</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">(<em>bool</em>) - 権限があれば True、なければ False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -177,10 +343,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_http.html" title="http アクション"
+          <a href="action_http.html" title="http"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_env.html" title="env アクション"
+          <a href="action_env.html" title="env"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

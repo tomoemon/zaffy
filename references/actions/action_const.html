@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>const アクション &mdash; zaffy 2013-01-12 documentation</title>
+    <title>const &mdash; zaffy 2013-01-12 documentation</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="debug アクション" href="action_debug.html" />
+    <link rel="next" title="debug" href="action_debug.html" />
     <link rel="prev" title="Action リファレンス" href="index.html" /> 
   </head>
   <body>
@@ -42,7 +42,7 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_debug.html" title="debug アクション"
+          <a href="action_debug.html" title="debug"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
           <a href="index.html" title="Action リファレンス"
@@ -58,7 +58,7 @@
                         title="前の章へ">Action リファレンス</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_debug.html"
-                        title="次の章へ">debug アクション</a></p>
+                        title="次の章へ">debug</a></p>
   <h3>このページ</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/references/actions/action_const.txt"
@@ -86,11 +86,51 @@
           <div class="body">
             
   <div class="section" id="module-actions.const">
-<span id="const-アクション"></span><h1>const アクション<a class="headerlink" href="#module-actions.const" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<dl class="attribute">
+<span id="const"></span><span id="references-actions-const-label"></span><h1>const<a class="headerlink" href="#module-actions.const" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="class">
 <dt id="actions.const.Const">
-<tt class="descclassname">actions.const.</tt><tt class="descname">Const</tt><a class="headerlink" href="#actions.const.Const" title="この定義へのパーマリンク">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><tt class="descclassname">actions.const.</tt><tt class="descname">Const</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.const.Const" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Const アクション</p>
+<p>上書き不可能なグローバル定数をシナリオ実行単位内で定義する。シナリオ A が、シナリオ B (Const アクションを実行する) を <a class="reference internal" href="action_require.html#references-actions-require-label"><em>require</em></a> すると、シナリオ A でも定数を参照することができる (=シナリオ実行単位でグローバル)。</p>
+<p>また、config ファイルで事前に共通の定数を定義しておくことも可能。詳しくは</p>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">zaffy/zaffy_sample.yml</span></tt></div></blockquote>
+<p>を参照。</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">const</span>
+  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">taro</span>
+  <span class="l-Scalar-Plain">pass</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">taropass</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http.get</span>
+  <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://yahoo.co.jp/</span>
+  <span class="l-Scalar-Plain">params</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;const.user&gt;&gt;</span>
+    <span class="l-Scalar-Plain">pass</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">&lt;&lt;const.pass&gt;&gt;</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="actions.const.Const.do_const">
+<tt class="descname">do_const</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#actions.const.Const.do_const" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>do_set の省略呼び出し</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions.const.Const.do_set">
+<tt class="descname">do_set</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#actions.const.Const.do_set" title="この定義へのパーマリンク">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>(any)</strong> (<em>any</em>) &#8211; 任意のキーで任意の値を指定する</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return dict:</th><td class="field-body">現在定義されている定数の辞書を返す</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 
@@ -110,7 +150,7 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_debug.html" title="debug アクション"
+          <a href="action_debug.html" title="debug"
              >次へ</a> |</li>
         <li class="right" >
           <a href="index.html" title="Action リファレンス"
