@@ -8,32 +8,9 @@ class Ssh(BaseAction):
 
   SSH接続を通してプロセスの実行などを行なう
 
-  .. code-block:: yaml
+  .. note::
 
-   - サンプルシナリオ
-
-   - action: ssh
-     host: localhost
-     user: testuser
-     password: hogehoge
-     cmd: ls -l
-     assert:
-       - res.returncode is eq 0
-
-   - action: ssh.put
-     host: localhost
-     user: testuser
-     password: hogehoge
-     local: zaffy.py
-     remote: /tmp/zaffy.py
-
-   - action: ssh.get
-     host: localhost
-     user: testuser
-     password: hogehoge
-     remote: /tmp/zaffy.py
-     local: zaffy2.py
-
+    接続先パスワードなどは :ref:`references-actions-preset-label` で定義しておくと、毎回記述する必要がなくなります。
   """
   def do_ssh(self, host, user, cmd, port=22, password=None, key_file=None):
     """ do_run の省略呼び出し """
@@ -43,6 +20,17 @@ class Ssh(BaseAction):
 
   def do_put(self, host, user, local, remote, port=22, password=None, key_file=None):
     """ scp でファイルを送信する
+
+    .. code-block:: yaml
+
+       - サンプルシナリオ
+
+       - action: ssh.put
+         host: localhost
+         user: testuser
+         password: hogehoge
+         local: zaffy.py
+         remote: /tmp/zaffy.py
 
     :param string host: 接続先ホスト名、またはIPアドレス
     :param string user: 接続先ホストにおけるユーザ名
@@ -64,6 +52,17 @@ class Ssh(BaseAction):
   def do_get(self, host, user, local, remote, port=22, password=None, key_file=None):
     """ scp でファイルを取得する
 
+    .. code-block:: yaml
+
+       - サンプルシナリオ
+
+       - action: ssh.get
+         host: localhost
+         user: testuser
+         password: hogehoge
+         remote: /tmp/zaffy.py
+         local: zaffy2.py
+
     :param string host: 接続先ホスト名、またはIPアドレス
     :param string user: 接続先ホストにおけるユーザ名
     :param string local: ローカルのファイル保存先
@@ -83,6 +82,18 @@ class Ssh(BaseAction):
 
   def do_run(self, host, user, cmd, port=22, password=None, key_file=None):
     """ ssh 接続してコマンドを実行する
+
+    .. code-block:: yaml
+
+     - サンプルシナリオ
+
+     - action: ssh
+       host: localhost
+       user: testuser
+       password: hogehoge
+       cmd: ls -l
+       assert:
+         - res.returncode is eq 0
 
     :param string host: 接続先ホスト名、またはIPアドレス
     :param string user: 接続先ホストにおけるユーザ名

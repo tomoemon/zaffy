@@ -21,7 +21,7 @@ class Http(BaseAction):
         Referer: http://google.com/
       no_content: false
       assert:
-        - res.content|length > 1000
+        - res.content|length is gt 1000
   """
   def _create_result(self, response, no_content, binary_content, save_file):
     result = {}
@@ -65,7 +65,7 @@ class Http(BaseAction):
     :param string url: URL (http, https スキーマの指定が必要)
     :param dict headers: 送信する header
     :param dict cookies: 送信する cookie
-    :param dict params: query string として送信するパラメータ (GET時に指定する)
+    :param dict|string params: query string として送信するパラメータ (GET時に指定する)。辞書形式ではなく a=10&b=20 形式の文字列で渡すことも可能
     :param dict|string data: body に付加するパラメータ (POST時に指定する)
     :param bool no_content: True: header のみを取得、False: content も取得
     :param bool binary_content: True: content をバイナリとして取得、False: header で指定された文字コードに従って decode
