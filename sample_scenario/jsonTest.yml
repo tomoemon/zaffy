@@ -1,4 +1,4 @@
-- HTTP テスト
+- JSON テスト
 
 - action: http.get
   url: http://b.hatena.ne.jp/entry/json/?url=http%3A%2F%2Fwww.hatena.ne.jp%2F
