@@ -12,51 +12,90 @@ class File(BaseAction):
   """
   @classmethod
   def exists(cls, filepath):
-    """ exists """
+    """ ファイルの存在チェック
+
+    :param string filepath: 対象のファイル
+    :return: (*bool*) - 存在する場合 True、なければ False
+    """
     return os.access(filepath, os.F_OK)
 
   @classmethod
   def writable(cls, filepath):
-    """ writable """
+    """ ファイルの書き込み権限チェック
+
+    :param string filepath: 対象のファイル
+    :return: (*bool*) - 権限があれば True、なければ False
+    """
     return os.access(filepath, os.W_OK)
 
   @classmethod
   def readable(cls, filepath):
-    """ readable """
+    """ ファイルの読み込み権限チェック
+
+    :param string filepath: 対象のファイル
+    :return: (*bool*) - 権限があれば True、なければ False
+    """
     return os.access(filepath, os.R_OK)
 
   @classmethod
   def executable(cls, filepath):
-    """ executable """
+    """ ファイルの実行権限チェック
+
+    :param string filepath: 対象のファイル
+    :return: (*bool*) - 権限があれば True、なければ False
+    """
     return os.access(filepath, os.R_OK)
 
   @classmethod
   def size(cls, filepath):
-    """ size """
+    """ ファイルサイズ取得
+
+    :param string filepath: 対象のファイル
+    :return: (*int*) - ファイルのバイト数
+    """
     stat_value = os.stat(filepath)
     return stat_value.st_size
 
   @classmethod
   def access_time(cls, filepath):
-    """ access_time """
+    """ ファイルの最終アクセス日時を取得
+
+    :param string filepath: 対象のファイル
+    :return: (*datetime*) - ファイルの最終アクセス日時
+    """
     stat_value = os.stat(filepath)
     return datetime.fromtimestamp(stat_value.st_atime)
 
   @classmethod
   def update_time(cls, filepath):
-    """ update_time """
+    """ ファイルの最終更新日時を取得
+
+    :param string filepath: 対象のファイル
+    :return: (*datetime*) - ファイルの最終更新日時
+    """
     stat_value = os.stat(filepath)
     return datetime.fromtimestamp(stat_value.st_mtime)
 
   @classmethod
   def create_time(cls, filepath):
-    """ create_time """
+    """ ファイルの作成日時を取得
+
+    :param string filepath: 対象のファイル
+    :return: (*datetime*) - ファイルの作成日時
+    """
     stat_value = os.stat(filepath)
     return datetime.fromtimestamp(stat_value.st_ctime)
 
   @classmethod
   def read(cls, filepath, size=-1, offset=0, encoding=None):
-    """ read """
+    """ ファイルの読み込み
+
+    :param string filepath: 対象のファイル
+    :param int size: 取得するバイト数
+    :param int offset: 取得するバイトオフセット
+    :param string encoding: 対象ファイルの文字エンコーディング
+    :return: (*string|byte*) - 取得したバイト列、もしくは文字列 (encoding 指定時)
+    """
     import codecs
     if encoding:
       with codecs.open(filepath, encoding=encoding) as fp:
@@ -68,22 +107,42 @@ class File(BaseAction):
         return fp.read(size)
 
   def do_copy(self, path, to):
-    """ copy """
+    """ ファイルをコピーする
+
+    :param string path: コピー元パス
+    :param string to: コピー先パス
+    :return: (*None*)
+    """
     shutil.copy(path, to)
 
   def do_delete(self, path):
-    """ remove """
+    """ ファイルまたはディレクトリを削除する
+
+    :param string path: 削除対象パス
+    :return: (*None*)
+    """
     if os.path.isdir(path):
       shutil.rmtree(path)
     else:
       os.unlink(path)
 
   def do_rename(self, path, to):
-    """ rename """
+    """ ファイルをリネーム（移動）する
+
+    :param string path: リネーム元パス
+    :param string to: リネーム先パス
+    :return: (*None*)
+    """
     shutil.move(path, to)
 
   def do_write(self, path, data, mode="wb"):
-    """ write """
+    """ ファイルの書き込み
+
+    :param string path: 対象のファイル
+    :param string|byte data: 対象データ
+    :param string mode: 書き込みモード
+    :return: (*None*)
+    """
     with open(path, mode) as fp:
       fp.write(data)
 

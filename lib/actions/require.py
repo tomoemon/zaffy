@@ -9,7 +9,12 @@ import util
 class Require(BaseAction):
   """ Require アクション
 
-  外部のシナリオファイルを読み込む
+  外部のシナリオファイルを読み込み、実行する
+
+  config ファイル
+
+  * **root_path** (*string*): 読み込みファイルを絶対パスで指定した際の基準ディレクトリ
+
   """
   _root_path = ""
 
@@ -22,17 +27,106 @@ class Require(BaseAction):
     return self.result['actions'][index]
 
   def do_require(self, path, global_env, scenario):
-    """ パラメータなしの呼び出し """
+    """ パラメータなしの呼び出し
+
+    * A.yml
+
+    .. code-block:: yaml
+
+      - サンプルシナリオ
+
+      - action: require
+        path: B.yml
+
+      - action: debug
+        result: <<last.res.status>>
+
+    * B.yml
+
+    .. code-block:: yaml
+
+      - サンプルシナリオ
+
+      - action: sleep
+        time: 1000
+
+      - action: http.get
+        url: http://yahoo.co.jp
+
+    :param string path: 読み込みシナリオファイル。相対パスの場合は現在のシナリオファイルからの相対パス。絶対パスの場合は ``root_path`` を基準ディレクトリとして使用する。
+    :return: - **any** (*dict*) - 読み込んだシナリオの最後のアクションの result
+    """
     new_scenario = self._load(path, global_env, scenario, None)
     self.result = new_scenario.actions[-1].result
 
   def do_call(self, path, global_env, scenario, params=None):
-    """ call パラメータ付き呼び出し """
+    """ パラメータ付き呼び出し
+
+    * A.yml
+
+    .. code-block:: yaml
+
+      - サンプルシナリオ
+
+      - action: require.call
+        path: B.yml
+        params:
+          x: 100
+          y: 200
+
+      - action: debug
+        result: <<last.res.sum>>
+
+    * B.yml
+
+    .. code-block:: yaml
+
+      - サンプルシナリオ
+
+      - action: local
+        sum: <<local.x + local.y>>
+
+    :param string path: 読み込みシナリオファイル。相対パスの場合は現在のシナリオファイルからの相対パス。絶対パスの場合は ``root_path`` を基準ディレクトリとして使用する。
+    :param any params: 読み込みシナリオに渡すパラメータ。渡されたパラメータは読み込みシナリオのローカル変数として参照可能。辞書を渡した場合はサンプルのように ``local.x`` 形式で参照可能、リストを渡した場合は ``local.0`` や ``local[0]`` のようにアクセスする。
+    :return: - **any** (*dict*) - 読み込んだシナリオの最後のアクションの result
+    """
     new_scenario = self._load(path, global_env, scenario, params)
     self.result = new_scenario.actions[-1].result
 
   def do_repeat(self, path, global_env, scenario, params):
-    """ call 繰り返し呼び出し """
+    """ パラメータ付き繰り返し呼び出し
+
+    * A.yml
+
+    .. code-block:: yaml
+
+      - サンプルシナリオ
+
+      # B.yml を2回呼び出す
+      - action: require.call
+        path: B.yml
+        params:
+          - x: 100
+            y: 200
+          - x: 50
+            y: 20
+
+    * B.yml
+
+    .. code-block:: yaml
+
+      - サンプルシナリオ
+
+      - action: local
+        sum: <<local.x + local.y>>
+
+      - action: debug
+        result: <<local.sum>> # 1度目は 300, 2度目は 70 を表示
+
+    :param string path: 読み込みシナリオファイル。相対パスの場合は現在のシナリオファイルからの相対パス。絶対パスの場合は ``root_path`` を基準ディレクトリとして使用する。
+    :param list params: 読み込みシナリオに渡すパラメータ。リストの要素数が、繰り返し呼び出しを行なう回数になる。
+    :return: - **any** (*dict*) - 読み込んだシナリオの最後のアクションの result
+    """
     for param in params:
       self.do_call(path, global_env, scenario, param)
 

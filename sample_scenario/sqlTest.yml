@@ -1,29 +1,43 @@
 - SQLテスト
-- action: sql.select
-  driver: mysql
-  host: localhost
-  db: user_db
-  user: root
-  password: hogehoge
-  sql: select * from user where user_id=1;
+
+- action: const
+  DRIVER: sqlite
+  HOST: localhost
+  DB: zaffytest
+  USER: testuser
+  PASS: hogehoge
+
+- action: sql.update
+  driver: <<const.DRIVER>>
+  host: <<const.HOST>>
+  db: <<const.DB>>
+  user: <<const.USER>>
+  password: <<const.PASS>>
+  sql:
+    - create table if not exists stocks (date text, trans text, symbol text, qty real, price real)
+    - insert into stocks values ("2012-10-20", "hoge", "symbol", 100, 200)
   assert:
-   - >
-    res.rows[0] ==
-      [1, "nanoha", "2012-04-10 15:57:26"|todatetime, "2012-04-10 15:57:26"|todatetime]
+    - res.rowcount is eq 1
+
+- action: sql.select
+  driver: <<const.DRIVER>>
+  host: <<const.HOST>>
+  db: <<const.DB>>
+  user: <<const.USER>>
+  password: <<const.PASS>>
+  sql: select * from stocks
+  assert:
+    - res.rows is eq [("2012-10-20", "hoge", "symbol", 100, 200)]
+    - res.rowcount is eq 1
 
 - action: sql.selectdict
-  driver: mysql
-  host: localhost
-  db: user_db
-  user: root
-  password: hogehoge
-  sql: select * from user where user_id=1;
+  driver: <<const.DRIVER>>
+  host: <<const.HOST>>
+  db: <<const.DB>>
+  user: <<const.USER>>
+  password: <<const.PASS>>
+  sql: select * from stocks
   assert:
-   - >
-    res.rows[0] ==
-      {
-       'user_id': 1,
-       'user_name': "nanoha",
-       'created_date': "2012-04-10 15:57:26"|todatetime,
-       'updated_date': "2012-04-10 15:57:26"|todatetime
-      }
+    - res.rows is eq [{"date":"2012-10-20", "trans":"hoge", "symbol":"symbol", "qty":100, "price":200}]
+    - res.rowcount is eq 1
+
