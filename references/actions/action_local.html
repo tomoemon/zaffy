@@ -92,7 +92,11 @@
 <em class="property">class </em><tt class="descclassname">actions.local.</tt><tt class="descname">Local</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.local.Local" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Local アクション</p>
 <p>シナリオ単位のローカル変数を保存する</p>
-<p>上書き可能なローカル変数をシナリオ内で定義する。<a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> と異なるのは上書き可能な点と、シナリオ内でのみ有効な点。シナリオ A が、シナリオ B (local アクションを実行する) を <a class="reference internal" href="action_require.html#references-actions-require-label"><em>require</em></a> しても、シナリオ A から B のローカル変数を参照することはできない (<a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> なら参照可能)</p>
+<p>上書き可能なローカル変数をシナリオ内で定義する。シナリオ内でのみ有効なため、シナリオ A が、シナリオ B (local アクションを実行する) を <a class="reference internal" href="action_require.html#references-actions-require-label"><em>require</em></a> しても、シナリオ A から B のローカル変数を参照することはできない。</p>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">シナリオ実行単位でグローバルに参照したい場合は <a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> を使用する。ただし、定数なので上書きは不可能。(zaffy にグローバルな変数は存在しない)</p>
+</div>
 <dl class="method">
 <dt id="actions.local.Local.do_local">
 <tt class="descname">do_local</tt><big>(</big><em>scenario</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#actions.local.Local.do_local" title="この定義へのパーマリンク">¶</a></dt>

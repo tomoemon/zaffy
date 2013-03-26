@@ -91,11 +91,15 @@
 <dt id="actions.const.Const">
 <em class="property">class </em><tt class="descclassname">actions.const.</tt><tt class="descname">Const</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.const.Const" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Const アクション</p>
-<p>上書き不可能なグローバル定数をシナリオ実行単位内で定義する。シナリオ A が、シナリオ B (Const アクションを実行する) を <a class="reference internal" href="action_require.html#references-actions-require-label"><em>require</em></a> すると、シナリオ A でも定数を参照することができる (=シナリオ実行単位でグローバル)。</p>
+<p>上書き不可能なグローバル定数をシナリオ実行単位内で定義する。シナリオ A が、シナリオ B (Const アクションを実行する) を <a class="reference internal" href="action_require.html#references-actions-require-label"><em>require</em></a> すると、シナリオ A でも定数を参照することができる (=シナリオ実行単位でグローバル)。同じキーで再度定義しようとした場合、シナリオ実行時にエラーが発生する。</p>
 <p>また、config ファイルで事前に共通の定数を定義しておくことも可能。詳しくは</p>
 <blockquote>
 <div><tt class="docutils literal"><span class="pre">zaffy/zaffy_sample.yml</span></tt></div></blockquote>
 <p>を参照。</p>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">シナリオ内で変数を定義したい場合は <a class="reference internal" href="action_local.html#references-actions-local-label"><em>local</em></a> を使用する。</p>
+</div>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
 <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">const</span>
