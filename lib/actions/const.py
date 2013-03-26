@@ -22,6 +22,7 @@ class Const(with_metaclass(_MetaConst, BaseAction)):
 
   を参照。
 
+  .. note:: シナリオ内で変数を定義したい場合は :ref:`references-actions-local-label` を使用する。
 
   .. code-block:: yaml
 
