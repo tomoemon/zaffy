@@ -1,28 +1,30 @@
 Zaffy
 =====
 
-Zaffy は yaml ベースのシンプルなフォーマットでテストシナリオを記述できる機能テストツールです。Web や Database、ファイルシステムなどの「外部システム」に対する入力とその応答チェックを共通の形式で記述することができます。種々の機能を組み合わせた自動化ツールとして使うことも可能です。
+Zaffy は yaml フォーマットでテストシナリオを記述できる機能テストツールです。Web や Database、ファイルシステムなどの外部システムに対する入力とその応答検証を共通の形式で記述することができます。種々の機能を組み合わせた自動化ツールとして使うことも可能です。
 
+詳しくはこちら
 http://tomoemon.github.com/zaffy/
 
-setup
+Setup
 -------------
 
-### requirements
+### Requirements
 
 * python 2.6 or later
-* python setuptools
+* setuptools (package management tool for python)
 
         # on python 2.x
         wget http://peak.telecommunity.com/dist/ez_setup.py
         sudo python ez_setup.py
         sudo easy_install pip
 
-* python packages
+* required packages
 
         sudo pip install -r required_packages.txt
 
-* python packages (optional)
+* optional packages
+ * if you'd like to parse XML/HTML
 
         # requirements for installing `lxml` package (parsing XML and HTML)
         #   on linux
@@ -31,15 +33,19 @@ setup
         #   on windows http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
         sudo pip instal lxml
 
+ * if you'd like to query SQL
+
         # requirements for sql(mysql) action
         sudo pip install PyMySQL
+
+ * if you'd like to connect with SSH
 
         # requirements for ssh action
         #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
         sudo pip install ssh
 
 
-usage
+Usage
 --------------
     $ python lib/zaffy.py sample_scenario/httpTest.yml
       # using config file: zaffy.yml
@@ -51,9 +57,9 @@ usage
 標準でTAP(Test Anything Protocol)形式による出力を行います
 
 
-シナリオ記述例
+Example
 --------------
-#http test
+# http test
     - HTTP テスト
     - action: http.get
       url: http://yahoo.co.jp/
@@ -69,7 +75,7 @@ usage
       params:
         pagesize: <<last.res.content|length>>
 
-#sql test
+# sql test
     - SQL テスト
     - action: sql.select
       driver: mysql
@@ -94,57 +100,4 @@ usage
       assert:
         - res.returncode == 0
         - res.stdout.strip() == "50 output.txt"
-
-アクション一覧
---------------
-* http
-    * get
-    * post
-    * put
-    * delete
-    * head
-    * patch
-
-* sql
-    * select…selectした結果の1行1行をリスト形式で取得する
-    * selectdict…selectした結果の1行1行をカラム名と対応した辞書形式で取得する
-    * update…insert文やupdate文などの更新系SQLを実行する
-
-* shell
-    * run(*)…デフォルトシェル経由でコマンドを実行する
-
-* file
-    * copy…ファイルをコピーする
-    * remove…ファイルを削除する
-    * rename…ファイル名を変更する
-    * write…ファイルに書き込みを行なう
-    * @exists…ファイルの存在をチェックする
-    * @writable…ファイルの書き込み権限をチェックする
-    * @readable…ファイルの読み込み権限をチェックする
-    * @executable…ファイルの実行権限をチェックする
-    * @size…ファイルサイズを取得する
-    * @access_time…ファイルの最終アクセス時刻を取得する
-    * @update_time…ファイルの最終更新時刻を取得する
-    * @create_time…ファイルの作成時刻を取得する
-    * @read…ファイルの内容を取得する
-
-* sleep
-    * sleep(*)…指定した時間（ミリ秒単位）処理を停止する
-
-* env
-    * @NAME…指定した環境変数を取得する
-
-* const
-    * set…他のアクションで使用できる定数を定義する
-    * push
-    * pop
-
-* debug
-    * print(*)…他のアクションの実行結果などを標準出力に出力する
-
-* preset
-    * アクション名…指定したアクションのパラメータテンプレートを作成する
-
-* require
-    * require(*)…他のテストシナリオの内容を実行する
 
