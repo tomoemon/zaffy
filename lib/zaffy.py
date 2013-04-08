@@ -51,10 +51,10 @@ def init(formatter):
 
 
 def main():
-  if option.enable_color:
-    stdout = ColoredStdout()
+  if option.without_color:
+    stdout = Stdout(option.without_debug)
   else:
-    stdout = Stdout()
+    stdout = ColoredStdout(option.without_debug)
   formatter = Tap(stdout)
   global_env = init(formatter)
   if option.targets:

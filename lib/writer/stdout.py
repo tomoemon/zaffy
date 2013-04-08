@@ -14,8 +14,16 @@ else:
 
 
 class Stdout(object):
+  def __init__(self, nodebug=False):
+    self.nodebug = nodebug
+
   def open(self):
     pass
+
+  def debug(self, data, option={}):
+    if not self.nodebug:
+      option['type'] = 'debug'
+      self.write(data, option)
 
   def write(self, data, option={}):
     data = util.unicode(data, errors='replace')
@@ -27,18 +35,12 @@ class Stdout(object):
 
 
 class ColoredStdout(Stdout):
-  def __init__(self):
-    super(ColoredStdout, self).__init__()
+  def __init__(self, nodebug=False):
+    super(ColoredStdout, self).__init__(nodebug)
     colorama.init()
 
-  def _reset_style(self):
-    self._set_style(Fore.RESET + Back.RESET + Style.RESET_ALL)
-
-  def _set_style(self, style):
-    sys.stdout.write(style)
-
   def write(self, data, option={}):
-    style = option.get('style', "")
+    style = option.get('type', "")
     start = ""
     end = Fore.RESET + Back.RESET + Style.RESET_ALL
     if style == 'error':
@@ -49,6 +51,8 @@ class ColoredStdout(Stdout):
       start = Fore.GREEN + Style.BRIGHT
     elif style == 'success_result':
       start = Fore.WHITE + Back.GREEN + Style.BRIGHT
+    elif style == 'debug':
+      start = Fore.BLACK + Back.RESET + Style.BRIGHT
     else:
       start = Fore.RESET + Back.RESET + Style.RESET_ALL
 

@@ -25,15 +25,14 @@ class Tap(object):
     return self.succeeded + self.failed + self.errored
 
   def debug(self, debug_str):
-    writer = self.writer
-    writer.write(_i("  # ", _u(debug_str)))
+    self.writer.debug(_i("  # ", _u(debug_str)))
 
   def start(self, scenario):
     self.current = scenario
 
   def _write_header(self, succeeded, style):
-    self.writer.write("{0} {1}".format(succeeded, self.finished()), {"style": style})
-    self.writer.write(_i(" - ", _u("{0}").format(self.current.doc.strip())), {"style": style})
+    self.writer.write("{0} {1}".format(succeeded, self.finished()), {"type": style})
+    self.writer.write(_i(" - ", _u("{0}").format(self.current.doc.strip())), {"type": style})
 
   def succeed(self):
     writer = self.writer
@@ -98,16 +97,16 @@ class Tap(object):
     writer.write("\n")
     if self.not_ok_list:
       writer.write("FAILED tests {0}\n".format(
-        ", ".join([_u(e) for e in self.not_ok_list])), {"style": "error_result"})
+        ", ".join([_u(e) for e in self.not_ok_list])), {"type": "error_result"})
       writer.write("Failed {0}/{1} tests, {2:.2f}% ok ({3:.3f} sec)\n".format(
         len(self.not_ok_list), self.test_count,
         float(self.succeeded) / self.test_count * 100,
-        elapsed_time), {"style": "error_result"})
+        elapsed_time), {"type": "error_result"})
     else:
       if self.test_count == 1:
         writer.write("1 test passed ({0:.3f} sec)\n".format(
-          elapsed_time), {"style": "success_result"})
+          elapsed_time), {"type": "success_result"})
       else:
         writer.write("{0} tests all passed ({1:.3f} sec)\n".format(
-          self.test_count, elapsed_time), {"style": "success_result"})
+          self.test_count, elapsed_time), {"type": "success_result"})
 
