@@ -14,7 +14,7 @@ class _MetaConst(type):
 class Const(with_metaclass(_MetaConst, BaseAction)):
   """Const アクション
 
-  上書き不可能なグローバル定数をシナリオ実行単位内で定義する。シナリオ A が、シナリオ B (Const アクションを実行する) を :ref:`references-actions-require-label` すると、シナリオ A でも定数を参照することができる (=シナリオ実行単位でグローバル)。
+  上書き不可能なグローバル定数をシナリオ実行単位内で定義する。シナリオ A が、シナリオ B (Const アクションを実行する) を :ref:`references-actions-require-label` すると、シナリオ A でも定数を参照することができる (=シナリオ実行単位でグローバル)。同じキーで再度定義しようとした場合、シナリオ実行時にエラーが発生する。
 
   また、config ファイルで事前に共通の定数を定義しておくことも可能。詳しくは
 
@@ -22,6 +22,7 @@ class Const(with_metaclass(_MetaConst, BaseAction)):
 
   を参照。
 
+  .. note:: シナリオ内で変数を定義したい場合は :ref:`references-actions-local-label` を使用する。
 
   .. code-block:: yaml
 

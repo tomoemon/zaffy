@@ -7,7 +7,9 @@ class Local(BaseAction):
 
   シナリオ単位のローカル変数を保存する
 
-  上書き可能なローカル変数をシナリオ内で定義する。:ref:`references-actions-const-label` と異なるのは上書き可能な点と、シナリオ内でのみ有効な点。シナリオ A が、シナリオ B (local アクションを実行する) を :ref:`references-actions-require-label` しても、シナリオ A から B のローカル変数を参照することはできない (:ref:`references-actions-const-label` なら参照可能)
+  上書き可能なローカル変数をシナリオ内で定義する。シナリオ内でのみ有効なため、シナリオ A が、シナリオ B (local アクションを実行する) を :ref:`references-actions-require-label` しても、シナリオ A から B のローカル変数を参照することはできない。
+
+  .. note:: シナリオ実行単位でグローバルに参照したい場合は :ref:`references-actions-const-label` を使用する。ただし、定数なので上書きは不可能。(zaffy にグローバルな変数は存在しない)
   """
   def do_local(self, scenario, **kwargs):
     """ do_set の省略呼び出し """
