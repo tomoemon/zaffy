@@ -26,7 +26,6 @@ Setup
 * optional packages
  * if you'd like to parse XML/HTML (used by `asxml`, `ashtml`, `xpath` filter)
 
-            # requirements for installing `lxml` package (parsing XML and HTML)
             #   on linux
             #     (ubuntu) sudo apt-get install python-dev libxslt-dev
             #     (centos) sudo yum install python-devel libxslt-devel
@@ -35,12 +34,10 @@ Setup
 
  * if you'd like to query SQL (used by `sql` action)
 
-            # requirements for sql(mysql) action
             sudo pip install PyMySQL
 
  * if you'd like to connect with SSH (used by `ssh` action)
 
-            # requirements for ssh action
             #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
             sudo pip install ssh
 
