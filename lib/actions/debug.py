@@ -7,6 +7,7 @@ import util
 
 _UNICODE_REGEXP = re.compile(r"\\u([0-9a-f]{4})")
 
+
 class Debug(BaseAction):
   """ Debug アクション
 

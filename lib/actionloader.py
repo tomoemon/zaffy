@@ -3,7 +3,6 @@ from actionsetting import ActionSetting
 from baseaction import BaseAction
 from moduleloader import load_module_dir
 from actionparams import ActionParams
-import inspect
 
 
 class InvalidActionException(Exception):

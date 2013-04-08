@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import argparse
-import util
 
 
 def _parse():

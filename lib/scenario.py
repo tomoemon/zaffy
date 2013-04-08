@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from assertionfailed import AssertionFailed
 from baseaction import ActionException
 
 

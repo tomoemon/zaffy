@@ -16,12 +16,12 @@ from formatter.tap import Tap
 from writer.stdout import ColoredStdout, Stdout
 from moduleloader import LoadError
 import template
-import util
 
 
 def print_error_list(formatter, prefix, error):
   for error in error.error_list:
     formatter.debug(prefix + str(error))
+
 
 def init(formatter):
   try:
@@ -71,6 +71,7 @@ def main():
 
   if failed:
     sys.exit(1)
+
 
 def teardown():
   for action_klass in action_loader.get_all_action_map().values():

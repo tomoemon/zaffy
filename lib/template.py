@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from jinja2 import Environment, TemplateSyntaxError, UndefinedError, Undefined
+from jinja2 import Environment, TemplateSyntaxError, UndefinedError
 from moduleloader import load_module_dir
 from assertionfailed import AssertionFailed
 import util
@@ -97,6 +97,7 @@ def expand(template_str, variable_map):
     raise TemplateFormatException(util.unicode(e) + "\n" + template_str)
   except UndefinedError as e:
     raise TemplateFormatException(util.unicode(e) + "\n" + template_str)
+
 
 def set_param(filter_list, variable_map, target):
   variable_map['__target__'] = target

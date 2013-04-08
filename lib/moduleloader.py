@@ -4,9 +4,11 @@ import os
 from os import path
 import environment
 
+
 class LoadError(Exception):
   def __init__(self, error_list):
     self.error_list = error_list
+
 
 def load_module(module_name, basepath):
   """ モジュールをロードして返す
