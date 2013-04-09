@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-from jinja2 import Environment, TemplateSyntaxError, UndefinedError
+import jinja2
 from moduleloader import load_module_dir
 from assertionfailed import AssertionFailed
 import util
 
-_env = Environment(block_start_string='<%', block_end_string='%>',
+_env = jinja2.Environment(block_start_string='<%', block_end_string='%>',
                   variable_start_string='<<', variable_end_string='>>')
 
+# referred by actions/env.py
+Undefined = jinja2.Undefined
 
 def load_plugin(plugin_dict, custom_plugin_dir, prefix=""):
   plugins, load_error = load_module_dir(custom_plugin_dir)
@@ -75,9 +77,9 @@ def assert_test(assertion, variable_map):
     result = run_raw_template(assert_template, variable_map)
     if result != '1':
       raise AssertionFailed(assertion, CustomTest.failed)
-  except TemplateSyntaxError as e:
+  except jinja2.TemplateSyntaxError as e:
     raise AssertFormatException(util.unicode(e) + "\n" + assertion)
-  except UndefinedError as e:
+  except jinja2.UndefinedError as e:
     raise AssertFormatException(util.unicode(e) + "\n" + assertion)
 
 
@@ -93,9 +95,9 @@ def run_raw_template(template_str, variable_map):
 def expand(template_str, variable_map):
   try:
     return run_raw_template(template_str, variable_map)
-  except TemplateSyntaxError as e:
+  except jinja2.TemplateSyntaxError as e:
     raise TemplateFormatException(util.unicode(e) + "\n" + template_str)
-  except UndefinedError as e:
+  except jinja2.UndefinedError as e:
     raise TemplateFormatException(util.unicode(e) + "\n" + template_str)
 
 
