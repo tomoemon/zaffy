@@ -1,8 +1,7 @@
 # -*- coding: utf-8
 import yaml
-from scenario import Scenario
+from scenario import Scenario, ScenarioDoc
 from actionloader import action_loader
-import util
 
 
 class ScenarioLoader(object):
@@ -22,19 +21,25 @@ class ScenarioLoader(object):
     if setting.filename and parent:
       self._assert_no_circular_reference(setting.filename, parent)
 
-    raw_scenario = list(yaml.load_all(setting.read()))
-    doc, raw_actions = self._parse(raw_scenario)
-
+    doc, raw_actions = self.parse(setting.read())
     return Scenario(
         setting,
         doc,
         self.create_actions(raw_actions),
         parent)
 
-  def _parse(self, content):
-    raw_actions = content[0]
-    doc = raw_actions.pop(0)
-    if not isinstance(doc, util.basestring):
+  def _filter(self, content):
+    if len(content) >= 2:
+      return content[0], content[1]
+    else:
+      return content[0][0], content[0][1:]
+
+  def parse(self, raw_yaml):
+    content = list(yaml.load_all(raw_yaml))
+    raw_doc, raw_actions = self._filter(content)
+    try:
+      doc = ScenarioDoc(raw_doc)
+    except:
       raise Exception("Scenario should have a description at first element: " + str(content))
     return doc, raw_actions
 

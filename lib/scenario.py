@@ -1,5 +1,18 @@
 # -*- coding: utf-8 -*-
 from baseaction import ActionException
+import six
+
+
+class ScenarioDoc(object):
+  def __init__(self, raw_doc):
+    if isinstance(raw_doc, six.string_types):
+      self.doc = raw_doc
+      self.tags = []
+    elif isinstance(raw_doc, dict):
+      self.doc = raw_doc['doc']
+      self.tags = raw_doc.get('tag', [])
+    else:
+      raise Exception('unexpected scenario document')
 
 
 class Scenario(object):

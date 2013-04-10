@@ -1,0 +1,81 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+if sys.getdefaultencoding() == 'ascii':
+  reload(sys)
+  sys.setdefaultencoding('utf-8')
+  delattr(sys, 'setdefaultencoding')
+
+from os import path
+sys.path.append(path.join(path.dirname(__file__), '../lib'))
+
+import os
+import argparse
+import sqlite3
+import codecs
+
+import bottle
+from bottle import route, run, template, request
+
+@route('/api/tag.json')
+def tag_list():
+  query = " "
+  params = []
+  if request.query.prefix:
+    query += " where tag like ? "
+    params = [request.query.prefix+"%"]
+  return {"list": get_row("select tag, count(*) as count from tag" + query + "group by tag", params)}
+
+@route('/api/tag/<name>.json')
+def tag(name):
+  return {"list": get_row("select tag, count(*) as count from tag where tag=? group by tag", [name])}
+
+@route('/api/scenario.json')
+def scenario_list():
+  query = " "
+  params = []
+  if request.query.tag:
+    query += "A join tag B on A.id=B.scenario_id where B.tag=?"
+    params.append(request.query.tag)
+  return {"list": get_row("select * from scenario" + query, params)}
+
+@route('/api/scenario/<id>.json')
+def scenario(id):
+  return {"list": get_row("select * from scenario where id=?", [id])}
+
+@route('/api/scenario/<id>/tag.json')
+def scenario(id):
+  return {"list": [s[0] for s in get("select tag from tag where scenario_id=?", [id])]}
+
+def _parse():
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-p', '--port', action='store', dest='port', default="8080")
+  parser.add_argument('--index', action='store', dest='index', default="index.sqlite")
+  parser.add_argument('--host', action='store', dest='host', default="localhost")
+  return parser.parse_args()
+
+conn = None
+
+def main():
+  global conn
+  bottle.debug(True)
+  p = _parse()
+  open(p.index).close()
+  conn = sqlite3.connect(p.index)
+  run(host=p.host, port=int(p.port), reloader=True)
+
+def get(sql, params=[]):
+  conn.row_factory = None
+  c = conn.cursor()
+  c.execute(sql, params)
+  return list(c)
+
+def get_row(sql, params=[]):
+  conn.row_factory = sqlite3.Row
+  c = conn.cursor()
+  c.execute(sql, params)
+  return map(dict, c)
+
+if __name__ == '__main__':
+  main()

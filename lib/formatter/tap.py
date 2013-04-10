@@ -32,11 +32,9 @@ class Tap(object):
 
   def _write_header(self, succeeded, style):
     self.writer.write("{0} {1}".format(succeeded, self.finished()), {"type": style})
-    self.writer.write(_i(" - ", _u("{0}").format(self.current.doc.strip())), {"type": style})
+    self.writer.write(_i(" - ", _u("{0}").format(self.current.doc.doc.strip())), {"type": style})
 
   def succeed(self):
-    writer = self.writer
-
     self.succeeded += 1
     self._write_header('ok', "success")
 

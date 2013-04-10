@@ -1,0 +1,94 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+if sys.getdefaultencoding() == 'ascii':
+  reload(sys)
+  sys.setdefaultencoding('utf-8')
+  delattr(sys, 'setdefaultencoding')
+
+from os import path
+sys.path.append(path.join(path.dirname(__file__), '../lib'))
+
+import os
+import argparse
+import sqlite3
+import codecs
+import hashlib
+from scenarioloader import scenario_loader
+
+CREATE_SCENARIO = """
+CREATE  TABLE IF NOT EXISTS `scenario` (
+  `id` TEXT BINARY NOT NULL ,
+  `doc` TEXT BINARY NOT NULL ,
+  `path` TEXT BINARY NOT NULL ,
+  `body` TEXT NOT NULL ,
+  PRIMARY KEY (`id`) )
+"""
+CREATE_TAG = """
+CREATE  TABLE IF NOT EXISTS `tag` (
+  `scenario_id` TEXT NOT NULL ,
+  `tag` TEXT NOT NULL ,
+  PRIMARY KEY (`scenario_id`, `tag`) )
+"""
+
+def _parse():
+  parser = argparse.ArgumentParser()
+  parser.add_argument('target_dirs', nargs='*', help="database file", default=["."])
+  parser.add_argument('-s', '--store', action='store', dest='filename', default="index.sqlite", help="database file")
+  return parser.parse_args()
+
+def main():
+  p = _parse()
+
+  yaml_list = []
+  for target in p.target_dirs:
+    if not os.access(target, os.R_OK):
+      sys.stderr.write("directory not found: " + target + "\n")
+      return
+    yaml_list.extend(search_yaml(target))
+
+  conn = create_db(p.filename)
+
+  while yaml_list:
+    add_scenario(conn, yaml_list[:100])
+    yaml_list = yaml_list[100:]
+
+  conn.commit()
+  conn.close()
+
+def parse_scenario(yaml_path):
+  raw_yaml = codecs.open(yaml_path, encoding='utf-8').read()
+  doc, raw_actions = scenario_loader.parse(raw_yaml)
+  s_id = hashlib.sha256(yaml_path).hexdigest()[:10]
+  return s_id, doc, yaml_path, raw_yaml
+
+def add_scenario(conn, yaml_path_list):
+  scenario_list = [parse_scenario(yaml) for yaml in yaml_path_list]
+  conn.executemany('insert into scenario values(?, ?, ?, ?)',
+      [(s[0], s[1].doc, s[2], s[3]) for s in scenario_list])
+
+  tags = []
+  for s in scenario_list:
+    tags.extend([(s[0], t) for t in s[1].tags])
+  conn.executemany('insert into tag values(?, ?)', tags)
+
+def create_db(db_name):
+  try:
+    os.unlink(db_name)
+  except:
+    pass
+  conn = sqlite3.connect(db_name)
+  conn.execute(CREATE_SCENARIO)
+  conn.execute(CREATE_TAG)
+  return conn
+
+def search_yaml(target_dir):
+  matches = []
+  for root, dirnames, filenames in os.walk(target_dir):
+    matches.extend([os.path.join(root, f) for f in filenames if f.endswith('.yml')])
+  return matches
+
+if __name__ == '__main__':
+  main()
+

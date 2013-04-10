@@ -1,4 +1,6 @@
-- HTTP Download テスト
+doc: HTTP Download テスト
+tag: [/api/tokeninfo, hogehoge]
+---
 
 - action: const.set
   FILE_NAME: yahoo.html
