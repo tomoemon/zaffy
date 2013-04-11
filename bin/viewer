@@ -7,16 +7,14 @@ if sys.getdefaultencoding() == 'ascii':
   sys.setdefaultencoding('utf-8')
   delattr(sys, 'setdefaultencoding')
 
-from os import path
-sys.path.append(path.join(path.dirname(__file__), '../lib'))
-
 import os
 import argparse
 import sqlite3
 import codecs
 
-import bottle
-from bottle import route, run, template, request
+from bottle import route, run, template, request, static_file
+
+VIEW_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "view")
 
 @route('/api/tag.json')
 def tag_list():
@@ -25,11 +23,11 @@ def tag_list():
   if request.query.prefix:
     query += " where tag like ? "
     params = [request.query.prefix+"%"]
-  return {"list": get_row("select tag, count(*) as count from tag" + query + "group by tag", params)}
+  return {"list": get("select tag, count(*) as count from tag" + query + "group by tag", params)}
 
 @route('/api/tag/<name>.json')
 def tag(name):
-  return {"list": get_row("select tag, count(*) as count from tag where tag=? group by tag", [name])}
+  return {"list": get("select tag, count(*) as count from tag where tag=? group by tag", [name])}
 
 @route('/api/scenario.json')
 def scenario_list():
@@ -38,15 +36,20 @@ def scenario_list():
   if request.query.tag:
     query += "A join tag B on A.id=B.scenario_id where B.tag=?"
     params.append(request.query.tag)
-  return {"list": get_row("select * from scenario" + query, params)}
+  return {"list": get("select * from scenario" + query, params)}
 
 @route('/api/scenario/<id>.json')
 def scenario(id):
-  return {"list": get_row("select * from scenario where id=?", [id])}
+  return {"list": get("select * from scenario where id=?", [id])}
 
 @route('/api/scenario/<id>/tag.json')
 def scenario(id):
-  return {"list": [s[0] for s in get("select tag from tag where scenario_id=?", [id])]}
+  return {"list": get("select tag from tag where scenario_id=?", [id])}
+
+@route('/')
+@route('/<name:path>')
+def asset(name='/index.html'):
+  return static_file(name, root=VIEW_DIR)
 
 def _parse():
   parser = argparse.ArgumentParser()
@@ -59,20 +62,13 @@ conn = None
 
 def main():
   global conn
-  bottle.debug(True)
   p = _parse()
   open(p.index).close()
   conn = sqlite3.connect(p.index)
-  run(host=p.host, port=int(p.port), reloader=True)
+  conn.row_factory = sqlite3.Row
+  run(host=p.host, port=int(p.port), reloader=True, debug=True)
 
 def get(sql, params=[]):
-  conn.row_factory = None
-  c = conn.cursor()
-  c.execute(sql, params)
-  return list(c)
-
-def get_row(sql, params=[]):
-  conn.row_factory = sqlite3.Row
   c = conn.cursor()
   c.execute(sql, params)
   return map(dict, c)
