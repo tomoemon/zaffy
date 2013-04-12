@@ -1,5 +1,11 @@
 - required sample
+
+- action: shell
+  cmd: echo hoge
+
 - action: debug
   sample: required called
   local: <<local>>
+  assert:
+    - 1 is eq 2
 

@@ -23,6 +23,7 @@ CREATE  TABLE IF NOT EXISTS `scenario` (
   `doc` TEXT BINARY NOT NULL ,
   `path` TEXT BINARY NOT NULL ,
   `body` TEXT NOT NULL ,
+  `action_count` INTEGER NOT NULL,
   PRIMARY KEY (`id`) )
 """
 CREATE_TAG = """
@@ -61,12 +62,12 @@ def parse_scenario(yaml_path):
   raw_yaml = codecs.open(yaml_path, encoding='utf-8').read()
   doc, raw_actions = scenario_loader.parse(raw_yaml)
   s_id = hashlib.sha256(yaml_path).hexdigest()[:10]
-  return s_id, doc, yaml_path, raw_yaml
+  return s_id, doc, yaml_path, raw_yaml, raw_actions
 
 def add_scenario(conn, yaml_path_list):
   scenario_list = [parse_scenario(yaml) for yaml in yaml_path_list]
-  conn.executemany('insert into scenario values(?, ?, ?, ?)',
-      [(s[0], s[1].doc, s[2], s[3]) for s in scenario_list])
+  conn.executemany('insert into scenario values(?, ?, ?, ?, ?)',
+      [(s[0], s[1].doc, s[2], s[3], len(s[4])) for s in scenario_list])
 
   tags = []
   for s in scenario_list:
