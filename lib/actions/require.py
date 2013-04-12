@@ -26,10 +26,10 @@ class Require(BaseAction):
   def __getitem__(self, index):
     return self.result['actions'][index]
 
-  def do_require(self, path, global_env, scenario):
-    """ パラメータなしの呼び出し
+  def do_require(self, path, global_env, scenario, params=None):
+    """ 外部シナリオの実行
 
-    * A.yml
+    * A.yml (パラメータなし呼び出し)
 
     .. code-block:: yaml
 
@@ -53,22 +53,13 @@ class Require(BaseAction):
       - action: http.get
         url: http://yahoo.co.jp
 
-    :param string path: 読み込みシナリオファイル。相対パスの場合は現在のシナリオファイルからの相対パス。絶対パスの場合は ``root_path`` を基準ディレクトリとして使用する。
-    :return: - **any** (*dict*) - 読み込んだシナリオの最後のアクションの result
-    """
-    new_scenario = self._load(path, global_env, scenario, None)
-    self.result = new_scenario.actions[-1].result
-
-  def do_call(self, path, global_env, scenario, params=None):
-    """ パラメータ付き呼び出し
-
-    * A.yml
+    * C.yml (パラメータ付き呼び出し)
 
     .. code-block:: yaml
 
       - サンプルシナリオ
 
-      - action: require.call
+      - action: require
         path: B.yml
         params:
           x: 100
@@ -77,7 +68,7 @@ class Require(BaseAction):
       - action: debug
         result: <<last.res.sum>>
 
-    * B.yml
+    * D.yml
 
     .. code-block:: yaml
 
