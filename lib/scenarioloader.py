@@ -30,7 +30,7 @@ class ScenarioLoader(object):
 
   def _filter(self, content):
     if len(content) >= 2:
-      return content[0], content[1]
+      return content[0], content[1] if isinstance(content[1], list) else []
     else:
       return content[0][0], content[0][1:]
 
@@ -40,7 +40,7 @@ class ScenarioLoader(object):
     try:
       doc = ScenarioDoc(raw_doc)
     except:
-      raise Exception("Scenario should have a description at first element: " + str(content))
+      raise Exception("Scenario should have a description at first element/document: " + str(content))
     return doc, raw_actions
 
   def create_actions(self, actions):

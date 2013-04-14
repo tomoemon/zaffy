@@ -5,10 +5,8 @@ $(function () {
         updateTagSearch();
     }, 500));
 
-    if ($.getQuery('prefix')) {
-        $('#tagPrefix input').val($.getQuery('prefix'));
-        updateTagSearch();
-    }
+    $('#tagPrefix input').val($.getQuery('prefix'));
+    updateTagSearch();
 
     printAllTags();
 
@@ -18,22 +16,29 @@ $(function () {
                 return val.tag;
             })
             _.forEach(list, function (val) {
-                $('#allTags').append('<span class="badge badge-info"><a href="scenario.html?tag=' + encodeURI(val.tag) + '">' + _.escape(val.tag) + '</a></span>');
+                $('#allTags').append('<span class="badge badge-info"><a href="scenario_list.html?tag=' + encodeURIComponent(val.tag) + '">' + _.escape(val.tag) + '</a></span>');
             });
         })
     }
 
     function updateTagSearch() {
         var prefix = $('#tagPrefix input').val();
-        $('#tagPrefix a').attr('href', '?prefix=' + encodeURI(prefix));
-        $.getJSON('/api/tag.json?prefix=' + encodeURI(prefix), function (data) {
-            console.log(data);
+        $('#tagPrefix a').attr('href', '?prefix=' + encodeURIComponent(prefix));
+        $.getJSON('/api/tag.json?prefix=' + encodeURIComponent(prefix), function (data) {
             $('#tags tbody tr').remove();
             var list = _.sortBy(data.list, function (val) {
                 return val.tag;
             })
             _.forEach(list, function (value) {
-                $('#tags tbody').append($('<tr><td>' + _.escape(value.tag) + '</td><td>' + value.count + '</td></tr>'));
+                var className = "";
+                if (value.notyet > 0) {
+                    className = "warning";
+                }
+                $('#tags tbody').append(
+                    $('<tr class="' + className + '">'
+                    + '<td><a href="scenario_list.html?tag=' + encodeURIComponent(value.tag) + '">' + _.escape(value.tag) + '</a></td>'
+                    + '<td>' + value.total + '</td>'
+                    + '<td><strong>' + value.notyet + '</strong></td></tr>'));
             });
             if (!list.length) {
                 $('#tags tbody').append($('<tr><td colspan="2">no tags matched</td></tr>'));

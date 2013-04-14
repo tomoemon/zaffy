@@ -10,31 +10,37 @@ if sys.getdefaultencoding() == 'ascii':
 import os
 import argparse
 import sqlite3
-import codecs
 
-from bottle import route, run, template, request, static_file
+from bottle import route, run, request, static_file
 
 VIEW_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "view")
 
 @route('/api/tag.json')
 def tag_list():
-  query = " "
+  query = ""
   params = []
   if request.query.prefix:
-    query += " where tag like ? "
-    params = [request.query.prefix+"%"]
-  return {"list": get("select tag, count(*) as count from tag" + query + "group by tag", params)}
+    query += r" where tag like ? ESCAPE '\'"
+    params = [_escape(request.query.prefix, '\\') + "%"]
+  return {"list": get("select tag, count(*) as total, sum(case when action_count = 0 then 1 else 0 end) as notyet"
+                      + " from tag A join scenario B on A.scenario_id = B.id"
+                      + query + " group by tag", params)}
 
-@route('/api/tag/<name>.json')
+@route('/api/tag/<name:path>.json')
 def tag(name):
-  return {"list": get("select tag, count(*) as count from tag where tag=? group by tag", [name])}
+  if request.query.co:
+    result = get("select distinct tag from tag where scenario_id in (select scenario_id from tag where tag=?)", [name])
+    return {"list": [e for e in result if e['tag'] != name]}
+  return {"list": get("select tag, count(*) as total, sum(case when action_count = 0 then 1 else 0 end) as notyet"
+                      + " from tag A join scenario B on A.scenario_id = B.id"
+                      + " where tag = ? group by tag", [name])}
 
 @route('/api/scenario.json')
 def scenario_list():
-  query = " "
+  query = ""
   params = []
   if request.query.tag:
-    query += "A join tag B on A.id=B.scenario_id where B.tag=?"
+    query += " A join tag B on A.id=B.scenario_id where B.tag=?"
     params.append(request.query.tag)
   return {"list": get("select * from scenario" + query, params)}
 
@@ -43,7 +49,7 @@ def scenario(id):
   return {"list": get("select * from scenario where id=?", [id])}
 
 @route('/api/scenario/<id>/tag.json')
-def scenario(id):
+def scenario_tag(id):
   return {"list": get("select tag from tag where scenario_id=?", [id])}
 
 @route('/')
@@ -51,27 +57,33 @@ def scenario(id):
 def asset(name='/index.html'):
   return static_file(name, root=VIEW_DIR)
 
+option = None
+
 def _parse():
+  global option
   parser = argparse.ArgumentParser()
   parser.add_argument('-p', '--port', action='store', dest='port', default="8080")
   parser.add_argument('--index', action='store', dest='index', default="index.sqlite")
   parser.add_argument('--host', action='store', dest='host', default="localhost")
-  return parser.parse_args()
-
-conn = None
+  option = parser.parse_args()
 
 def main():
-  global conn
-  p = _parse()
-  open(p.index).close()
-  conn = sqlite3.connect(p.index)
-  conn.row_factory = sqlite3.Row
-  run(host=p.host, port=int(p.port), reloader=True, debug=True)
+  _parse()
+  open(option.index).close()
+  run(host=option.host, port=int(option.port), reloader=True, debug=True)
 
 def get(sql, params=[]):
+  conn = sqlite3.connect(option.index)
+  conn.row_factory = sqlite3.Row
   c = conn.cursor()
   c.execute(sql, params)
-  return map(dict, c)
+  result = map(dict, c)
+  c.close()
+  conn.close()
+  return result
+
+def _escape(q, escape):
+  return q.replace('%', escape + '%').replace('_', escape + '_')
 
 if __name__ == '__main__':
   main()

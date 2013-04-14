@@ -10,6 +10,7 @@ if sys.getdefaultencoding() == 'ascii':
 from os import path
 sys.path.append(path.join(path.dirname(__file__), '../lib'))
 
+import util
 import os
 import argparse
 import sqlite3
@@ -35,8 +36,9 @@ CREATE  TABLE IF NOT EXISTS `tag` (
 
 def _parse():
   parser = argparse.ArgumentParser()
-  parser.add_argument('target_dirs', nargs='*', help="database file", default=["."])
-  parser.add_argument('-s', '--store', action='store', dest='filename', default="index.sqlite", help="database file")
+  parser.add_argument('target_dirs', nargs='*', help="indexing directories", default=["."])
+  parser.add_argument('-d', '--database', action='store', dest='database', default="index.sqlite", help="database file")
+  parser.add_argument('-s', '--suffix', action='store', dest='suffix', default='.yml', help="filename suffix for indexing")
   return parser.parse_args()
 
 def main():
@@ -47,9 +49,9 @@ def main():
     if not os.access(target, os.R_OK):
       sys.stderr.write("directory not found: " + target + "\n")
       return
-    yaml_list.extend(search_yaml(target))
+    yaml_list.extend(search_yaml(target, p.suffix))
 
-  conn = create_db(p.filename)
+  conn = create_db(p.database)
 
   while yaml_list:
     add_scenario(conn, yaml_list[:100])
@@ -61,11 +63,23 @@ def main():
 def parse_scenario(yaml_path):
   raw_yaml = codecs.open(yaml_path, encoding='utf-8').read()
   doc, raw_actions = scenario_loader.parse(raw_yaml)
-  s_id = hashlib.sha256(yaml_path).hexdigest()[:10]
+  if not doc.tags:
+    doc.tags.append('__EMPTY_TAG__')
+  if not raw_actions:
+    doc.tags.append('__NOT_IMPLEMENTED__')
+  s_id = hashlib.sha256(yaml_path + raw_yaml).hexdigest()[:10]
   return s_id, doc, yaml_path, raw_yaml, raw_actions
 
 def add_scenario(conn, yaml_path_list):
-  scenario_list = [parse_scenario(yaml) for yaml in yaml_path_list]
+  scenario_list = []
+  for yaml_path in yaml_path_list:
+    try:
+      print("indexing... {0}".format(yaml_path.encode(sys.getfilesystemencoding())))
+      scenario_list.append(parse_scenario(yaml_path))
+    except Exception as e:
+      sys.stderr.write("WARNING: ignored invalid scenario\n")
+      sys.stderr.write("  " + str(e) + "\n")
+
   conn.executemany('insert into scenario values(?, ?, ?, ?, ?)',
       [(s[0], s[1].doc, s[2], s[3], len(s[4])) for s in scenario_list])
 
@@ -84,10 +98,10 @@ def create_db(db_name):
   conn.execute(CREATE_TAG)
   return conn
 
-def search_yaml(target_dir):
+def search_yaml(target_dir, suffix):
   matches = []
   for root, dirnames, filenames in os.walk(target_dir):
-    matches.extend([os.path.join(root, f) for f in filenames if f.endswith('.yml')])
+    matches.extend([util.unicode(os.path.join(root, f), sys.getfilesystemencoding()) for f in filenames if f.endswith(suffix)])
   return matches
 
 if __name__ == '__main__':

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja-JP">
+<head>
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/syntax/sons-of-obsidian-customized.css" type="text/css" rel="stylesheet"/>
+    <link href="css/view.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+
+        #scenarioDoc {
+            font-family: "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
+            font-size: 1.5em;
+        }
+    </style>
+    <title>Scenario - Zaffy</title>
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand">Zaffy Scenario Viewer</a>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li><a href="index.html">Tag</a></li>
+                    <li class="active"><a href="#">Scenario</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="span10">
+            <h1 id='scenarioDoc'></h1>
+            <blockquote>
+                <p>
+                <div id='scenarioPath'></div>
+                </p>
+            </blockquote>
+                <p>
+                <div class="tags" id="scenarioTags"></div>
+                </p>
+            <pre class='prettyprint linenums lang-yaml' id='scenarioBody'></pre>
+        </div>
+    </div>
+</div>
+<script type='text/javascript' src='js/jquery-1.9.1.min.js'></script>
+<script type='text/javascript' src='js/underscore-min.js'></script>
+<script type='text/javascript' src='js/util.js'></script>
+<script type='text/javascript' src="js/syntax/prettify.js"></script>
+<script type='text/javascript' src="js/syntax/lang-yaml.js"></script>
+<script type="text/javascript" src="js/scenarioview.js"></script>
+</body>
+</html>
