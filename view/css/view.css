@@ -1,0 +1,9 @@
+.tags span {
+    margin-left: 0.5em;
+    font-size: 1.1em;
+}
+
+.tags a {
+    font-weight: normal;
+    color: white;
+}
