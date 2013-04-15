@@ -64,13 +64,14 @@ def _parse():
   parser = argparse.ArgumentParser()
   parser.add_argument('-p', '--port', action='store', dest='port', default="8080")
   parser.add_argument('--index', action='store', dest='index', default="index.sqlite")
-  parser.add_argument('--host', action='store', dest='host', default="localhost")
+  parser.add_argument('--host', action='store', dest='host', default="0.0.0.0")
+  parser.add_argument('--debug', action='store_true', dest='is_debug', default=False)
   option = parser.parse_args()
 
 def main():
   _parse()
   open(option.index).close()
-  run(host=option.host, port=int(option.port), reloader=True, debug=True)
+  run(host=option.host, port=int(option.port), reloader=option.is_debug, debug=option.is_debug)
 
 def get(sql, params=[]):
   conn = sqlite3.connect(option.index)
