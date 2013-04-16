@@ -94,7 +94,7 @@ class Require(BaseAction):
       - サンプルシナリオ
 
       # B.yml を2回呼び出す
-      - action: require.call
+      - action: require.repeat
         path: B.yml
         params:
           - x: 100
@@ -119,7 +119,7 @@ class Require(BaseAction):
     :return: - **any** (*dict*) - 読み込んだシナリオの最後のアクションの result
     """
     for param in params:
-      self.do_call(path, global_env, scenario, param)
+      self.do_require(path, global_env, scenario, param)
 
   @staticmethod
   def _replace_root(src_path, new_root):
