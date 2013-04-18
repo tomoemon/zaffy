@@ -31,18 +31,28 @@ def tag(name):
   if request.query.co:
     result = get("select distinct tag from tag where scenario_id in (select scenario_id from tag where tag=?)", [name])
     return {"list": [e for e in result if e['tag'] != name]}
-  return {"list": get("select tag, count(*) as total, sum(case when action_count = 0 then 1 else 0 end) as notyet"
-                      + " from tag A join scenario B on A.scenario_id = B.id"
-                      + " where tag = ? group by tag", [name])}
+  return {"list": get("""SELECT
+    tag,
+    COUNT(*) AS total,
+    SUM(CASE WHEN action_count = 0 THEN 1 ELSE 0 END) AS notyet
+    FROM tag A JOIN scenario B ON A.scenario_id = B.id
+    WHERE tag = ? GROUP BY tag""", [name])}
 
 @route('/api/scenario.json')
 def scenario_list():
   query = ""
   params = []
   if request.query.tag:
-    query += " A join tag B on A.id=B.scenario_id where B.tag=?"
+    query += " WHERE `A`.`id` IN (SELECT `scenario_id` FROM `tag` WHERE `tag`=?)"
     params.append(request.query.tag)
-  return {"list": get("select * from scenario" + query, params)}
+  return {"list": get("""select
+    MAX(`id`) AS `id` ,
+    MAX(body) AS `body`,
+    MAX(`doc`) AS `doc`,
+    MAX(`action_count`) AS `action_count`,
+    MAX(`path`) AS `path`,
+    GROUP_CONCAT(`tag`, "\t") AS `tags`
+    FROM scenario A JOIN tag B ON A.id=B.scenario_id""" + query + ' GROUP BY `A`.`id`', params)}
 
 @route('/api/scenario/<id>.json')
 def scenario(id):
