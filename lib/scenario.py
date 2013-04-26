@@ -10,7 +10,8 @@ class ScenarioDoc(object):
       self.tags = []
     elif isinstance(raw_doc, dict):
       self.doc = raw_doc['doc']
-      self.tags = raw_doc.get('tag', [])
+      tag = raw_doc.get('tag', [])
+      self.tags = tag if isinstance(tag, list) else [tag]
     else:
       raise Exception('unexpected scenario document')
 

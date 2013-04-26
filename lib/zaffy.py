@@ -12,6 +12,7 @@ from configloader import ConfigLoader
 from actionloader import action_loader
 from aggregator import Aggregator
 from scenariorunner import ScenarioRunner
+from scenariofilter import TagFilter
 from formatter.tap import Tap
 from writer.stdout import ColoredStdout, Stdout
 from moduleloader import LoadError
@@ -59,7 +60,12 @@ def main():
   global_env = init(formatter)
   if option.targets:
     agg = Aggregator()
-    agg.add_files(option.targets)
+    agg.add_filter(TagFilter(option.tags))
+    try:
+      agg.add_files(option.targets)
+    except IOError as e:
+      formatter.writer.write("Loading scenario failed:\n" + str(e) + "\n\n", {"type": "error"})
+      return
     runner = ScenarioRunner(agg, formatter)
     failed = runner.run(global_env)
   else:
