@@ -43,6 +43,9 @@ class CUI(cmd.Cmd):
           self.action_complete.append(action_key)
           self.action_param_complete[action_key] = args
 
+  def do_EOF(self, line):
+    return self.do_exit(line)
+
   def precmd(self, line):
     """ >>> の状態で enter が押されて、do_hogehoge へのマッチングを行う前に呼ばれる """
     if hasattr(CUI, 'do_action: '):
