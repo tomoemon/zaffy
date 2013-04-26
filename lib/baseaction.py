@@ -49,6 +49,11 @@ class BaseAction(object):
     pass
 
   @classmethod
+  def load_module(cls):
+    # modules, errors
+    return ((), None)
+
+  @classmethod
   def teardown(cls):
     pass
 

@@ -39,6 +39,9 @@ class ActionLoader(object):
       if not issubclass(action_klass, BaseAction):
         # BaseAction クラスを継承していないクラスがあったらエラー
         raise Exception(module_name.title() + " class must extend BaseAction")
+      modules, errors = type.__getattribute__(action_klass, 'load_module')()
+      if errors:
+        error.extend(errors)
       self.action_klasses[module_name] = action_klass
 
     if error:

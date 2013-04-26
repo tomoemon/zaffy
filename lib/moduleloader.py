@@ -9,6 +9,11 @@ class LoadError(Exception):
   def __init__(self, error_list):
     self.error_list = error_list
 
+  def extend(self, error):
+    self.error_list.extend(error.error_list)
+
+  def __len__(self):
+    return len(self.error_list)
 
 def load_module(module_name, basepath):
   """ モジュールをロードして返す
@@ -36,7 +41,7 @@ def load_modules(basepath):
         plugin_list.append(m)
     except ImportError as e:
       error_list.append((filename, e))
-  error = LoadError(error_list) if error_list else None
+  error = LoadError(error_list)
   return plugin_list, error
 
 

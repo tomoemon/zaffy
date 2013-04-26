@@ -5,7 +5,6 @@ from moduleloader import load_module_dir
 
 _drivers = {}
 
-
 class Sql(BaseAction):
   """ Sql アクション
 
@@ -21,12 +20,13 @@ class Sql(BaseAction):
   is_pool_connection = False
 
   @classmethod
-  def setup(cls, config):
+  def load_module(cls):
     global _drivers
     modules, errors = load_module_dir(path.join("actions", "sqldrivers"))
     for module in modules:
       klass = getattr(module, module.__name__.title())
       _drivers[module.__name__] = klass()
+    return modules, errors
 
   @classmethod
   def teardown(cls):
