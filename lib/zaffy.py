@@ -17,6 +17,7 @@ from formatter.tap import Tap
 from writer.stdout import ColoredStdout, Stdout
 from moduleloader import LoadError
 import template
+import util
 
 
 def print_error_list(formatter, prefix, error):
@@ -52,32 +53,46 @@ def init(formatter):
 
 
 def main():
+  if not option.targets and not option.interactive:
+    option.print_help()
+    return
+
   if option.without_color:
     stdout = Stdout(option.without_debug)
   else:
     stdout = ColoredStdout(option.without_debug)
+
   formatter = Tap(stdout)
   global_env = init(formatter)
-  if option.targets:
-    agg = Aggregator()
-    agg.add_filter(TagFilter(option.tags))
-    try:
-      agg.add_files(option.targets)
-    except IOError as e:
-      formatter.writer.write("Loading scenario failed:\n" + str(e) + "\n\n", {"type": "error"})
-      return
-    runner = ScenarioRunner(agg, formatter)
-    failed = runner.run(global_env)
+
+  if option.interactive:
+    result = run_console(global_env)
   else:
-    import console
-    console.run(global_env)
-    failed = False
+    result = run_scenario(global_env)
 
   teardown()
+  sys.exit(result)
 
-  if failed:
-    sys.exit(1)
+def run_scenario(global_env):
+  formatter = global_env['formatter']
+  failed = False
+  try:
+    agg = Aggregator()
+    agg.add_filter(TagFilter(option.tags))
+    agg.add_files(option.targets)
+  except IOError as e:
+    formatter.writer.write(util.unicode(e) + "\n\n", {"type": "error"})
+    failed = True
 
+  runner = ScenarioRunner(agg, formatter)
+  failed = failed or runner.run(global_env)
+
+  return int(failed)
+
+def run_console(global_env):
+  import console
+  console.run(global_env)
+  return 0
 
 def teardown():
   for action_klass in action_loader.get_all_action_map().values():
