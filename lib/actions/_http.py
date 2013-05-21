@@ -74,12 +74,12 @@ class Http(BaseAction):
     :param string password: HTTP認証パスワード
     :param dict headers: 送信する header
     :param dict cookies: 送信する cookie
-    :param dict|string params: query string として送信するパラメータ (GET時に指定する)。辞書形式ではなく a=10&b=20 形式の文字列で渡すことも可能
-    :param dict|string data: body に付加するパラメータ (POST時に指定する)
+    :param dict|string params: query string として送信するパラメータ。辞書形式ではなく a=10&b=20 形式の文字列で渡すことも可能
+    :param dict|string data: message body として送信するパラメータ
     :param bool no_content: True: header のみを取得、False: content も取得
     :param bool binary_content: True: content をバイナリとして取得、False: header で指定された文字コードに従って decode
-    :param string save_file: content をファイルに保存してメモリ上に持たずに指定されたパスに出力する (binary_content=Trueとして扱う)
-    :param bool ssl_verify: True: リクエスト先が返す自己証明書の場合は Error、False: 自己証明書を通す
+    :param string save_file: content をメモリ上に持たずに指定されたファイルに出力する (binary_content=Trueとして扱う)
+    :param bool ssl_verify: True: https 通信の際に自己証明書が使われた場合は Error、False: 自己証明書を通す
     :param bool allow_redirects: True: 30x レスポンスに対して自動でリダイレクトする、False: リダイレクトしない
     :param int timeout: タイムアウト時間を秒数で指定 (content のダウンロードに要する時間は除く)
     :return: - **status** (*int*) - http response status
