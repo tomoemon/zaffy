@@ -62,9 +62,6 @@ class Scenario(object):
     action = self._action_queue.pop(0)
     finished_actions = self._finished_actions
 
-    #fetch the current line number
-    line_number = action._params._raw_params['__line__']
-
     global_env["actions"] = finished_actions
     global_env["action_index"] = len(finished_actions)
     global_env["this"] = action
@@ -74,8 +71,6 @@ class Scenario(object):
     except ActionException as e:
       e.action_index = len(finished_actions)
       e.scenario = self
-      #add line number into exception
-      e.line_number = line_number
       raise
     finally:
       finished_actions.append(action)

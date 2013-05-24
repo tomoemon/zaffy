@@ -45,7 +45,7 @@ class Tap(object):
     arrow = ""
     while parent and hasattr(parent, 'original'):
       writer.write(_i(indent, _u(arrow + "filename: {0}").format(parent.scenario.setting.filename)))
-      writer.write(_i(indent, _u(arrow + "action_index: {0}").format(parent.action_index)))
+      writer.write(_i(indent, _u(arrow + "action_index: {0} (line: {1})").format(parent.action_index, parent.line_number)))
       parent = parent.original
       indent += " "
       arrow = '-> '
@@ -61,7 +61,6 @@ class Tap(object):
     self._write_header('not ok', "error")
     writer.write("  ------------------------------------------------------------\n")
     self._stacktrace(writer, exception)
-    writer.write(_i("  ", _u("line_number: {0}").format(exception.line_number)))
     writer.write(_i("  ", _u("assert_index: {0}").format(exception.assert_index)))
     writer.write(_i("  ", _u("assertion: {0}").format(exception.assertion)))
     writer.write(_i("  ", _u("compared: ")))

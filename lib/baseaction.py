@@ -6,11 +6,12 @@ from assertionfailed import AssertionFailed
 
 
 class ActionException(Exception):
-  def __init__(self, exception, stack_trace):
+  def __init__(self, exception, stack_trace, line_number):
     self.original = exception
     self.stack_trace = stack_trace
     self.action_index = None
     self.scenario = None
+    self.line_number = line_number
 
   @property
   def root(self):
@@ -24,8 +25,8 @@ class ActionException(Exception):
 
 
 class ActionAssertionFailed(ActionException):
-  def __init__(self, exception, stack_trace):
-    super(ActionAssertionFailed, self).__init__(exception, stack_trace)
+  def __init__(self, exception, stack_trace, line_number):
+    super(ActionAssertionFailed, self).__init__(exception, stack_trace, line_number)
 
 
 class BaseAction(object):
@@ -43,6 +44,10 @@ class BaseAction(object):
   def res(self):
     """ self.result の alias """
     return self.result
+
+  @property
+  def line_number(self):
+    return self._params._raw_params['__line__']
 
   @classmethod
   def setup(cls, config):
@@ -66,9 +71,9 @@ class BaseAction(object):
       self._run()
       self._filter(global_env)
     except ActionAssertionFailed as e:
-      self.exception = ActionAssertionFailed(e, traceback.format_exc())
+      self.exception = ActionAssertionFailed(e, traceback.format_exc(), self.line_number)
     except Exception as e:
-      self.exception = ActionException(e, traceback.format_exc())
+      self.exception = ActionException(e, traceback.format_exc(), self.line_number)
     finally:
       self.end_time = time.time()
       self.result["execution_time"] = self.end_time - self.start_time
@@ -92,9 +97,9 @@ class BaseAction(object):
       self._test_assertex(global_env)
       self._test_assert(global_env)
     except AssertionFailed as e:
-      raise ActionAssertionFailed(e, traceback.format_exc())
+      raise ActionAssertionFailed(e, traceback.format_exc(), self.line_number)
     except template.TemplateFormatException as e:
-      raise ActionException(e, traceback.format_exc())
+      raise ActionException(e, traceback.format_exc(), self.line_number)
 
   def _test_assertex(self, global_env):
     if not self._params.assertex_list:
@@ -120,7 +125,6 @@ class BaseAction(object):
         template.assert_test(assert_str, variables)
       except AssertionFailed as e:
         e.assert_index = assert_index
-        e.line_number = self._params._raw_params['__line__']
         raise
 
   def _test_assert(self, global_env):
@@ -137,6 +141,5 @@ class BaseAction(object):
         template.assert_test(assert_str, variables)
       except AssertionFailed as e:
         e.assert_index = assert_index
-        e.line_number = self._params._raw_params['__line__']
         raise
 
