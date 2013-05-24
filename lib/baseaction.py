@@ -73,6 +73,9 @@ class BaseAction(object):
     except ActionAssertionFailed as e:
       self.exception = ActionAssertionFailed(e, traceback.format_exc(), self.line_number)
     except Exception as e:
+      # 別シナリオを require して実行中に例外が起きた場合は ActionException が飛んでくる
+      # このシナリオにおける line_number を記録する（あとで表示する）必要があるので、
+      # 再度 wrap する
       self.exception = ActionException(e, traceback.format_exc(), self.line_number)
     finally:
       self.end_time = time.time()
@@ -98,7 +101,9 @@ class BaseAction(object):
       self._test_assert(global_env)
     except AssertionFailed as e:
       raise ActionAssertionFailed(e, traceback.format_exc(), self.line_number)
-    except template.TemplateFormatException as e:
+    except ActionException as e:
+      raise
+    except Exception as e:
       raise ActionException(e, traceback.format_exc(), self.line_number)
 
   def _test_assertex(self, global_env):
