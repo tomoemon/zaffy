@@ -77,6 +77,11 @@ class ActionParams(object):
       else:
         parent[key] = new_value
     elif isinstance(value, dict):
+      # see: scenarioloader.py
+      # 辞書オブジェクトに勝手に __line__ が入ることによって挙動が変わることがあるので
+      # 削除しておく
+      if '__line__' in value:
+        del value['__line__']
       for k, v in value.items():
         self._expand_params(value, k, v, global_env)
     elif isinstance(value, list):
