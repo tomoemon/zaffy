@@ -14,6 +14,7 @@ class ActionSetting(object):
     action_name = match_dict['actionName']
     method_name = match_dict['methodName']
     preset_name = match_dict['presetName']
+    line_number = raw_obj['__line__']
 
     # action: http.get
     # の場合は http アクションの get メソッドを呼ぶ
@@ -26,6 +27,7 @@ class ActionSetting(object):
     self.action_name = action_name
     self.method_name = method_name
     self.preset_name = preset_name
+    self.line_number = line_number
 
     del raw_obj['action']
     self.params = dict(raw_obj)

@@ -2,9 +2,12 @@
 import yaml
 from scenario import Scenario, ScenarioDoc
 from actionloader import action_loader
+from yaml.composer import Composer
+from yaml.constructor import Constructor
 
 
 class ScenarioLoader(object):
+
 
   def _assert_no_circular_reference(self, filename, parent):
     """ 循環参照チェック """
@@ -35,7 +38,31 @@ class ScenarioLoader(object):
       return content[0][0], content[0][1:]
 
   def parse(self, raw_yaml):
-    content = list(yaml.load_all(raw_yaml))
+    #content = list(yaml.load_all(raw_yaml))
+
+    #add hooks to compose_node and construct_mapping
+    #save the line number into __line__
+    loader = yaml.Loader(raw_yaml)
+    def compose_node(parent, index):
+          line = loader.line
+          node = Composer.compose_node(loader, parent, index)
+          node.__line__ = line + 1
+          return node
+    def construct_mapping(node, deep=False):
+          mapping = Constructor.construct_mapping(loader, node, deep=deep)
+          mapping['__line__'] = node.__line__
+          return mapping
+    def load_all():
+           try:
+               while loader.check_data():
+                   yield loader.get_data()
+           finally:
+               loader.dispose()
+    loader.compose_node = compose_node
+    loader.construct_mapping = construct_mapping
+    loader.load_all = load_all
+    content = list(loader.load_all())
+
     raw_doc, raw_actions = self._filter(content)
     try:
       doc = ScenarioDoc(raw_doc)

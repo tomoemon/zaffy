@@ -120,6 +120,7 @@ class BaseAction(object):
         template.assert_test(assert_str, variables)
       except AssertionFailed as e:
         e.assert_index = assert_index
+        e.line_number = self._params._raw_params['__line__']
         raise
 
   def _test_assert(self, global_env):
@@ -136,5 +137,6 @@ class BaseAction(object):
         template.assert_test(assert_str, variables)
       except AssertionFailed as e:
         e.assert_index = assert_index
+        e.line_number = self._params._raw_params['__line__']
         raise
 

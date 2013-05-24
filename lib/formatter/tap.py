@@ -61,6 +61,7 @@ class Tap(object):
     self._write_header('not ok', "error")
     writer.write("  ------------------------------------------------------------\n")
     self._stacktrace(writer, exception)
+    writer.write(_i("  ", _u("line_number: {0}").format(exception.line_number)))
     writer.write(_i("  ", _u("assert_index: {0}").format(exception.assert_index)))
     writer.write(_i("  ", _u("assertion: {0}").format(exception.assertion)))
     writer.write(_i("  ", _u("compared: ")))
@@ -80,6 +81,7 @@ class Tap(object):
     self._write_header('not ok', "error")
     writer.write("  ------------------------------------------------------------\n")
     self._stacktrace(writer, exception)
+    writer.write(_i("  ", _u("line_number: {0}").format(exception.line_number)))
     writer.write(_i("  ", _u(exception.root.stack_trace).rstrip()))
     writer.write("  ------------------------------------------------------------\n")
 
