@@ -12,6 +12,13 @@ class Ssh(BaseAction):
 
     接続先パスワードなどは :ref:`references-actions-preset-label` で定義しておくと、毎回記述する必要がなくなります。
   """
+  def _connect(self, host, user, password, key_file, port):
+    client = ssh.SSHClient()
+    client.set_missing_host_key_policy(ssh.AutoAddPolicy())
+    client.load_system_host_keys()
+    client.connect(host, username=user, password=password, key_filename=key_file, port=port)
+    return client
+
   def do_ssh(self, host, user, cmd, port=22, password=None, key_file=None):
     """ do_run の省略呼び出し """
     method_params = locals()
@@ -40,10 +47,7 @@ class Ssh(BaseAction):
     :param string password: パスワード認証を行う場合のユーザのログインパスワード
     :param string key_file: 公開鍵認証を行う場合の公開鍵ファイル
     """
-    client = ssh.SSHClient()
-    client.set_missing_host_key_policy(ssh.AutoAddPolicy())
-    client.load_system_host_keys()
-    client.connect(host, username=user, password=password, key_filename=key_file, port=port)
+    client = self._connect(host, user, password, key_file, port)
 
     sftp = client.open_sftp()
     sftp.put(local, remote)
@@ -71,10 +75,7 @@ class Ssh(BaseAction):
     :param string password: パスワード認証を行う場合のユーザのログインパスワード
     :param string key_file: 公開鍵認証を行う場合の公開鍵ファイル
     """
-    client = ssh.SSHClient()
-    client.set_missing_host_key_policy(ssh.AutoAddPolicy())
-    client.load_system_host_keys()
-    client.connect(host, username=user, password=password, key_filename=key_file, port=port)
+    client = self._connect(host, user, password, key_file, port)
 
     sftp = client.open_sftp()
     sftp.get(remote, local)
@@ -105,10 +106,7 @@ class Ssh(BaseAction):
              - **stderr** (*string*) - 実行したコマンドの標準エラー
              - **returncode** (*int*) - 実行したコマンドの終了ステータス
     """
-    client = ssh.SSHClient()
-    client.set_missing_host_key_policy(ssh.AutoAddPolicy())
-    client.load_system_host_keys()
-    client.connect(host, username=user, password=password, key_filename=key_file, port=port)
+    client = self._connect(host, user, password, key_file, port)
     stdin, stdout, stderr = client.exec_command(cmd)
 
     self.result = {
