@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from baseaction import ActionException, ActionAssertionFailed
 import time
+import sys
 
 
 class ScenarioRunner(object):
@@ -23,10 +24,16 @@ class ScenarioRunner(object):
         scenario.run(global_env)
         formatter.succeed()
       except ActionAssertionFailed as e:
-        formatter.fail(e)
+        formatter.fail(self._encode(e))
         failed = True
       except ActionException as e:
-        formatter.error(e)
+        formatter.error(self._encode(e))
         failed = True
     formatter.end_test(time.time() - start_time)
     return failed
+
+  def _encode(self, exception):
+    root = exception.root
+    if isinstance(root.original, OSError):
+      root.stack_trace = root.stack_trace.decode(sys.getfilesystemencoding())
+    return exception

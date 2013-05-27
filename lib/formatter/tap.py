@@ -80,10 +80,7 @@ class Tap(object):
     self._write_header('not ok', "error")
     writer.write("  ------------------------------------------------------------\n")
     self._stacktrace(writer, exception)
-    root_stacktrace = exception.root.stack_trace
-    if isinstance(exception.root.original, util.WindowsError):
-      root_stacktrace = root_stacktrace.decode('cp932')
-    writer.write(_i("  ", _u(root_stacktrace).rstrip()))
+    writer.write(_i("  ", _u(exception.root.stack_trace).rstrip()))
     writer.write("  ------------------------------------------------------------\n")
 
   def start_test(self, test_count):
