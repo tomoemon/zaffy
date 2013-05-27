@@ -7,5 +7,5 @@
   sample: required called
   local: <<local>>
   assert:
-    - 1 is eq 2
+    - 1 is eq 1
 
