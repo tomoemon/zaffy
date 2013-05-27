@@ -96,9 +96,3 @@ def filter_args(argspec, _params):
 
   return params
 
-
-try:
-  WindowsError = WindowsError
-except NameError:
-  WindowsError = None
-
