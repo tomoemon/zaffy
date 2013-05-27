@@ -1,4 +1,7 @@
-- HTTP テスト
+doc: HTTP テスト
+tag: [http, get, post]
+
+---
 
 - action: const.set
   url: yahoo.co.jp

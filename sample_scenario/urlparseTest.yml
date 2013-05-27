@@ -1,16 +1,17 @@
-#---
 - urlparse テスト
 
 - action: const.set
   url: http://www.w3.org/1999/02/22-rdf-syntax-ns;param?p1=%2Fhoge&p1=piyo&p2=fuga#hashstring
+  resfilter:
+    url: const.url|asurl
   assert:
-    - (const.url|asurl).scheme is eq "http"
-    - (const.url|asurl).hostname is eq 'www.w3.org'
-    - (const.url|asurl).path is eq '/1999/02/22-rdf-syntax-ns;param'
-    - (const.url|asurl).query is eq 'p1=%2Fhoge&p1=piyo&p2=fuga'
-    - (const.url|asurl).param.p1 is eq ['/hoge', 'piyo']
-    - (const.url|asurl).param.p2 is eq ['fuga']
-    - (const.url|asurl).hash is eq 'hashstring'
+    - res.url.scheme is eq "http"
+    - res.url.hostname is eq 'www.w3.org'
+    - res.url.path is eq '/1999/02/22-rdf-syntax-ns;param'
+    - res.url.query is eq 'p1=%2Fhoge&p1=piyo&p2=fuga'
+    - res.url.param.p1 is eq ['/hoge', 'piyo']
+    - res.url.param.p2 is eq ['fuga']
+    - res.url.hash is eq 'hashstring'
 
 - action: const.set
   query: a=100&b=200&a=300

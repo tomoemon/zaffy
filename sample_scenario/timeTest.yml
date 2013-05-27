@@ -1,4 +1,4 @@
-- timeTest
+- 時刻処理テスト
 
 - action: debug
   t0: <<time.now()>>

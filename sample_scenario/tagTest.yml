@@ -1,4 +1,4 @@
-doc: ローカル変数テスト
+doc: タグ絞り込みテスト
 tag: [hoge, fuga]
 
 # testing: bin/zaffy.bat sample_scenario\*Test.yml -t hoge

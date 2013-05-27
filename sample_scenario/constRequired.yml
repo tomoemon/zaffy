@@ -1,4 +1,4 @@
-- ローカル変数テスト
+- 定数テスト(constDuplicateTest.yml から読み込まれる)
 
 - action: debug
   x: <<const.hoge>>

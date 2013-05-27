@@ -1,5 +1,5 @@
 doc: HTTP Download テスト
-tag: [/api/tokeninfo, hogehoge]
+tag: [http, get]
 ---
 
 - action: const.set

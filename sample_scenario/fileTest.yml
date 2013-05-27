@@ -1,4 +1,4 @@
-- file test
+- ファイルテスト
 
 - action: local
   filename: <<scenario.dir>>/fileTest.txt
