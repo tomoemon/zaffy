@@ -4,7 +4,7 @@ from os import path
 from subprocess import Popen, PIPE
 from baseaction import BaseAction
 import util
-import sys
+
 
 class Shell(BaseAction):
   """ Shell アクション
@@ -47,8 +47,8 @@ class Shell(BaseAction):
         stdin=stdin_pipe, stdout=stdout_pipe, stderr=stderr_pipe, shell=shell)
     (stdoutdata, stderrdata) = proc.communicate(stdin)
 
-    stdoutdata = util.unicode(stdoutdata, sys.getfilesystemencoding())
-    stderrdata = util.unicode(stderrdata, sys.getfilesystemencoding())
+    stdoutdata = util.unicode_os_string(stdoutdata)
+    stderrdata = util.unicode_os_string(stderrdata)
 
     self.result = {
         'stdout': stdoutdata,

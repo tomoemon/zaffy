@@ -8,6 +8,7 @@ else:
   import locale
   default_encoding = locale.getpreferredencoding()
 
+filesystem_encoding = sys.getfilesystemencoding()
 
 if sys.version[:1] == '2':
   basestring = basestring
@@ -39,6 +40,10 @@ def unicode(value, encoding=default_encoding, errors='strict'):
     return _unicode(value, encoding=encoding, errors=errors)
   except TypeError:
     return _unicode(value)
+
+
+def unicode_os_string(value, encoding=filesystem_encoding, errors='strict'):
+  return unicode(value, encoding, errors)
 
 
 def open_yaml(filename):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from baseaction import ActionException, ActionAssertionFailed
 import time
-import sys
+import util
 
 
 class ScenarioRunner(object):
@@ -35,5 +35,6 @@ class ScenarioRunner(object):
   def _encode(self, exception):
     root = exception.root
     if isinstance(root.original, OSError):
-      root.stack_trace = root.stack_trace.decode(sys.getfilesystemencoding())
+      root.stack_trace = util.unicode_os_string(root.stack_trace)
     return exception
+
