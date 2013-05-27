@@ -30,6 +30,8 @@ class ActionSetting(object):
     self.line_number = line_number
 
     del raw_obj['action']
+    del raw_obj['__line__']
+
     self.params = dict(raw_obj)
 
   def _parse_action_id(self, raw_action_id):

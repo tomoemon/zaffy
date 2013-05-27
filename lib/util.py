@@ -65,11 +65,6 @@ def filter_args(argspec, _params):
   params = dict(_params)
   args = argspec.args
 
-
-  #paramsから__line__を削除する
-  if '__line__' in params:
-    del params['__line__']
-
   if argspec.defaults:
     no_default_key_count = len(args) - len(argspec.defaults)
     required_keys = args[:no_default_key_count]

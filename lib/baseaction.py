@@ -47,7 +47,7 @@ class BaseAction(object):
 
   @property
   def line_number(self):
-    return self._params._raw_params['__line__']
+    return self._setting.line_number
 
   @classmethod
   def setup(cls, config):
