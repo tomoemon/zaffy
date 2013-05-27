@@ -1,0 +1,15 @@
+doc: ローカル変数テスト
+tag: [hoge, fuga]
+
+# testing: bin/zaffy.bat sample_scenario\*Test.yml -t hoge
+# testing: bin/zaffy sample_scenario/*Test.yml -t hoge
+---
+
+- action: local
+  hoge: hoge
+  fuga: bar
+
+- action: debug
+  local.hoge: <<local.hoge>>
+  assert:
+   - local.hoge is eq 'hoge'
