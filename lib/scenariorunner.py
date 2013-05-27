@@ -34,7 +34,7 @@ class ScenarioRunner(object):
 
   def _encode(self, exception):
     root = exception.root
-    if isinstance(root.original, OSError):
+    if isinstance(root.original, EnvironmentError):
       root.stack_trace = util.unicode_os_string(root.stack_trace)
     return exception
 
