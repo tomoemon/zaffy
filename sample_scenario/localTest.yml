@@ -19,7 +19,7 @@
    - local.hoge is eq 'hogehoge'
 
 # 別のシナリオで local.hoge に保存しても影響しない
-- action: require.call
+- action: require
   path: localRequire.yml
   params:
     piyo: arg value
