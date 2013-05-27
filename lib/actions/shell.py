@@ -10,11 +10,11 @@ class Shell(BaseAction):
 
   シェルを通してプロセスの実行などを行なう
   """
-  def do_shell(self, cmd, stdin=None, curdir=None):
+  def do_shell(self, cmd, stdin=None, curdir=None, shell=True):
     """ do_run の省略呼び出し """
     self.do_run(cmd, stdin, curdir)
 
-  def do_run(self, cmd, stdin=None, curdir=None):
+  def do_run(self, cmd, stdin=None, curdir=None, shell=True):
     """ コマンドの実行
 
     .. code-block:: yaml
@@ -29,6 +29,7 @@ class Shell(BaseAction):
 
     :param string cmd: 実行するコマンド
     :param string curdir: 実行時のカレントディレクトリ。指定しない場合は zaffy 実行時のカレントディレクトリ
+    :param bool shell: True: シェルを介して実行する
     :return: - **stdout** (*string*) - 実行したコマンドの標準出力
              - **stderr** (*string*) - 実行したコマンドの標準エラー
              - **returncode** (*int*) - 実行したコマンドの終了ステータス
@@ -42,7 +43,7 @@ class Shell(BaseAction):
     stdout_pipe = PIPE
     stderr_pipe = PIPE
     proc = Popen(cmd,
-        stdin=stdin_pipe, stdout=stdout_pipe, stderr=stderr_pipe)
+        stdin=stdin_pipe, stdout=stdout_pipe, stderr=stderr_pipe, shell=shell)
     (stdoutdata, stderrdata) = proc.communicate(stdin)
 
     self.result = {
