@@ -3,7 +3,8 @@ import os
 from os import path
 from subprocess import Popen, PIPE
 from baseaction import BaseAction
-
+import util
+import sys
 
 class Shell(BaseAction):
   """ Shell アクション
@@ -12,7 +13,7 @@ class Shell(BaseAction):
   """
   def do_shell(self, cmd, stdin=None, curdir=None, shell=True):
     """ do_run の省略呼び出し """
-    self.do_run(cmd, stdin, curdir)
+    self.do_run(cmd, stdin, curdir, shell)
 
   def do_run(self, cmd, stdin=None, curdir=None, shell=True):
     """ コマンドの実行
@@ -45,6 +46,9 @@ class Shell(BaseAction):
     proc = Popen(cmd,
         stdin=stdin_pipe, stdout=stdout_pipe, stderr=stderr_pipe, shell=shell)
     (stdoutdata, stderrdata) = proc.communicate(stdin)
+
+    stdoutdata = util.unicode(stdoutdata, sys.getfilesystemencoding())
+    stderrdata = util.unicode(stderrdata, sys.getfilesystemencoding())
 
     self.result = {
         'stdout': stdoutdata,
