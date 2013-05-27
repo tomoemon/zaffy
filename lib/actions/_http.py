@@ -81,7 +81,7 @@ class Http(BaseAction):
     :param string save_file: content をメモリ上に持たずに指定されたファイルに出力する (binary_content=Trueとして扱う)
     :param bool ssl_verify: True: https 通信の際に自己証明書が使われた場合は Error、False: 自己証明書を通す
     :param bool allow_redirects: True: 30x レスポンスに対して自動でリダイレクトする、False: リダイレクトしない
-    :param int timeout: タイムアウト時間を秒数で指定 (content のダウンロードに要する時間は除く)
+    :param float timeout: タイムアウト時間を秒単位で指定 (content のダウンロードに要する時間は除く)
     :return: - **status** (*int*) - http response status
              - **headers** (*dict*) - http response headers
              - **cookies** (*dict*) - http response cookies
