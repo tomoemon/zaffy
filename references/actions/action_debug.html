@@ -93,6 +93,10 @@
 <dd><p>Debug アクション</p>
 <p>アクションの実行結果などデバッグ用の出力を行なう。
 事前に実行した別アクションの実行結果や関数実行結果の出力に用いる。</p>
+<div class="admonition note">
+<p class="first admonition-title">ノート</p>
+<p class="last">通常の用途ではアクションの共通パラメータである <tt class="docutils literal"><span class="pre">_debug</span></tt> を使うことを推奨</p>
+</div>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
 <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http.get</span>
@@ -105,13 +109,13 @@
 </div>
 <dl class="method">
 <dt id="actions.debug.Debug.do_debug">
-<tt class="descname">do_debug</tt><big>(</big><em>global_env</em>, <em>scenario</em>, <em>**params</em><big>)</big><a class="headerlink" href="#actions.debug.Debug.do_debug" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_debug</tt><big>(</big><em>global_env</em>, <em>**params</em><big>)</big><a class="headerlink" href="#actions.debug.Debug.do_debug" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>do_rawprint の省略呼び出し</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="actions.debug.Debug.do_print">
-<tt class="descname">do_print</tt><big>(</big><em>global_env</em>, <em>scenario</em>, <em>**params</em><big>)</big><a class="headerlink" href="#actions.debug.Debug.do_print" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_print</tt><big>(</big><em>global_env</em>, <em>**params</em><big>)</big><a class="headerlink" href="#actions.debug.Debug.do_print" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>与えられた文字列値を python の基本データ型のリテラルとして解釈した後に print する</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
@@ -124,7 +128,7 @@
 
 <dl class="method">
 <dt id="actions.debug.Debug.do_rawprint">
-<tt class="descname">do_rawprint</tt><big>(</big><em>global_env</em>, <em>scenario</em>, <em>**params</em><big>)</big><a class="headerlink" href="#actions.debug.Debug.do_rawprint" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_rawprint</tt><big>(</big><em>global_env</em>, <em>**params</em><big>)</big><a class="headerlink" href="#actions.debug.Debug.do_rawprint" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>与えられた値を文字列化して表示する</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 

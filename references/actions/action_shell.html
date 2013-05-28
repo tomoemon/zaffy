@@ -94,7 +94,7 @@
 <p>シェルを通してプロセスの実行などを行なう</p>
 <dl class="method">
 <dt id="actions.shell.Shell.do_run">
-<tt class="descname">do_run</tt><big>(</big><em>cmd</em>, <em>stdin=None</em>, <em>curdir=None</em><big>)</big><a class="headerlink" href="#actions.shell.Shell.do_run" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_run</tt><big>(</big><em>cmd</em>, <em>stdin=None</em>, <em>curdir=None</em>, <em>shell=True</em>, <em>error_on_failed=False</em><big>)</big><a class="headerlink" href="#actions.shell.Shell.do_run" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>コマンドの実行</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
@@ -112,6 +112,8 @@
 <tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first simple">
 <li><strong>cmd</strong> (<em>string</em>) &#8211; 実行するコマンド</li>
 <li><strong>curdir</strong> (<em>string</em>) &#8211; 実行時のカレントディレクトリ。指定しない場合は zaffy 実行時のカレントディレクトリ</li>
+<li><strong>shell</strong> (<em>bool</em>) &#8211; シェルを介して実行する (default:True)</li>
+<li><strong>error_on_failed</strong> (<em>bool</em>) &#8211; コマンドの失敗時(return code != 0) にテストを error 扱いにする (default:False)</li>
 </ul>
 </td>
 </tr>
@@ -129,7 +131,7 @@
 
 <dl class="method">
 <dt id="actions.shell.Shell.do_shell">
-<tt class="descname">do_shell</tt><big>(</big><em>cmd</em>, <em>stdin=None</em>, <em>curdir=None</em><big>)</big><a class="headerlink" href="#actions.shell.Shell.do_shell" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_shell</tt><big>(</big><em>cmd</em>, <em>stdin=None</em>, <em>curdir=None</em>, <em>shell=True</em>, <em>error_on_failed=False</em><big>)</big><a class="headerlink" href="#actions.shell.Shell.do_shell" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>do_run の省略呼び出し</p>
 </dd></dl>
 
