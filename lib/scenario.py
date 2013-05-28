@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from baseaction import ActionException
 import six
+from debugprinter import DebugPrinter
 
 
 class ScenarioDoc(object):
@@ -37,6 +38,10 @@ class Scenario(object):
   def actions(self):
     return self._finished_actions
 
+  @property
+  def action_index(self):
+    return len(self._finished_actions)
+
   def run(self, global_env):
     # 一時対応
     if not self.parent:
@@ -44,9 +49,9 @@ class Scenario(object):
       type.__getattribute__(global_env["preset"], 'init_scenario')()
     # ここまで
 
-
     global_env["scenario"] = self
     global_env["local"] = self.localvar
+    global_env["debugprinter"] = DebugPrinter(global_env['formatter'], self)
 
     while self._action_queue:
       self.run_action(global_env)
@@ -60,18 +65,18 @@ class Scenario(object):
 
   def run_action(self, global_env):
     action = self._action_queue.pop(0)
-    finished_actions = self._finished_actions
 
-    global_env["actions"] = finished_actions
-    global_env["action_index"] = len(finished_actions)
+    global_env["actions"] = self.actions
+    global_env["action_index"] = self.action_index
     global_env["this"] = action
-    global_env["last"] = finished_actions[-1] if finished_actions else None
+    global_env["last"] = self.actions[-1] if self.actions else None
     try:
       action.run_action(global_env)
     except ActionException as e:
-      e.action_index = len(finished_actions)
+      e.action_index = self.action_index
       e.scenario = self
       raise
     finally:
-      finished_actions.append(action)
+      action.debug_print(global_env['debugprinter'])
+      self.actions.append(action)
 

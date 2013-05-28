@@ -8,10 +8,7 @@
   assert:
    - res.e0 is eq 'http://b.hatena.ne.jp/entry/ugomemo.hatena.ne.jp/letters'
    - res.e0 is ne res.related[1].entry_url
-
-- action: debug
-  url: <<last.res.related[0].entry_url>>
-  title: <<last.res.related[0].title>>
+  _debug: [params, res.status]
 
 - action: const
   params:
@@ -19,6 +16,5 @@
     y: 200
     hoge: true
     fuga: "false"
+  _debug: on
 
-- action: debug
-  s: <<const.params|tojson>>

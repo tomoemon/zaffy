@@ -18,6 +18,7 @@ class ActionParams(object):
     self._raw_params = setting.params
 
     self.params = None
+    self.debug = False
     self.filter_list = None
     self.assert_list = None
     self.assertex_list = None
@@ -29,24 +30,26 @@ class ActionParams(object):
       self._expand_params(params, key, value, global_env)
 
     #
+    # debug 設定の取得
+    #
+    self.debug = params.pop('_debug', False)
+
+    #
     # filter 設定の取得
     #
-    self.filter_list = params.get('resfilter', [])
+    self.filter_list = params.pop('resfilter', [])
     if isinstance(self.filter_list, dict):
       self.filter_list = [self.filter_list]
-    params.pop('resfilter', None)
 
     #
     # assert 設定の取得
     #
-    self.assert_list = params.get('assert', [])
+    self.assert_list = params.pop('assert', [])
     if isinstance(self.assert_list, util.basestring):
       self.assert_list = [self.assert_list]
-    self.assertex_list = params.get('assertex', [])
+    self.assertex_list = params.pop('assertex', [])
     if isinstance(self.assertex_list, util.basestring):
       self.assertex_list = [self.assertex_list]
-    params.pop('assert', None)
-    params.pop('assertex', None)
 
     #
     # params 設定の取得

@@ -3,6 +3,7 @@ import time
 import traceback
 import template
 from assertionfailed import AssertionFailed
+import util
 
 
 class ActionException(Exception):
@@ -93,7 +94,38 @@ class BaseAction(object):
       "res": self.result,
       "this": self.__dict__
     })
-    template.set_param(self._params.filter_list, variables, self.result)
+    for filter_dict in self._params.filter_list:
+      self.result.update(template.expand_param(filter_dict, variables))
+
+  def debug_print(self, printer):
+    debug = self._params.debug
+
+    if not debug:
+      return
+
+    if debug == True:
+      debug = ["params", "res"]
+
+    if isinstance(debug, util.basestring):
+      debug_dict = {debug: debug}
+    elif isinstance(debug, list):
+      debug_dict = dict([(k, k) for k in debug])
+    elif isinstance(debug, dict):
+      debug_dict = debug
+    else:
+      debug_dict = {util.unicode(debug): util.unicode(debug)}
+
+    variables = {}
+    variables.update({
+      "params": self.params,
+      "res": self.result,
+      "this": self.__dict__
+    })
+    try:
+      result = template.expand_param(debug_dict, variables)
+      printer.write(result)
+    except Exception as e:
+      printer.write({"error": util.unicode(e)})
 
   def _assert(self, global_env):
     try:
