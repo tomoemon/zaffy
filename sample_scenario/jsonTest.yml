@@ -7,7 +7,7 @@
     - e0: out.related[0].entry_url
   assert:
    - out.e0 is eq 'http://b.hatena.ne.jp/entry/ugomemo.hatena.ne.jp/letters'
-   - out.e0 is ne res.related[1].entry_url
+   - out.e0 is ne out.related[1].entry_url
   _debug: [in, out.status]
 
 - action: const
@@ -16,5 +16,5 @@
     y: 200
     hoge: true
     fuga: "false"
-  _debug: true # true setting equal to [in, out]
+  _debug: true # setting 'true' is equal to '[in, out]'
 
