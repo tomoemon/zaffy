@@ -52,7 +52,7 @@ class ActionParams(object):
       self.assertex_list = [self.assertex_list]
 
     #
-    # params 設定の取得
+    # input 設定の取得
     #
     # instance method は "self" が付いてるので除く
     argspec = self._argspec

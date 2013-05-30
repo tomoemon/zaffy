@@ -47,6 +47,16 @@ class BaseAction(object):
     return self.result
 
   @property
+  def input(self):
+    """ 将来的に変数名自体を input に変える """
+    return self.params
+
+  @property
+  def output(self):
+    """ 将来的に変数名自体を output に変える """
+    return self.result
+
+  @property
   def line_number(self):
     return self._setting.line_number
 
@@ -92,6 +102,8 @@ class BaseAction(object):
     variables = dict(global_env)
     variables.update({
       "res": self.result,
+      "in": self.params,
+      "out": self.result,
       "this": self.__dict__
     })
     for filter_dict in self._params.filter_list:
@@ -104,7 +116,7 @@ class BaseAction(object):
       return
 
     if debug == True:
-      debug = ["params", "res"]
+      debug = ["in", "out"]
 
     if isinstance(debug, util.basestring):
       debug_dict = {debug: debug}
@@ -117,7 +129,8 @@ class BaseAction(object):
 
     variables = {}
     variables.update({
-      "params": self.params,
+      "in": self.params,
+      "out": self.result,
       "res": self.result,
       "this": self.__dict__
     })
@@ -171,6 +184,8 @@ class BaseAction(object):
     variables = dict(global_env)
     variables.update({
       "res": self.result,
+      "in": self.params,
+      "out": self.result,
       "this": self.__dict__
     })
     for assert_index, assert_str in enumerate(self._params.assert_list):
