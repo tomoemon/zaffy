@@ -23,11 +23,9 @@
   path: localRequire.yml
   params:
     piyo: arg value
-
-- action: debug
-  result: <<last.result>>
+  _debug: out
   assert:
-   - last.result.response is eq 100
+    - out.response is eq 100
 
 - action: debug
   local.hoge: <<local.hoge>>

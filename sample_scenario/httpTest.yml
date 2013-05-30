@@ -34,5 +34,5 @@ tag: [http, get, post]
 - action: http.get
   url: http://google.co.jp/
   assert:
-   - res.status == 200
+   - out.status == 200
 

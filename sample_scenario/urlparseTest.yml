@@ -5,13 +5,13 @@
   resfilter:
     url: const.url|asurl
   assert:
-    - res.url.scheme is eq "http"
-    - res.url.hostname is eq 'www.w3.org'
-    - res.url.path is eq '/1999/02/22-rdf-syntax-ns;param'
-    - res.url.query is eq 'p1=%2Fhoge&p1=piyo&p2=fuga'
-    - res.url.param.p1 is eq ['/hoge', 'piyo']
-    - res.url.param.p2 is eq ['fuga']
-    - res.url.hash is eq 'hashstring'
+    - out.url.scheme is eq "http"
+    - out.url.hostname is eq 'www.w3.org'
+    - out.url.path is eq '/1999/02/22-rdf-syntax-ns;param'
+    - out.url.query is eq 'p1=%2Fhoge&p1=piyo&p2=fuga'
+    - out.url.param.p1 is eq ['/hoge', 'piyo']
+    - out.url.param.p2 is eq ['fuga']
+    - out.url.hash is eq 'hashstring'
 
 - action: const.set
   query: a=100&b=200&a=300

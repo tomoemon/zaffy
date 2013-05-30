@@ -41,20 +41,12 @@ class BaseAction(object):
     self._params = params_obj
     self._setting = setting
 
-  @property
-  def res(self):
-    """ self.result の alias """
-    return self.result
-
-  @property
-  def input(self):
-    """ 将来的に変数名自体を input に変える """
-    return self.params
-
-  @property
-  def output(self):
-    """ 将来的に変数名自体を output に変える """
-    return self.result
+  def __getattr__(self, key):
+    # "in" が予約語で property 定義できないので getattr で対応する
+    if key == 'in':
+      return self.params
+    elif key == 'out' or key == 'res':
+      return self.result
 
   @property
   def line_number(self):
@@ -101,9 +93,9 @@ class BaseAction(object):
   def _filter(self, global_env):
     variables = dict(global_env)
     variables.update({
-      "res": self.result,
       "in": self.params,
       "out": self.result,
+      "res": self.result,
       "this": self.__dict__
     })
     for filter_dict in self._params.filter_list:
@@ -183,9 +175,9 @@ class BaseAction(object):
 
     variables = dict(global_env)
     variables.update({
-      "res": self.result,
       "in": self.params,
       "out": self.result,
+      "res": self.result,
       "this": self.__dict__
     })
     for assert_index, assert_str in enumerate(self._params.assert_list):

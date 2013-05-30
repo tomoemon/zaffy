@@ -8,15 +8,15 @@
 - action: http.get
   url: http://d.hatena.ne.jp/hatenadiary/rss
   resfilter:
-    - xml: res.content|asxml(namespaces=const.ns)
+    - xml: out.content|asxml(namespaces=const.ns)
   assert:
   # 要素内のtextの取得
-   - res.xml|xpath('/r:RDF/d:channel/d:title/text()') is eq 'はてなダイアリー日記'
+   - out.xml|xpath('/r:RDF/d:channel/d:title/text()') is eq 'はてなダイアリー日記'
   # 要素の属性取得
-   - res.xml|xpath('/r:RDF/d:channel/@r:about') is eq 'http://d.hatena.ne.jp/hatenadiary/rss'
+   - out.xml|xpath('/r:RDF/d:channel/@r:about') is eq 'http://d.hatena.ne.jp/hatenadiary/rss'
 
 - action: http.get
   url: http://yahoo.co.jp
   assert:
-  - res.content|ashtml|xpath('/html/head/title/text()') is eq 'Yahoo! JAPAN'
+  - out.content|ashtml|xpath('/html/head/title/text()') is eq 'Yahoo! JAPAN'
 

@@ -3,7 +3,5 @@
 - action: shell
   cmd: "gzip hoge"
   curdir: 'c:\'
-
-- action: debug
-  result: <<last.res>>
+  _debug: out
 

@@ -14,11 +14,11 @@
     local['z'] = d * 20
 
 - action: debug
-  result: <<last.result>>
+  result: <<last.out>>
   local: <<local>>
   assert:
-    - last.result.a is eq 10
-    - last.result.c is eq 30
-    - last.result.d is eq 300
+    - last.out.a is eq 10
+    - last.out.c is eq 30
+    - last.out.d is eq 300
     - local.z is eq 6000
 
