@@ -13,7 +13,7 @@ class DebugPrinter(object):
     self.formatter = formatter
     self.scenario = scenario
 
-  def smart_write(cls, **params):
+  def smart_write(self, params):
     """ 与えられた文字列値を python の基本データ型のリテラルとして解釈した後に print する
 
     .. code-block:: yaml
