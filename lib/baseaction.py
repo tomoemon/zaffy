@@ -33,20 +33,20 @@ class ActionAssertionFailed(ActionException):
 class BaseAction(object):
 
   def __init__(self, setting, params_obj):
-    self.result = {}
+    self.input = {}
+    self.output = {}
     self.exception = None
     self.start_time = None
     self.end_time = None
-    self.params = None
     self._params = params_obj
     self._setting = setting
 
   def __getattr__(self, key):
     # "in" が予約語で property 定義できないので getattr で対応する
     if key == 'in':
-      return self.params
+      return self.input
     elif key == 'out' or key == 'res':
-      return self.result
+      return self.output
 
   @property
   def line_number(self):
@@ -70,7 +70,7 @@ class BaseAction(object):
     try:
       # 変数を jinja2 で展開する
       # local 変数などアクション実行中に値が変わるものがあるので直前にやる必要がある
-      self.params = self._params.expand(global_env)
+      self.input = self._params.expand(global_env)
       self._run()
       self._filter(global_env)
     except ActionAssertionFailed as e:
@@ -82,24 +82,24 @@ class BaseAction(object):
       self.exception = ActionException(e, traceback.format_exc(), self.line_number)
     finally:
       self.end_time = time.time()
-      self.result["execution_time"] = self.end_time - self.start_time
+      self.output["execution_time"] = self.end_time - self.start_time
 
     self._assert(global_env)
 
   def _run(self):
     method = getattr(self, "do_" + self._setting.method_name)
-    method(**self.params)
+    method(**self.input)
 
   def _filter(self, global_env):
     variables = dict(global_env)
     variables.update({
-      "in": self.params,
-      "out": self.result,
-      "res": self.result,
+      "in": self.input,
+      "out": self.output,
+      "res": self.output,
       "this": self.__dict__
     })
     for filter_dict in self._params.filter_list:
-      self.result.update(template.expand_param(filter_dict, variables))
+      self.output.update(template.expand_param(filter_dict, variables))
 
   def debug_print(self, printer):
     debug = self._params.debug
@@ -121,9 +121,9 @@ class BaseAction(object):
 
     variables = {}
     variables.update({
-      "in": self.params,
-      "out": self.result,
-      "res": self.result,
+      "in": self.input,
+      "out": self.output,
+      "res": self.output,
       "this": self.__dict__
     })
     try:
@@ -175,9 +175,9 @@ class BaseAction(object):
 
     variables = dict(global_env)
     variables.update({
-      "in": self.params,
-      "out": self.result,
-      "res": self.result,
+      "in": self.input,
+      "out": self.output,
+      "res": self.output,
       "this": self.__dict__
     })
     for assert_index, assert_str in enumerate(self._params.assert_list):

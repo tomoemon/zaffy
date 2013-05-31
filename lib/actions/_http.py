@@ -61,7 +61,7 @@ class Http(BaseAction):
           verify=ssl_verify,
           allow_redirects=allow_redirects,
           timeout=timeout)
-    self.result = self._create_result(r, no_content, binary_content, save_file)
+    self.output = self._create_result(r, no_content, binary_content, save_file)
 
   def do_delete(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):

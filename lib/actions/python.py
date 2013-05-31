@@ -35,5 +35,5 @@ class Python(BaseAction):
     ast = compile(code, '<string>', 'exec')
     eval(ast, global_dict, local_dict)
     del local_dict['local']
-    self.result.update(local_dict)
+    self.output.update(local_dict)
 

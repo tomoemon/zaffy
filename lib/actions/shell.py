@@ -26,7 +26,7 @@ class Shell(BaseAction):
        cmd: ls -l /tmp
 
      - action: debug
-       result: <<last.res.stdout>>
+       output: <<last.res.stdout>>
 
     :param string cmd: 実行するコマンド
     :param string curdir: 実行時のカレントディレクトリ。指定しない場合は zaffy 実行時のカレントディレクトリ
@@ -54,7 +54,7 @@ class Shell(BaseAction):
     if error_on_failed and proc.returncode != 0:
       raise Exception(stderrdata.strip() + ' (code=' + util.unicode(proc.returncode) + ')')
 
-    self.result = {
+    self.output = {
         'stdout': stdoutdata,
         'stderr': stderrdata,
         'returncode': proc.returncode

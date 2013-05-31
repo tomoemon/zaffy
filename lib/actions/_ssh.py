@@ -109,7 +109,7 @@ class Ssh(BaseAction):
     client = self._connect(host, user, password, key_file, port)
     stdin, stdout, stderr = client.exec_command(cmd)
 
-    self.result = {
+    self.output = {
         'stdout': stdout.read(),
         'stderr': stderr.read(),
         'returncode': stdout.channel.recv_exit_status(),

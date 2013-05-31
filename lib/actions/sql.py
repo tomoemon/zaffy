@@ -67,8 +67,8 @@ class Sql(BaseAction):
     cursor = conn.cursor(driver.base_cursor())
 
     cursor.execute(sql)
-    self.result["rows"] = list(cursor.fetchall())
-    self.result["rowcount"] = len(self.result['rows'])
+    self.output["rows"] = list(cursor.fetchall())
+    self.output["rowcount"] = len(self.output['rows'])
 
     cursor.close()
 
@@ -116,8 +116,8 @@ class Sql(BaseAction):
     cursor = conn.cursor(driver.dict_cursor())
 
     cursor.execute(sql)
-    self.result["rows"] = list(cursor.fetchall())
-    self.result["rowcount"] = len(self.result['rows'])
+    self.output["rows"] = list(cursor.fetchall())
+    self.output["rowcount"] = len(self.output['rows'])
 
     cursor.close()
 
@@ -165,8 +165,8 @@ class Sql(BaseAction):
       cursor = conn.cursor()
 
       cursor.execute(sql_unit)
-      self.result["rowcount"] = cursor.rowcount
-      self.result["rows"] = []
+      self.output["rowcount"] = cursor.rowcount
+      self.output["rows"] = []
       conn.commit()
       cursor.close()
 

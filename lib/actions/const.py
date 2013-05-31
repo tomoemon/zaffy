@@ -66,5 +66,5 @@ class Const(with_metaclass(_MetaConst, BaseAction)):
         raise Exception("cannot overridden const key '{0}', value '{1}'".format(key, value))
       self._const_params[key] = value
 
-    self.result = self._const_params
+    self.output = self._const_params
 
