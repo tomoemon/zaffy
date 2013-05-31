@@ -72,13 +72,14 @@ class ActionParams(object):
     # 辞書、リストの場合はさらにその中の要素を展開する。
     # ここで指定していない数値等の型はそのまま
     if isinstance(value, util.basestring):
-      new_value = template.expand(value, global_env)
+      # key に + が付いている場合は変数をそのまま代入する
       if isinstance(key, util.basestring) and key.startswith('+'):
         original_key = key.lstrip('+')
-        parent[original_key] = ast.literal_eval(new_value)
+        result = template.expand_param({original_key: value}, global_env)
+        parent[original_key] = result[original_key]
         del parent[key]
       else:
-        parent[key] = new_value
+        parent[key] = template.expand(value, global_env)
     elif isinstance(value, dict):
       # see: scenarioloader.py
       # 辞書オブジェクトに勝手に __line__ が入ることによって挙動が変わることがあるので
