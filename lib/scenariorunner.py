@@ -2,6 +2,7 @@
 from baseaction import ActionException, ActionAssertionFailed
 import time
 import util
+import chardet
 
 
 class ScenarioRunner(object):
@@ -36,5 +37,9 @@ class ScenarioRunner(object):
     root = exception.root
     if isinstance(root.original, EnvironmentError):
       root.stack_trace = util.unicode_os_string(root.stack_trace)
+    else:
+      encoding = chardet.detect(root.stack_trace)
+      if encoding['confidence'] > 0.95:
+        root.stack_trace = util.unicode(root.stack_trace, encoding['encoding'])
     return exception
 
