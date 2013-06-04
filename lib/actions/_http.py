@@ -21,7 +21,7 @@ class Http(BaseAction):
         Referer: http://google.com/
       no_content: false
       assert:
-        - res.content|length is gt 1000
+        - out.content|length is gt 1000
   """
   def _create_result(self, response, no_content, binary_content, save_file):
     result = {}

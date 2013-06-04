@@ -94,7 +94,7 @@ class Ssh(BaseAction):
        password: hogehoge
        cmd: ls -l
        assert:
-         - res.returncode is eq 0
+         - out.returncode is eq 0
 
     :param string host: 接続先ホスト名、またはIPアドレス
     :param string user: 接続先ホストにおけるユーザ名

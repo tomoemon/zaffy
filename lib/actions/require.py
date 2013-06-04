@@ -63,7 +63,7 @@ class Require(BaseAction):
           y: 200
 
       - action: debug
-        output: <<last.res.sum>>
+        output: <<last.out.sum>>
 
     * D.yml
 

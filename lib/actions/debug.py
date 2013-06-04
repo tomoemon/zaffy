@@ -20,7 +20,7 @@ class Debug(BaseAction):
 
      # 直前のアクションの実行結果から HTTP STATUS を取得して表示
      - action: debug
-       res: <<last.res.status>> #=> 200 と表示
+       result: <<last.out.status>> #=> 200 と表示
   """
 
   def do_rawprint(self, global_env, **params):

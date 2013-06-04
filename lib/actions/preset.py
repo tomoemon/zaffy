@@ -77,7 +77,7 @@ class Preset(BaseAction):
        http:
          assert404:
            assert:
-             - res.status is 404
+             - out.status is 404
 
      # named preset の適用
      #   assert を定義していないが status が 404 であることをテストしている

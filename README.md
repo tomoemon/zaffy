@@ -64,8 +64,8 @@ Example
         hoge: 10
         fuga: piyo
       assert:
-        - res.status == 200
-        - res.content|length > 1000
+        - out.status == 200
+        - out.content|length > 1000
 
     - action: http.post
       url: http://localhost:8000/
@@ -83,7 +83,7 @@ Example
       sql: select * from user where user_id=1;
       assert:
        - >
-        res.rows[0] ==
+        out.rows[0] ==
           [1, "nanoha", "2012-04-10 15:57:26"|todate, "2012-04-10 15:57:26"|todate]
 
     # preset 機能を使うことで接続情報などを省略したシンプルな記述が可能
@@ -95,6 +95,6 @@ Example
     - action: shell
       cmd: wc -l output.txt
       assert:
-        - res.returncode == 0
-        - res.stdout.strip() == "50 output.txt"
+        - out.returncode == 0
+        - out.stdout.strip() == "50 output.txt"
 

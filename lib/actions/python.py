@@ -19,7 +19,7 @@ class Python(BaseAction):
         import math
         z = math.factorial(local['x'])
       assert:
-        - res.z is eq 24
+        - out.z is eq 24
   """
   def do_python(self, code, global_env):
     """do_run の省略呼び出し"""

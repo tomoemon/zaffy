@@ -26,7 +26,7 @@ class Shell(BaseAction):
        cmd: ls -l /tmp
 
      - action: debug
-       output: <<last.res.stdout>>
+       output: <<last.out.stdout>>
 
     :param string cmd: 実行するコマンド
     :param string curdir: 実行時のカレントディレクトリ。指定しない場合は zaffy 実行時のカレントディレクトリ

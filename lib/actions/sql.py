@@ -48,7 +48,7 @@ class Sql(BaseAction):
         sql: select * from user where user_id=1
         assert:
          - >
-          res.rows[0] is eq
+          out.rows[0] is eq
             (1, "nanoha", "2012-04-10 15:57:26"|todatetime, "2012-04-10 15:57:26"|todatetime)
 
     :param string driver: データベースのドライバ (``mysql`` または ``sqlite`` のみ指定可能)
@@ -91,7 +91,7 @@ class Sql(BaseAction):
         sql: select * from user where user_id=1
         assert:
          - >
-          res.rows[0] is eq
+          out.rows[0] is eq
             {
              'user_id': 1,
              'user_name': "nanoha",
@@ -139,7 +139,7 @@ class Sql(BaseAction):
         password: hogehoge
         sql: update user set user_name="fate" where user_id=1
         assert:
-         - res.rowcount is eq 1
+         - out.rowcount is eq 1
 
     :param string driver: データベースのドライバ  (``mysql`` または ``sqlite`` のみ指定可能)
     :param string|list sql: 実行するSQL文。リストを渡した場合は複数実行する
