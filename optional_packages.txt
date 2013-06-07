@@ -1,0 +1,4 @@
+PyMySQL
+lxml # require (centos:python-devel libxslt-devel, ubuntu: python-dev libxslt-dev)
+ssh
+
