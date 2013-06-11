@@ -44,24 +44,24 @@ class Http(BaseAction):
         return response.content if binary_content else response.text
     return ''
 
-  def _http_method(self, method, url, auth, user, password, headers, cookies, params, data,
-      no_content, binary_content, save_file, ssl_verify, allow_redirects, timeout):
+  def _http_method(self, method, params):
 
-    if auth == 'basic':
-      auth = requests.auth.HTTPBasicAuth(user, password)
-    elif auth == 'digest':
-      auth = requests.auth.HTTPDigestAuth(user, password)
+    auth = ''
+    if params['auth'] == 'basic':
+      auth = requests.auth.HTTPBasicAuth(params['user'], params['password'])
+    elif params['auth'] == 'digest':
+      auth = requests.auth.HTTPDigestAuth(params['user'], params['password'])
 
-    r = getattr(requests, method)(url,
-          headers=headers,
-          cookies=cookies,
-          params=params,
+    r = getattr(requests, method)(params['url'],
+          headers=params['headers'],
+          cookies=params['cookies'],
+          params=params['params'],
           auth=auth,
-          data=data,
-          verify=ssl_verify,
-          allow_redirects=allow_redirects,
-          timeout=timeout)
-    self.output = self._create_result(r, no_content, binary_content, save_file)
+          data=params['data'],
+          verify=params['ssl_verify'],
+          allow_redirects=params['allow_redirects'],
+          timeout=params['timeout'])
+    self.output = self._create_result(r, params['no_content'], params['binary_content'], params['save_file'])
 
   def do_delete(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
@@ -90,40 +90,40 @@ class Http(BaseAction):
     """
     method_params = locals()
     del method_params['self']
-    self._http_method("delete", **method_params)
+    self._http_method("delete", method_params)
 
   def do_get(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ http get """
     method_params = locals()
     del method_params['self']
-    self._http_method("get", **method_params)
+    self._http_method("get", method_params)
 
   def do_post(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ http post """
     method_params = locals()
     del method_params['self']
-    self._http_method("post", **method_params)
+    self._http_method("post", method_params)
 
   def do_put(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ http put """
     method_params = locals()
     del method_params['self']
-    self._http_method("put", **method_params)
+    self._http_method("put", method_params)
 
   def do_head(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ http head """
     method_params = locals()
     del method_params['self']
-    self._http_method("head", **method_params)
+    self._http_method("head", method_params)
 
   def do_patch(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ http patch """
     method_params = locals()
     del method_params['self']
-    self._http_method("patch", **method_params)
+    self._http_method("patch", method_params)
 
