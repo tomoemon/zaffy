@@ -25,6 +25,12 @@ class ActionException(Exception):
     return getattr(self.original, key)
 
 
+class ActionTemplateException(ActionException):
+  def __init__(self, exception, stack_trace, line_number, template):
+    super(ActionTemplateException, self).__init__(exception, stack_trace, line_number)
+    self.template = template
+
+
 class ActionAssertionFailed(ActionException):
   def __init__(self, exception, stack_trace, line_number):
     super(ActionAssertionFailed, self).__init__(exception, stack_trace, line_number)
@@ -75,6 +81,8 @@ class BaseAction(object):
       self._filter(global_env)
     except ActionAssertionFailed as e:
       self.exception = ActionAssertionFailed(e, traceback.format_exc(), self.line_number)
+    except template.TemplateFormatException as e:
+      self.exception = ActionTemplateException(e, traceback.format_exc(), self.line_number, e.template)
     except Exception as e:
       # 別シナリオを require して実行中に例外が起きた場合は ActionException が飛んでくる
       # このシナリオにおける line_number を記録する（あとで表示する）必要があるので、
@@ -138,6 +146,8 @@ class BaseAction(object):
       self._test_assert(global_env)
     except AssertionFailed as e:
       raise ActionAssertionFailed(e, traceback.format_exc(), self.line_number)
+    except template.TemplateFormatException as e:
+      raise ActionTemplateException(e, traceback.format_exc(), self.line_number, e.template)
     except ActionException as e:
       raise
     except Exception as e:

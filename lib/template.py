@@ -53,7 +53,9 @@ class CustomTest(object):
 
 
 class TemplateFormatException(Exception):
-  pass
+  def __init__(self, original, template):
+    super(TemplateFormatException, self).__init__(util.unicode(original))
+    self.template = template
 
 
 class AssertFormatException(TemplateFormatException):
@@ -78,9 +80,9 @@ def assert_test(assertion, variable_map):
     if result != '1':
       raise AssertionFailed(assertion, CustomTest.failed)
   except jinja2.TemplateSyntaxError as e:
-    raise AssertFormatException(util.unicode(e) + "\n" + assertion)
+    raise AssertFormatException(e, assertion)
   except jinja2.UndefinedError as e:
-    raise AssertFormatException(util.unicode(e) + "\n" + assertion)
+    raise AssertFormatException(e, assertion)
 
 
 def run_raw_template(template_str, variable_map):
@@ -96,9 +98,9 @@ def expand(template_str, variable_map):
   try:
     return run_raw_template(template_str, variable_map)
   except jinja2.TemplateSyntaxError as e:
-    raise TemplateFormatException(util.unicode(e) + "\n" + template_str)
+    raise TemplateFormatException(e, template_str)
   except jinja2.UndefinedError as e:
-    raise TemplateFormatException(util.unicode(e) + "\n" + template_str)
+    raise TemplateFormatException(e, template_str)
 
 
 def expand_param(filter_dict, variable_map):

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from baseaction import ActionException, ActionAssertionFailed
+from baseaction import ActionException, ActionAssertionFailed, ActionTemplateException
 import time
 import util
 import chardet
@@ -26,6 +26,9 @@ class ScenarioRunner(object):
         formatter.succeed()
       except ActionAssertionFailed as e:
         formatter.fail(self._encode(e))
+        failed = True
+      except ActionTemplateException as e:
+        formatter.error_template(e)
         failed = True
       except ActionException as e:
         formatter.error(self._encode(e))
