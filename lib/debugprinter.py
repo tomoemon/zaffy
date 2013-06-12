@@ -40,14 +40,6 @@ class DebugPrinter(object):
   def write(self, params):
     params['__file__'] = self.scenario.setting.filename
     params['__index__'] = self.scenario.action_index
-    self.formatter.debug("\nDEBUG - {0}".format(datetime.datetime.now()))
-    self.formatter.debug(self._pp(params))
-
-  @classmethod
-  def _pp(cls, obj):
-    # 日本語を pprint で表示しようとすると、
-    # 以下のように文字コードで表示されてしまうため置換する
-    # 'row1': u'\u6570\u5b66\u30ac\u30fc\u30eb'
-    pstr = pprint.pformat(obj, width=80, indent=2)
-    return _UNICODE_REGEXP.sub(lambda x: util.unichr(int("0x" + x.group(1), 16)), pstr)
+    params['__time__'] = util.unicode(datetime.datetime.now())
+    self.formatter.debug(params)
 

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import util
+import pprint
 
 
 _u = lambda x: util.unicode(x, errors='replace')
@@ -24,8 +25,11 @@ class Tap(object):
   def finished(self):
     return self.succeeded + self.failed + self.errored
 
-  def debug(self, debug_str):
-    self.writer.debug(_i("  # ", _u(debug_str)))
+  def debug(self, debug_obj):
+    if not isinstance(debug_obj, util.basestring):
+      debug_obj = pprint.pformat(debug_obj, width=80, indent=2)
+    debug_str = util.unescape_unicode(debug_obj)
+    self.writer.debug(_i("  # ", _u(debug_str) + "\n"))
 
   def start(self, scenario):
     self.current = scenario

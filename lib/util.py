@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
+import re
 
 
 if sys.stdout.isatty():
@@ -95,4 +96,14 @@ def filter_args(argspec, _params):
     raise ArgMatchException(exists_keys[0], "unknown")
 
   return params
+
+
+_UNICODE_REGEXP = re.compile(r"\\u([0-9a-f]{4})")
+
+
+def unescape_unicode(obj):
+  # 日本語を pprint で表示しようとすると、
+  # 以下のように文字コードで表示されてしまうため置換する
+  # 'row1': u'\u6570\u5b66\u30ac\u30fc\u30eb'
+  return _UNICODE_REGEXP.sub(lambda x: _unichr(int("0x" + x.group(1), 16)), obj)
 
