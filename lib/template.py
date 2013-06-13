@@ -58,10 +58,6 @@ class TemplateFormatException(Exception):
     self.template = template
 
 
-class AssertFormatException(TemplateFormatException):
-  pass
-
-
 def assert_test(assertion, variable_map):
   """
   >>> assert_test('hoge == "fuga"', {"hoge": "fuga"})
@@ -80,9 +76,9 @@ def assert_test(assertion, variable_map):
     if result != '1':
       raise AssertionFailed(assertion, CustomTest.failed)
   except jinja2.TemplateSyntaxError as e:
-    raise AssertFormatException(e, assertion)
+    raise TemplateFormatException(e, assertion)
   except jinja2.UndefinedError as e:
-    raise AssertFormatException(e, assertion)
+    raise TemplateFormatException(e, assertion)
 
 
 def run_raw_template(template_str, variable_map):
@@ -109,7 +105,12 @@ def expand_param(filter_dict, variable_map):
     # TODO: safe value escaping
     key = key.replace("'", "")
     template = "<<__target__.update({{'{0}': {1}}})>>".format(key, value)
-    expand(template, variable_map)
+    try:
+      run_raw_template(template, variable_map)
+    except jinja2.TemplateSyntaxError as e:
+      raise TemplateFormatException(e, "{0}: {1}".format(key, value))
+    except jinja2.UndefinedError as e:
+      raise TemplateFormatException(e, "{0}: {1}".format(key, value))
   return variable_map['__target__']
 
 if __name__ == "__main__":
