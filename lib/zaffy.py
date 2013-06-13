@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+
 if sys.getdefaultencoding() == 'ascii':
   reload(sys)
   sys.setdefaultencoding('utf-8')
@@ -13,6 +14,7 @@ from actionloader import action_loader
 from aggregator import Aggregator
 from scenariorunner import ScenarioRunner
 from scenariofilter import TagFilter
+from scenarioloader import ScenarioLoadError
 from formatter.tap import Tap
 from writer.stdout import ColoredStdout, Stdout
 from moduleloader import LoadError
@@ -73,6 +75,7 @@ def main():
   teardown()
   sys.exit(result)
 
+
 def run_scenario(global_env):
   formatter = global_env['formatter']
   failed = False
@@ -80,8 +83,9 @@ def run_scenario(global_env):
     agg = Aggregator()
     agg.add_filter(TagFilter(option.tags))
     agg.add_files(option.targets)
-  except IOError as e:
-    formatter.writer.write(util.unicode(e) + "\n\n", {"type": "error"})
+  except ScenarioLoadError as e:
+    formatter.writer.write("{0}({1}):\n  {2}\n\n".format(e.__class__.__name__, e.error, e.filename))
+    formatter.writer.write(util.unicode(e) + "\n")
     failed = True
 
   runner = ScenarioRunner(agg, formatter)

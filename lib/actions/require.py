@@ -138,8 +138,6 @@ class Require(BaseAction):
 
   def _load(self, path, global_env, scenario, params):
     path = path.strip()
-    if not path:
-      raise Exception(path + " not exists")
 
     if os.path.isabs(path):
       if self._root_path:

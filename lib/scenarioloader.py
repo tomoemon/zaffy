@@ -4,10 +4,17 @@ from scenario import Scenario, ScenarioDoc
 from actionloader import action_loader
 from yaml.composer import Composer
 from yaml.constructor import Constructor
+import util
+
+
+class ScenarioLoadError(Exception):
+  def __init__(self, filename, error, message):
+    super(ScenarioLoadError, self).__init__(message)
+    self.error = error
+    self.filename = filename
 
 
 class ScenarioLoader(object):
-
 
   def _assert_no_circular_reference(self, filename, parent):
     """ 循環参照チェック """
@@ -16,7 +23,8 @@ class ScenarioLoader(object):
       from_filename = parent.filename
       if from_filename in refer_list:
         refer_list.append(from_filename)
-        raise Exception("Circular reference detected: " + str(list(reversed(refer_list))))
+        raise ScenarioLoadError(filename, "CicularReference",
+                                "circular reference detected: {0}".format(list(reversed(refer_list))))
       refer_list.append(from_filename)
       parent = parent.parent
 
@@ -24,7 +32,10 @@ class ScenarioLoader(object):
     if setting.filename and parent:
       self._assert_no_circular_reference(setting.filename, parent)
 
-    doc, raw_actions = self.parse(setting.read())
+    try:
+      doc, raw_actions = self.parse(setting.read())
+    except Exception as e:
+      raise ScenarioLoadError(setting.filename, e.__class__.__name__, util.unicode(e))
     return Scenario(
         setting,
         doc,
@@ -41,15 +52,18 @@ class ScenarioLoader(object):
     #add hooks to compose_node and construct_mapping
     #save the line number into __line__
     loader = yaml.Loader(raw_yaml)
+
     def compose_node(parent, index):
       line = loader.line
       node = Composer.compose_node(loader, parent, index)
       node.__line__ = line + 1
       return node
+
     def construct_mapping(node, deep=False):
       mapping = Constructor.construct_mapping(loader, node, deep=deep)
       mapping['__line__'] = node.__line__
       return mapping
+
     def load_all():
       try:
         while loader.check_data():
@@ -65,7 +79,7 @@ class ScenarioLoader(object):
     try:
       doc = ScenarioDoc(raw_doc)
     except:
-      raise Exception("Scenario should have a description at first element/document: " + str(content))
+      raise Exception("scenario should have a description at first element/document: " + str(content))
     return doc, raw_actions
 
   def create_actions(self, actions):
