@@ -26,7 +26,7 @@ class Sqlite(object):
   def __init__(self):
     pass
 
-  def connect(self, db, host=None, user=None, password=None, port=None):
+  def connect(self, db, host=None, user=None, password=None, port=None, charset=None):
     con = sqlite3.connect(db)
     return _ConnectionWrapper(con)
 

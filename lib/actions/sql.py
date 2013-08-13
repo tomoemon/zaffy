@@ -32,7 +32,7 @@ class Sql(BaseAction):
   def teardown(cls):
     pass
 
-  def do_select(self, driver, sql, db, host=None, user=None, password=None, port=_DEFAULT_PORT):
+  def do_select(self, driver, sql, db, host=None, user=None, password=None, port=_DEFAULT_PORT, charset="utf8"):
     """ 参照系のクエリ(SELECT, SHOW など)を実行し、タプル形式で結果を取得する
 
     .. code-block:: yaml
@@ -58,12 +58,13 @@ class Sql(BaseAction):
     :param string user: DB接続のためのユーザ (``mysql`` のみ)
     :param string password: DB接続のためのパスワード (``mysql`` のみ)
     :param int port: DB接続先のポート番号 (``mysql`` のみ)
+    :param string charset: DB接続時の文字コード (``mysql`` のみ)
     :return: - **rowcount** (*int*) - 取得した行数
              - **rows** (*list*) - 取得した行(tuple)のリスト
     """
     driver = _drivers[driver]
     conn = driver.connect(host=host, port=port, db=db,
-                          user=user, password=password)
+                          user=user, password=password, charset=charset)
     cursor = conn.cursor(driver.base_cursor())
 
     cursor.execute(sql)
@@ -75,7 +76,7 @@ class Sql(BaseAction):
     # connectionManager的なのを作ったら個別のcloseはしない
     conn.close()
 
-  def do_selectdict(self, driver, sql, db, host=None, user=None, password=None, port=_DEFAULT_PORT):
+  def do_selectdict(self, driver, sql, db, host=None, user=None, password=None, port=_DEFAULT_PORT, charset="utf8"):
     """ 参照系のクエリ(SELECT, SHOW など)を実行し、辞書形式で結果を取得する
 
     .. code-block:: yaml
@@ -107,12 +108,13 @@ class Sql(BaseAction):
     :param string user: DB接続のためのユーザ (``mysql`` のみ)
     :param string password: DB接続のためのパスワード (``mysql`` のみ)
     :param int port: DB接続先のポート番号 (``mysql`` のみ)
+    :param string charset: DB接続時の文字コード (``mysql`` のみ)
     :return: - **rowcount** (*int*) - 取得した行数
              - **rows** (*list*) - 取得した行(dict)のリスト、行のキーはカラム名に対応する
     """
     driver = _drivers[driver]
     conn = driver.connect(host=host, port=port, db=db,
-                          user=user, password=password)
+                          user=user, password=password, charset=charset)
     cursor = conn.cursor(driver.dict_cursor())
 
     cursor.execute(sql)
@@ -124,7 +126,7 @@ class Sql(BaseAction):
     # connectionManager的なのを作ったら個別のcloseはしない
     conn.close()
 
-  def do_update(self, driver, sql, db, host=None, user=None, password=None, port=_DEFAULT_PORT):
+  def do_update(self, driver, sql, db, host=None, user=None, password=None, port=_DEFAULT_PORT, charset="utf8"):
     """ 更新系のクエリ(UPDATE, INSERT など)を実行する
 
     .. code-block:: yaml
@@ -148,6 +150,7 @@ class Sql(BaseAction):
     :param string user: DB接続のためのユーザ (``mysql`` のみ)
     :param string password: DB接続のためのパスワード (``mysql`` のみ)
     :param int port: DB接続先のポート番号 (``mysql`` のみ)
+    :param string charset: DB接続時の文字コード (``mysql`` のみ)
     :return: - **rowcount** (*int*) - 更新した行数、``sql`` に複数のSQL文を渡した場合は最後に実行した結果
              - **rows** (*list*) - 空リスト
     """
@@ -158,7 +161,7 @@ class Sql(BaseAction):
       sql = [sql]
 
     conn = driver.connect(host=host, port=port, db=db,
-                          user=user, password=password)
+                          user=user, password=password, charset=charset)
 
     for sql_unit in sql:
       # 複数個あるときは結果が上書きされる
