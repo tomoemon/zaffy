@@ -43,3 +43,6 @@ class DebugPrinter(object):
     params['__time__'] = util.unicode(datetime.datetime.now())
     self.formatter.debug(params)
 
+  def simple_write(self, value):
+    self.formatter.debug(value, '')
+

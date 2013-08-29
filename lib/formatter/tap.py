@@ -25,11 +25,11 @@ class Tap(object):
   def finished(self):
     return self.succeeded + self.failed + self.errored
 
-  def debug(self, debug_obj):
+  def debug(self, debug_obj, postfix="\n"):
     if not isinstance(debug_obj, util.basestring):
       debug_obj = pprint.pformat(debug_obj, width=80, indent=2)
     debug_str = util.unescape_unicode(debug_obj)
-    self.writer.debug(_i("  # ", _u(debug_str) + "\n"))
+    self.writer.debug(_i("  # ", _u(debug_str) + postfix))
 
   def start(self, scenario):
     self.current = scenario
