@@ -2,7 +2,7 @@
 
 - action: http.get
   url: http://b.hatena.ne.jp/entry/json/?url=http%3A%2F%2Fwww.hatena.ne.jp%2F
-  resfilter:
+  outfilter:
     - related: (out.content|asjson).related
     - e0: out.related[0].entry_url
   assert:

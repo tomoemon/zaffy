@@ -2,7 +2,7 @@
 
 - action: const.set
   url: http://www.w3.org/1999/02/22-rdf-syntax-ns;param?p1=%2Fhoge&p1=piyo&p2=fuga#hashstring
-  resfilter:
+  outfilter:
     url: const.url|asurl
   assert:
     - out.url.scheme is eq "http"

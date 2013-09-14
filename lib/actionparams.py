@@ -37,7 +37,8 @@ class ActionParams(object):
     #
     # filter 設定の取得
     #
-    self.filter_list = params.pop('resfilter', [])
+    resfilter = params.pop('resfilter', [])
+    self.filter_list =  params.pop('outfilter', []) if not resfilter else resfilter
     if isinstance(self.filter_list, dict):
       self.filter_list = [self.filter_list]
 

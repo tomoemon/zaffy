@@ -7,7 +7,7 @@
 
 - action: http.get
   url: http://d.hatena.ne.jp/hatenadiary/rss
-  resfilter:
+  outfilter:
     - xml: out.content|asxml(namespaces=const.ns)
   assert:
   # 要素内のtextの取得
