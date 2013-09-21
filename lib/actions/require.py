@@ -20,8 +20,9 @@ class Require(BaseAction):
 
   @classmethod
   def setup(cls, config):
-    if 'root_path' in config:
-      cls._root_path = os.path.abspath(config['root_path'])
+    root_path = config.get('root_path', '')
+    if root_path:
+      cls._root_path = os.path.abspath(root_path)
 
   def do_require(self, path, global_env, scenario, params=None):
     """ 外部シナリオの実行
