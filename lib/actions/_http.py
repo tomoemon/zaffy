@@ -2,6 +2,8 @@
 import requests
 from baseaction import BaseAction
 
+import certifi
+certfile = certifi.where()
 
 class Http(BaseAction):
   """ Http アクション
@@ -58,7 +60,7 @@ class Http(BaseAction):
           params=params['params'],
           auth=auth,
           data=params['data'],
-          verify=params['ssl_verify'],
+          verify=certfile if params['ssl_verify'] else False,
           allow_redirects=params['allow_redirects'],
           timeout=params['timeout'])
     self.output = self._create_result(r, params['no_content'], params['binary_content'], params['save_file'])
