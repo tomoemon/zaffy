@@ -63,7 +63,7 @@ class Tap(object):
     self.failed += 1
     self.not_ok_list.append(self.finished())
     self._write_header('not ok', "error")
-    writer.write("  ------------------------------------------------------------\n")
+    writer.write("  ---\n")
     self._stacktrace(writer, exception)
     writer.write(_i("  ", _u("assert_index: {0}").format(exception.assert_index)))
     writer.write(_i("  ", _u("assertion: {0}").format(exception.assertion)))
@@ -71,7 +71,7 @@ class Tap(object):
     for i, items in enumerate(exception.compared):
       for j, item in enumerate(items):
         writer.write(_i("    ", _u("{0}-{1}: {2}").format(i, j, item)))
-    writer.write("  ------------------------------------------------------------\n")
+    writer.write("  ...\n")
 
   def error(self, exception):
     """
@@ -82,10 +82,10 @@ class Tap(object):
     self.errored += 1
     self.not_ok_list.append(self.finished())
     self._write_header('not ok', "error")
-    writer.write("  ------------------------------------------------------------\n")
+    writer.write("  ---\n")
     self._stacktrace(writer, exception)
     writer.write(_i("    ", "\n" + _u(exception.root.stack_trace).rstrip()))
-    writer.write("  ------------------------------------------------------------\n")
+    writer.write("  ...\n")
 
   def error_simple(self, exception):
     """
