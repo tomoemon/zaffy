@@ -46,13 +46,14 @@ class Tap(object):
   def _stacktrace(writer, exception):
     parent = exception
     indent = "  "
-    arrow = ""
     while parent and hasattr(parent, 'original'):
-      writer.write(_i(indent, _u(arrow + "filename: {0}").format(parent.scenario.setting.filename)))
-      writer.write(_i(indent, _u(arrow + "action_index: {0} (line: {1})").format(parent.action_index, parent.line_number)))
+      writer.write(_i(indent, _u("filename: '{0}'").format(parent.scenario.setting.filename)))
+      writer.write(_i(indent, _u("action_index: {0}").format(parent.action_index)))
+      writer.write(_i(indent, _u("line: {0}").format(parent.line_number)))
+      if hasattr(parent.original, 'original'):
+        writer.write(_i(indent, _u("next: ").format(parent.line_number)))
       parent = parent.original
-      indent += " "
-      arrow = '-> '
+      indent += "  "
 
   def fail(self, exception):
     """
@@ -84,7 +85,7 @@ class Tap(object):
     self._write_header('not ok', "error")
     writer.write("  ---\n")
     self._stacktrace(writer, exception)
-    writer.write(_i("    ", "\n" + _u(exception.root.stack_trace).rstrip()))
+    writer.write(_i("  # ", "\n" + _u(exception.root.stack_trace).rstrip()))
     writer.write("  ...\n")
 
   def error_simple(self, exception):
