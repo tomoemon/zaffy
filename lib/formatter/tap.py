@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import util
 import pprint
+import YamlDumper
 
 
 _u = lambda x: util.unicode(x, errors='replace')
@@ -9,7 +10,11 @@ _u = lambda x: util.unicode(x, errors='replace')
 def _i(prefix, output_string, postfix="\n"):
   """ 行先頭に "ok" 等の文字が出力されないようにフォーマットする
   """
-  return "\n".join([prefix + line for line in output_string.split("\n")]) + "\n"
+  return "\n".join([prefix + line for line in output_string.rstrip().split("\n")]) + postfix
+
+
+def _dump(obj):
+  return _u(YamlDumper.dump(obj))
 
 
 class Tap(object):
@@ -43,17 +48,28 @@ class Tap(object):
     self._write_header('ok', "success")
 
   @staticmethod
-  def _stacktrace(writer, exception):
+  def _stacktrace(exception):
+    next_log = log = {}
     parent = exception
-    indent = "  "
     while parent and hasattr(parent, 'original'):
-      writer.write(_i(indent, _u("filename: '{0}'").format(parent.scenario.setting.filename)))
-      writer.write(_i(indent, _u("action_index: {0}").format(parent.action_index)))
-      writer.write(_i(indent, _u("line: {0}").format(parent.line_number)))
+      next_log["filename"] = parent.scenario.setting.filename
+      next_log["aciton_index"] = parent.action_index
+      next_log["line"] = parent.line_number
       if hasattr(parent.original, 'original'):
-        writer.write(_i(indent, _u("next: ").format(parent.line_number)))
+        next_log["next"] = {}
+        next_log = next_log["next"]
       parent = parent.original
-      indent += "  "
+    return log
+
+  def dump_yamlish(self, obj):
+    writer = self.writer
+    writer.write("  ---\n")
+    writer.write(
+      _i("  ",
+        _u(YamlDumper.dump(obj))
+      )
+    )
+    writer.write("  ...\n")
 
   def fail(self, exception):
     """
@@ -64,15 +80,15 @@ class Tap(object):
     self.failed += 1
     self.not_ok_list.append(self.finished())
     self._write_header('not ok', "error")
-    writer.write("  ---\n")
-    self._stacktrace(writer, exception)
-    writer.write(_i("  ", _u("assert_index: {0}").format(exception.assert_index)))
-    writer.write(_i("  ", _u("assertion: {0}").format(exception.assertion)))
-    writer.write(_i("  ", _u("compared: ")))
-    for i, items in enumerate(exception.compared):
-      for j, item in enumerate(items):
-        writer.write(_i("    ", _u("{0}-{1}: {2}").format(i, j, item)))
-    writer.write("  ...\n")
+
+    self.dump_yamlish({
+      "failed": {
+        "assert_index": exception.assert_index,
+        "assert": exception.assertion,
+        "compared": exception.compared,
+      },
+      "call_stack": self._stacktrace(exception)
+    })
 
   def error(self, exception):
     """
@@ -83,10 +99,11 @@ class Tap(object):
     self.errored += 1
     self.not_ok_list.append(self.finished())
     self._write_header('not ok', "error")
-    writer.write("  ---\n")
-    self._stacktrace(writer, exception)
-    writer.write(_i("  # ", "\n" + _u(exception.root.stack_trace).rstrip()))
-    writer.write("  ...\n")
+
+    self.dump_yamlish({
+      "exception": YamlDumper.literal_unicode(_u(exception.root.stack_trace)),
+      "call_stack": self._stacktrace(exception)
+    })
 
   def error_simple(self, exception):
     """
@@ -94,7 +111,7 @@ class Tap(object):
     """
     e = exception
     e.root.stack_trace = e.root.original.__class__.__name__ + \
-        ": " + _u(e.root.original) + "\n- " + _u(e.root.template)
+        ": " + _u(e.root.original) + "\n>> " + _u(e.root.template)
     self.error(e)
 
   def start_test(self, test_count):

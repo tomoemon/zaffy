@@ -83,8 +83,14 @@ class BaseAction(object):
       self.exception = ActionAssertionFailed(e, traceback.format_exc(), self.line_number)
     except template.TemplateFormatException as e:
       self.exception = ActionSimpleException(e, traceback.format_exc(), self.line_number, e.template)
+    except ActionSimpleException as e:
+      # require している別シナリオを実行中に TemplateFormatException が起きた場合は
+      # 元シナリオには ActionSimpleException が飛んでくる
+      # このシナリオにおける line_number を記録する（あとで表示する）必要があるので、
+      # 再度 wrap する
+      self.exception = ActionSimpleException(e, traceback.format_exc(), self.line_number, e.template)
     except Exception as e:
-      # 別シナリオを require して実行中に例外が起きた場合は ActionException が飛んでくる
+      # require している別シナリオを実行中に例外が起きた場合は ActionException が飛んでくる
       # このシナリオにおける line_number を記録する（あとで表示する）必要があるので、
       # 再度 wrap する
       self.exception = ActionException(e, traceback.format_exc(), self.line_number)
