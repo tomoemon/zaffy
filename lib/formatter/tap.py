@@ -53,7 +53,7 @@ class Tap(object):
     parent = exception
     while parent and hasattr(parent, 'original'):
       next_log["filename"] = parent.scenario.setting.filename
-      next_log["aciton_index"] = parent.action_index
+      next_log["action_index"] = parent.action_index
       next_log["line"] = parent.line_number
       if hasattr(parent.original, 'original'):
         next_log["next"] = {}
@@ -82,7 +82,7 @@ class Tap(object):
     self._write_header('not ok', "error")
 
     self.dump_yamlish({
-      "failed": {
+      "failure": {
         "assert_index": exception.assert_index,
         "assert": exception.assertion,
         "compared": exception.compared,
@@ -101,7 +101,7 @@ class Tap(object):
     self._write_header('not ok', "error")
 
     self.dump_yamlish({
-      "exception": YamlDumper.literal_unicode(_u(exception.root.stack_trace)),
+      "error": YamlDumper.literal_unicode(_u(exception.root.stack_trace)),
       "call_stack": self._stacktrace(exception)
     })
 
