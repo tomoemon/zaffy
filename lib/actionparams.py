@@ -19,6 +19,7 @@ class ActionParams(object):
 
     self.params = None
     self.debug = False
+    self.enable = True
     self.filter_list = None
     self.assert_list = None
     self.assertex_list = None
@@ -33,6 +34,11 @@ class ActionParams(object):
     # debug 設定の取得
     #
     self.debug = params.pop('_debug', False)
+
+    #
+    # enable 設定の取得
+    #
+    self.enable = params.pop('_enable', True)
 
     #
     # filter 設定の取得

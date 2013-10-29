@@ -101,6 +101,9 @@ class BaseAction(object):
     self._assert(global_env)
 
   def _run(self):
+    if not self._params.enable:
+      return
+
     method = getattr(self, "do_" + self._setting.method_name)
     method(**self.input)
 
@@ -115,8 +118,11 @@ class BaseAction(object):
     for filter_dict in self._params.filter_list:
       self.output.update(template.expand_param(filter_dict, variables))
 
-  def debug_print(self, printer):
+  def debug_print(self, printer, index):
     debug = self._params.debug
+
+    if not self._params.enable:
+      printer.simple_write("skipped_action: {0}".format(index))
 
     if not debug:
       return

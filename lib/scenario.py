@@ -77,6 +77,6 @@ class Scenario(object):
       e.scenario = self
       raise
     finally:
-      action.debug_print(global_env['debugprinter'])
+      action.debug_print(global_env['debugprinter'], self.action_index)
       self.actions.append(action)
 
