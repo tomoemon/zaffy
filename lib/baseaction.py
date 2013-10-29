@@ -77,8 +77,9 @@ class BaseAction(object):
       # 変数を jinja2 で展開する
       # local 変数などアクション実行中に値が変わるものがあるので直前にやる必要がある
       self.input = self._params.expand(global_env)
-      self._run()
-      self._filter(global_env)
+      if self._params.enable:
+        self._run()
+        self._filter(global_env)
     except ActionAssertionFailed as e:
       self.exception = ActionAssertionFailed(e, traceback.format_exc(), self.line_number)
     except template.TemplateFormatException as e:
@@ -101,9 +102,6 @@ class BaseAction(object):
     self._assert(global_env)
 
   def _run(self):
-    if not self._params.enable:
-      return
-
     method = getattr(self, "do_" + self._setting.method_name)
     method(**self.input)
 
