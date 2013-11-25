@@ -29,10 +29,11 @@ def unicode_representer(dumper, data):
 
 yaml.SafeDumper.add_representer(folded_unicode, folded_unicode_representer)
 yaml.SafeDumper.add_representer(literal_unicode, literal_unicode_representer)
+yaml.SafeDumper.add_multi_representer(util._unicode, unicode_representer)
 yaml.Dumper.add_representer(folded_unicode, folded_unicode_representer)
 yaml.Dumper.add_representer(literal_unicode, literal_unicode_representer)
-yaml.Dumper.add_representer(tuple, tuple_representer)
-yaml.Dumper.add_representer(util._unicode, unicode_representer)
+yaml.Dumper.add_multi_representer(tuple, tuple_representer)
+yaml.Dumper.add_multi_representer(util._unicode, unicode_representer)
 
 
 def dump(obj):
