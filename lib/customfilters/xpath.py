@@ -36,7 +36,11 @@ def do_xpathlist(value, xpath, namespaces=None):
 def do_xpath(value, xpath, namespaces=None):
   """ 返り値が1件だけの場合は中身を取り出して返す """
   result = do_xpathlist(value, xpath, namespaces)
-  if len(result) == 1:
-    return result[0]
+  try:
+    if len(result) == 1:
+      return result[0]
+  except TypeError:
+    # xml.xpath responds sequence of element or number (eg. count() is used)
+    pass
   return result
 

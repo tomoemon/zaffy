@@ -14,6 +14,8 @@
    - out.xml|xpath('/r:RDF/d:channel/d:title/text()') is eq 'はてなダイアリー日記'
   # 要素の属性取得
    - out.xml|xpath('/r:RDF/d:channel/@r:about') is eq 'http://d.hatena.ne.jp/hatenadiary/rss'
+  # 要素数の取得
+   - out.xml|xpath('count(/r:RDF/d:channel/d:title)') is eq 1
 
 - action: http.get
   url: http://yahoo.co.jp
