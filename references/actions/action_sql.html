@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>sql &mdash; zaffy 2013-01-12 documentation</title>
+    <title>sql &mdash; zaffy 1.0.2014-05-21 ドキュメント</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2013-01-12',
+        VERSION:     '1.0.2014-05-21',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +24,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/translations.js"></script>
-    <link rel="top" title="zaffy 2013-01-12 documentation" href="../../index.html" />
+    <link rel="top" title="zaffy 1.0.2014-05-21 ドキュメント" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
     <link rel="next" title="ssh" href="action_ssh.html" />
     <link rel="prev" title="sleep" href="action_sleep.html" /> 
@@ -47,7 +45,7 @@
         <li class="right" >
           <a href="action_sleep.html" title="sleep"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">zaffy 1.0.2014-05-21 ドキュメント</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
       </ul>
     </div>
@@ -98,7 +96,7 @@
 </div>
 <dl class="method">
 <dt id="actions.sql.Sql.do_select">
-<tt class="descname">do_select</tt><big>(</big><em>driver</em>, <em>sql</em>, <em>db</em>, <em>host=None</em>, <em>user=None</em>, <em>password=None</em>, <em>port=3306</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_select" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_select</tt><big>(</big><em>driver</em>, <em>sql</em>, <em>db</em>, <em>host=None</em>, <em>user=None</em>, <em>password=None</em>, <em>port=3306</em>, <em>charset='utf8'</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_select" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>参照系のクエリ(SELECT, SHOW など)を実行し、タプル形式で結果を取得する</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
@@ -111,7 +109,7 @@
   <span class="l-Scalar-Plain">sql</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">select * from user where user_id=1</span>
   <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
    <span class="p-Indicator">-</span> <span class="p-Indicator">&gt;</span>
-    <span class="no">res.rows[0] is eq</span>
+    <span class="no">out.rows[0] is eq</span>
       <span class="no">(1, &quot;nanoha&quot;, &quot;2012-04-10 15:57:26&quot;|todatetime, &quot;2012-04-10 15:57:26&quot;|todatetime)</span>
 </pre></div>
 </div>
@@ -123,10 +121,11 @@
 <li><strong>driver</strong> (<em>string</em>) &#8211; データベースのドライバ (<tt class="docutils literal"><span class="pre">mysql</span></tt> または <tt class="docutils literal"><span class="pre">sqlite</span></tt> のみ指定可能)</li>
 <li><strong>sql</strong> (<em>string</em>) &#8211; 実行するSQL文</li>
 <li><strong>db</strong> (<em>string</em>) &#8211; データベース名</li>
-<li><strong>host</strong> (<em>string</em>) &#8211; データベースホスト名 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
-<li><strong>user</strong> (<em>string</em>) &#8211; DB接続のためのユーザ (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
-<li><strong>password</strong> (<em>string</em>) &#8211; DB接続のためのパスワード (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
-<li><strong>port</strong> (<em>int</em>) &#8211; DB接続先のポート番号 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>host</strong> (<em>string</em>) &#8211; データベースホスト名 (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>user</strong> (<em>string</em>) &#8211; DB接続のためのユーザ (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; DB接続のためのパスワード (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>port</strong> (<em>int</em>) &#8211; DB接続先のポート番号 (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>charset</strong> (<em>string</em>) &#8211; DB接続時の文字コード (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)(<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ必要)</li>
 </ul>
 </td>
 </tr>
@@ -143,7 +142,7 @@
 
 <dl class="method">
 <dt id="actions.sql.Sql.do_selectdict">
-<tt class="descname">do_selectdict</tt><big>(</big><em>driver</em>, <em>sql</em>, <em>db</em>, <em>host=None</em>, <em>user=None</em>, <em>password=None</em>, <em>port=3306</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_selectdict" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_selectdict</tt><big>(</big><em>driver</em>, <em>sql</em>, <em>db</em>, <em>host=None</em>, <em>user=None</em>, <em>password=None</em>, <em>port=3306</em>, <em>charset='utf8'</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_selectdict" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>参照系のクエリ(SELECT, SHOW など)を実行し、辞書形式で結果を取得する</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
@@ -156,7 +155,7 @@
   <span class="l-Scalar-Plain">sql</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">select * from user where user_id=1</span>
   <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
    <span class="p-Indicator">-</span> <span class="p-Indicator">&gt;</span>
-    <span class="no">res.rows[0] is eq</span>
+    <span class="no">out.rows[0] is eq</span>
       <span class="no">{</span>
        <span class="no">&#39;user_id&#39;: 1,</span>
        <span class="no">&#39;user_name&#39;: &quot;nanoha&quot;,</span>
@@ -173,10 +172,11 @@
 <li><strong>driver</strong> (<em>string</em>) &#8211; データベースのドライバ (<tt class="docutils literal"><span class="pre">mysql</span></tt> または <tt class="docutils literal"><span class="pre">sqlite</span></tt> のみ指定可能)</li>
 <li><strong>sql</strong> (<em>string</em>) &#8211; 実行するSQL文</li>
 <li><strong>db</strong> (<em>string</em>) &#8211; データベース名</li>
-<li><strong>host</strong> (<em>string</em>) &#8211; データベースホスト名 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
-<li><strong>user</strong> (<em>string</em>) &#8211; DB接続のためのユーザ (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
-<li><strong>password</strong> (<em>string</em>) &#8211; DB接続のためのパスワード (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
-<li><strong>port</strong> (<em>int</em>) &#8211; DB接続先のポート番号 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>host</strong> (<em>string</em>) &#8211; データベースホスト名 (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>user</strong> (<em>string</em>) &#8211; DB接続のためのユーザ (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; DB接続のためのパスワード (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>port</strong> (<em>int</em>) &#8211; DB接続先のポート番号 (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>charset</strong> (<em>string</em>) &#8211; DB接続時の文字コード (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
 </ul>
 </td>
 </tr>
@@ -193,7 +193,7 @@
 
 <dl class="method">
 <dt id="actions.sql.Sql.do_update">
-<tt class="descname">do_update</tt><big>(</big><em>driver</em>, <em>sql</em>, <em>db</em>, <em>host=None</em>, <em>user=None</em>, <em>password=None</em>, <em>port=3306</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_update" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_update</tt><big>(</big><em>driver</em>, <em>sql</em>, <em>db</em>, <em>host=None</em>, <em>user=None</em>, <em>password=None</em>, <em>port=3306</em>, <em>charset='utf8'</em><big>)</big><a class="headerlink" href="#actions.sql.Sql.do_update" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>更新系のクエリ(UPDATE, INSERT など)を実行する</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
@@ -205,7 +205,7 @@
   <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hogehoge</span>
   <span class="l-Scalar-Plain">sql</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">update user set user_name=&quot;fate&quot; where user_id=1</span>
   <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
-   <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">res.rowcount is eq 1</span>
+   <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">out.rowcount is eq 1</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -216,10 +216,11 @@
 <li><strong>driver</strong> (<em>string</em>) &#8211; データベースのドライバ  (<tt class="docutils literal"><span class="pre">mysql</span></tt> または <tt class="docutils literal"><span class="pre">sqlite</span></tt> のみ指定可能)</li>
 <li><strong>sql</strong> (<em>string|list</em>) &#8211; 実行するSQL文。リストを渡した場合は複数実行する</li>
 <li><strong>db</strong> (<em>string</em>) &#8211; データベース名</li>
-<li><strong>host</strong> (<em>string</em>) &#8211; データベースホスト名 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
-<li><strong>user</strong> (<em>string</em>) &#8211; DB接続のためのユーザ (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
-<li><strong>password</strong> (<em>string</em>) &#8211; DB接続のためのパスワード (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
-<li><strong>port</strong> (<em>int</em>) &#8211; DB接続先のポート番号 (<tt class="docutils literal"><span class="pre">mysql</span></tt> のみ)</li>
+<li><strong>host</strong> (<em>string</em>) &#8211; データベースホスト名 (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>user</strong> (<em>string</em>) &#8211; DB接続のためのユーザ (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; DB接続のためのパスワード (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>port</strong> (<em>int</em>) &#8211; DB接続先のポート番号 (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
+<li><strong>charset</strong> (<em>string</em>) &#8211; DB接続時の文字コード (<tt class="docutils literal"><span class="pre">driver</span></tt> が <tt class="docutils literal"><span class="pre">mysql</span></tt> の場合のみ必要)</li>
 </ul>
 </td>
 </tr>
@@ -259,13 +260,13 @@
         <li class="right" >
           <a href="action_sleep.html" title="sleep"
              >前へ</a> |</li>
-        <li><a href="../../index.html">zaffy 2013-01-12 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">zaffy 1.0.2014-05-21 ドキュメント</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, tomoemon.
-      このドキュメントは <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3 で生成しました。
+        &copy; Copyright 2013-2014, tomoemon.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2 で生成しました。
     </div>
   </body>
 </html>
