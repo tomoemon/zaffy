@@ -5,9 +5,12 @@ from six import with_metaclass
 
 class _MetaConst(type):
   def __getattribute__(cls, name):
-    if not type.__getattribute__(cls, '_loaded'):
-      # document 作成時は __doc__ などの属性にそのままアクセスさせる必要がある
-      return type.__getattribute__(cls, name)
+    try:
+      if not type.__getattribute__(cls, '_loaded'):
+        # document 作成時は __doc__ などの属性にそのままアクセスさせる必要がある
+        return type.__getattribute__(cls, name)
+    except:
+        return type.__getattribute__(cls, name)
     return type.__getattribute__(cls, '_const_params')[name]
 
 

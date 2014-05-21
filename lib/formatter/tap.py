@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import util
 import pprint
-import YamlDumper
+from . import YamlDumper
 
 
 _u = lambda x: util.unicode(x, errors='replace')
