@@ -108,7 +108,7 @@ class CUI(cmd.Cmd):
   def _do_action(self, param):
     lines = ["action: {0}".format(param)]
     while True:
-      line = raw_input("... ").rstrip()
+      line = util.input("... ").rstrip()
       if not line:
         # run action
         break
