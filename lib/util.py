@@ -15,7 +15,6 @@ if sys.version[:1] == '2':
   basestring = basestring
   _unicode = unicode
   _unichr = unichr
-  input = raw_input
 
   def normalize_write_string(value, encoding):
     # python26 だと encode して出さないと文字化けした
@@ -24,7 +23,6 @@ else:
   basestring = str
   _unicode = str
   _unichr = chr
-  input = input
 
   def normalize_write_string(value, encoding):
     return value.encode(encoding, 'replace').decode(encoding, 'replace')

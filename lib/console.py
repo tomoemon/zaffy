@@ -3,6 +3,7 @@ import sys
 import cmd
 import inspect
 import util
+from six.moves import input
 from pprint import pformat
 from actionloader import action_loader
 from scenarioloader import scenario_loader
@@ -108,7 +109,7 @@ class CUI(cmd.Cmd):
   def _do_action(self, param):
     lines = ["action: {0}".format(param)]
     while True:
-      line = util.input("... ").rstrip()
+      line = input("... ").rstrip()
       if not line:
         # run action
         break
