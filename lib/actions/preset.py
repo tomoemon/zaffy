@@ -49,7 +49,7 @@ class Preset(BaseAction):
     すでに定義済みのプリセット名と同じ名前で定義した場合、後から定義したパラメータセットで完全に上書きされる。異なるアクション間で同名のプリセット名を持つことは可能。
 
   評価のタイミング
-    preset アクションで定義したパラメータセットは、アクションが実行されたタイミングで評価される。パラメータセットの中で :ref:`references-actions-const-label` 定数や :ref:`references-actions-local-label` 変数の使用、または関数呼び出しを記述していた場合、その時点での値でパラメータセットが確定する。評価を遅延させたい場合は
+    preset アクションで定義したパラメータセットは、preset アクションが実行されたタイミングで評価される。パラメータセットの中で :ref:`references-actions-const-label` 定数や :ref:`references-actions-local-label` 変数の使用、または関数呼び出しを記述していた場合、その時点での値でパラメータセットが確定する。評価を遅延させたい場合は
 
     ``<<"<<const.param1>>">>``
 

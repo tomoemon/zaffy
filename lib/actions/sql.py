@@ -54,11 +54,11 @@ class Sql(BaseAction):
     :param string driver: データベースのドライバ (``mysql`` または ``sqlite`` のみ指定可能)
     :param string sql: 実行するSQL文
     :param string db: データベース名
-    :param string host: データベースホスト名 (``mysql`` のみ)
-    :param string user: DB接続のためのユーザ (``mysql`` のみ)
-    :param string password: DB接続のためのパスワード (``mysql`` のみ)
-    :param int port: DB接続先のポート番号 (``mysql`` のみ)
-    :param string charset: DB接続時の文字コード (``mysql`` のみ)
+    :param string host: データベースホスト名 (``driver`` が ``mysql`` の場合のみ必要)
+    :param string user: DB接続のためのユーザ (``driver`` が ``mysql`` の場合のみ必要)
+    :param string password: DB接続のためのパスワード (``driver`` が ``mysql`` の場合のみ必要)
+    :param int port: DB接続先のポート番号 (``driver`` が ``mysql`` の場合のみ必要)
+    :param string charset: DB接続時の文字コード (``driver`` が ``mysql`` の場合のみ必要)(``mysql`` のみ必要)
     :return: - **rowcount** (*int*) - 取得した行数
              - **rows** (*list*) - 取得した行(tuple)のリスト
     """
@@ -104,11 +104,11 @@ class Sql(BaseAction):
     :param string driver: データベースのドライバ (``mysql`` または ``sqlite`` のみ指定可能)
     :param string sql: 実行するSQL文
     :param string db: データベース名
-    :param string host: データベースホスト名 (``mysql`` のみ)
-    :param string user: DB接続のためのユーザ (``mysql`` のみ)
-    :param string password: DB接続のためのパスワード (``mysql`` のみ)
-    :param int port: DB接続先のポート番号 (``mysql`` のみ)
-    :param string charset: DB接続時の文字コード (``mysql`` のみ)
+    :param string host: データベースホスト名 (``driver`` が ``mysql`` の場合のみ必要)
+    :param string user: DB接続のためのユーザ (``driver`` が ``mysql`` の場合のみ必要)
+    :param string password: DB接続のためのパスワード (``driver`` が ``mysql`` の場合のみ必要)
+    :param int port: DB接続先のポート番号 (``driver`` が ``mysql`` の場合のみ必要)
+    :param string charset: DB接続時の文字コード (``driver`` が ``mysql`` の場合のみ必要)
     :return: - **rowcount** (*int*) - 取得した行数
              - **rows** (*list*) - 取得した行(dict)のリスト、行のキーはカラム名に対応する
     """
@@ -146,11 +146,11 @@ class Sql(BaseAction):
     :param string driver: データベースのドライバ  (``mysql`` または ``sqlite`` のみ指定可能)
     :param string|list sql: 実行するSQL文。リストを渡した場合は複数実行する
     :param string db: データベース名
-    :param string host: データベースホスト名 (``mysql`` のみ)
-    :param string user: DB接続のためのユーザ (``mysql`` のみ)
-    :param string password: DB接続のためのパスワード (``mysql`` のみ)
-    :param int port: DB接続先のポート番号 (``mysql`` のみ)
-    :param string charset: DB接続時の文字コード (``mysql`` のみ)
+    :param string host: データベースホスト名 (``driver`` が ``mysql`` の場合のみ必要)
+    :param string user: DB接続のためのユーザ (``driver`` が ``mysql`` の場合のみ必要)
+    :param string password: DB接続のためのパスワード (``driver`` が ``mysql`` の場合のみ必要)
+    :param int port: DB接続先のポート番号 (``driver`` が ``mysql`` の場合のみ必要)
+    :param string charset: DB接続時の文字コード (``driver`` が ``mysql`` の場合のみ必要)
     :return: - **rowcount** (*int*) - 更新した行数、``sql`` に複数のSQL文を渡した場合は最後に実行した結果
              - **rows** (*list*) - 空リスト
     """
