@@ -70,7 +70,7 @@ Example
     - action: http.post
       url: http://localhost:8000/
       params:
-        pagesize: <<last.res.content|length>>
+        pagesize: <<last.out.content|length>>
 
 # sql test
     - SQL テスト
