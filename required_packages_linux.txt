@@ -1,0 +1,10 @@
+argparse
+six
+Jinja2
+PyYAML
+requests
+certifi
+python-dateutil
+chardet
+colorama
+
