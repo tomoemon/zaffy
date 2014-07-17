@@ -21,7 +21,7 @@ Setup
 
 * required packages
 
-        sudo pip install -r required_packages.txt
+        sudo pip install -r required_packages_linux.txt
 
 * optional packages
  * if you'd like to parse XML/HTML (used by `asxml`, `ashtml`, `xpath` filter)
