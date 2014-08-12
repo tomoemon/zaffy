@@ -3,6 +3,7 @@ from baseaction import ActionException, ActionAssertionFailed, ActionSimpleExcep
 import time
 import util
 import chardet
+import six
 
 
 class ScenarioRunner(object):
@@ -40,7 +41,7 @@ class ScenarioRunner(object):
     root = exception.root
     if isinstance(root.original, EnvironmentError):
       root.stack_trace = util.unicode_os_string(root.stack_trace)
-    else:
+    elif not isinstance(root.stack_trace, six.text_type):
       encoding = chardet.detect(root.stack_trace)
       if encoding['confidence'] > 0.95:
         root.stack_trace = util.unicode(root.stack_trace, encoding['encoding'])

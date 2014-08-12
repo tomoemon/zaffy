@@ -1,0 +1,10 @@
+- JSON テスト
+
+- action: local
+  hoge: "http://hoge.fuga.com"
+  assert:
+      - out.hoge|regex_match("http://")
+      - not out.hoge|regex_match("ttp://")
+      - out.hoge|regex_search("ttp://")
+      - out.hoge|regex_search("t*p://hoge\\.f.ga")
+
