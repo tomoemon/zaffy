@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>http &mdash; zaffy 1.0.2014-05-21 ドキュメント</title>
+    <title>http &mdash; zaffy 1.0.2014-10-14 ドキュメント</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0.2014-05-21',
+        VERSION:     '1.0.2014-10-14',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/translations.js"></script>
-    <link rel="top" title="zaffy 1.0.2014-05-21 ドキュメント" href="../../index.html" />
+    <link rel="top" title="zaffy 1.0.2014-10-14 ドキュメント" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
     <link rel="next" title="local" href="action_local.html" />
     <link rel="prev" title="file" href="action_file.html" /> 
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="action_file.html" title="file"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../../index.html">zaffy 1.0.2014-05-21 ドキュメント</a> &raquo;</li>
+        <li><a href="../../index.html">zaffy 1.0.2014-10-14 ドキュメント</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
       </ul>
     </div>
@@ -106,7 +106,7 @@
 </div>
 <dl class="method">
 <dt id="actions._http.Http.do_delete">
-<tt class="descname">do_delete</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_delete" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_delete</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>files={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_delete" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>http delete (その他のメソッドもパラメータ、レスポンスは同じ)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -119,6 +119,7 @@
 <li><strong>password</strong> (<em>string</em>) &#8211; HTTP認証パスワード</li>
 <li><strong>headers</strong> (<em>dict</em>) &#8211; 送信する header</li>
 <li><strong>cookies</strong> (<em>dict</em>) &#8211; 送信する cookie</li>
+<li><strong>files</strong> (<em>dict</em>) &#8211; 送信するファイル</li>
 <li><strong>params</strong> (<em>dict|string</em>) &#8211; query string として送信するパラメータ。辞書形式ではなく a=10&amp;b=20 形式の文字列で渡すことも可能</li>
 <li><strong>data</strong> (<em>dict|string</em>) &#8211; message body として送信するパラメータ</li>
 <li><strong>no_content</strong> (<em>bool</em>) &#8211; True: header のみを取得、False: content も取得</li>
@@ -146,31 +147,31 @@
 
 <dl class="method">
 <dt id="actions._http.Http.do_get">
-<tt class="descname">do_get</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_get" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_get</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>files={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_get" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>http get</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="actions._http.Http.do_head">
-<tt class="descname">do_head</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_head" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_head</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>files={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_head" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>http head</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="actions._http.Http.do_patch">
-<tt class="descname">do_patch</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_patch" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_patch</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>files={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_patch" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>http patch</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="actions._http.Http.do_post">
-<tt class="descname">do_post</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_post" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_post</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>files={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_post" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>http post</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="actions._http.Http.do_put">
-<tt class="descname">do_put</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_put" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_put</tt><big>(</big><em>url</em>, <em>auth=''</em>, <em>user=''</em>, <em>password=''</em>, <em>headers={}</em>, <em>cookies={}</em>, <em>files={}</em>, <em>params={}</em>, <em>data={}</em>, <em>no_content=False</em>, <em>binary_content=False</em>, <em>save_file=None</em>, <em>ssl_verify=True</em>, <em>allow_redirects=True</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._http.Http.do_put" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>http put</p>
 </dd></dl>
 
@@ -199,7 +200,7 @@
         <li class="right" >
           <a href="action_file.html" title="file"
              >前へ</a> |</li>
-        <li><a href="../../index.html">zaffy 1.0.2014-05-21 ドキュメント</a> &raquo;</li>
+        <li><a href="../../index.html">zaffy 1.0.2014-10-14 ドキュメント</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 
       </ul>
     </div>
