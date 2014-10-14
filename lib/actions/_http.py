@@ -57,6 +57,7 @@ class Http(BaseAction):
     r = getattr(requests, method)(params['url'],
           headers=params['headers'],
           cookies=params['cookies'],
+          files=params['files'],
           params=params['params'],
           auth=auth,
           data=params['data'],
@@ -65,7 +66,7 @@ class Http(BaseAction):
           timeout=params['timeout'])
     self.output = self._create_result(r, params['no_content'], params['binary_content'], params['save_file'])
 
-  def do_delete(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
+  def do_delete(self, url, auth="", user="", password="", headers={}, cookies={}, files={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """
     http delete (その他のメソッドもパラメータ、レスポンスは同じ)
@@ -76,6 +77,7 @@ class Http(BaseAction):
     :param string password: HTTP認証パスワード
     :param dict headers: 送信する header
     :param dict cookies: 送信する cookie
+    :param dict files: 送信するファイル
     :param dict|string params: query string として送信するパラメータ。辞書形式ではなく a=10&b=20 形式の文字列で渡すことも可能
     :param dict|string data: message body として送信するパラメータ
     :param bool no_content: True: header のみを取得、False: content も取得
@@ -94,35 +96,35 @@ class Http(BaseAction):
     del method_params['self']
     self._http_method("delete", method_params)
 
-  def do_get(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
+  def do_get(self, url, auth="", user="", password="", headers={}, cookies={}, files={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ http get """
     method_params = locals()
     del method_params['self']
     self._http_method("get", method_params)
 
-  def do_post(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
+  def do_post(self, url, auth="", user="", password="", headers={}, cookies={}, files={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ http post """
     method_params = locals()
     del method_params['self']
     self._http_method("post", method_params)
 
-  def do_put(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
+  def do_put(self, url, auth="", user="", password="", headers={}, cookies={}, files={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ http put """
     method_params = locals()
     del method_params['self']
     self._http_method("put", method_params)
 
-  def do_head(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
+  def do_head(self, url, auth="", user="", password="", headers={}, cookies={}, files={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ http head """
     method_params = locals()
     del method_params['self']
     self._http_method("head", method_params)
 
-  def do_patch(self, url, auth="", user="", password="", headers={}, cookies={}, params={}, data={},
+  def do_patch(self, url, auth="", user="", password="", headers={}, cookies={}, files={}, params={}, data={},
       no_content=False, binary_content=False, save_file=None, ssl_verify=True, allow_redirects=True, timeout=None):
     """ http patch """
     method_params = locals()
