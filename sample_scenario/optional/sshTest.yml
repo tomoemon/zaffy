@@ -10,15 +10,14 @@
 
 - action: ssh
   cmd: ls -l
-
-- action: debug
-  x: <<last.res>>
+  timeout: 5
+  _debug: out
 
 - action: ssh.put
-  local: zaffy.py
-  remote: zaffy2.py
+  local: README.md
+  remote: README2.md
 
 - action: ssh.get
-  remote: zaffy2.py
-  local: zaffy3.py
+  remote: README2.md
+  local: README3.md
 

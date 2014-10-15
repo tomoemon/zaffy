@@ -12,20 +12,14 @@ class Ssh(BaseAction):
 
     接続先パスワードなどは :ref:`references-actions-preset-label` で定義しておくと、毎回記述する必要がなくなります。
   """
-  def _connect(self, host, user, password, key_file, port):
+  def _connect(self, host, user, password, key_file, port, timeout):
     client = ssh.SSHClient()
     client.set_missing_host_key_policy(ssh.AutoAddPolicy())
     client.load_system_host_keys()
-    client.connect(host, username=user, password=password, key_filename=key_file, port=port)
+    client.connect(host, username=user, password=password, key_filename=key_file, port=port, timeout=timeout)
     return client
 
-  def do_ssh(self, host, user, cmd, port=22, password=None, key_file=None):
-    """ do_run の省略呼び出し """
-    method_params = locals()
-    del method_params['self']
-    self.do_run(**method_params)
-
-  def do_put(self, host, user, local, remote, port=22, password=None, key_file=None):
+  def do_put(self, host, user, local, remote, port=22, password=None, key_file=None, timeout=None):
     """ scp でファイルを送信する
 
     .. code-block:: yaml
@@ -46,14 +40,15 @@ class Ssh(BaseAction):
     :param int port: 接続先ポート番号
     :param string password: パスワード認証を行う場合のユーザのログインパスワード
     :param string key_file: 公開鍵認証を行う場合の公開鍵ファイル
+    :param int timeout: タイムアウト時間（秒）
     """
-    client = self._connect(host, user, password, key_file, port)
+    client = self._connect(host, user, password, key_file, port, timeout)
 
     sftp = client.open_sftp()
     sftp.put(local, remote)
     sftp.close()
 
-  def do_get(self, host, user, local, remote, port=22, password=None, key_file=None):
+  def do_get(self, host, user, local, remote, port=22, password=None, key_file=None, timeout=None):
     """ scp でファイルを取得する
 
     .. code-block:: yaml
@@ -74,14 +69,21 @@ class Ssh(BaseAction):
     :param int port: 接続先ポート番号
     :param string password: パスワード認証を行う場合のユーザのログインパスワード
     :param string key_file: 公開鍵認証を行う場合の公開鍵ファイル
+    :param int timeout: タイムアウト時間（秒）
     """
-    client = self._connect(host, user, password, key_file, port)
+    client = self._connect(host, user, password, key_file, port, timeout)
 
     sftp = client.open_sftp()
     sftp.get(remote, local)
     sftp.close()
 
-  def do_run(self, host, user, cmd, port=22, password=None, key_file=None):
+  def do_ssh(self, host, user, cmd, port=22, password=None, key_file=None, timeout=None, decoding='utf-8'):
+    """ do_run の省略呼び出し """
+    method_params = locals()
+    del method_params['self']
+    self.do_run(**method_params)
+
+  def do_run(self, host, user, cmd, port=22, password=None, key_file=None, timeout=None, decoding='utf-8'):
     """ ssh 接続してコマンドを実行する
 
     .. code-block:: yaml
@@ -102,16 +104,18 @@ class Ssh(BaseAction):
     :param int port: 接続先ポート番号
     :param string password: パスワード認証を行う場合のユーザのログインパスワード
     :param string key_file: 公開鍵認証を行う場合の公開鍵ファイル
+    :param string decoding: 実行結果をデコードする際に用いるエンコード方式
+    :param int timeout: タイムアウト時間（秒）
     :return: - **stdout** (*string*) - 実行したコマンドの標準出力
              - **stderr** (*string*) - 実行したコマンドの標準エラー
              - **returncode** (*int*) - 実行したコマンドの終了ステータス
     """
-    client = self._connect(host, user, password, key_file, port)
-    stdin, stdout, stderr = client.exec_command(cmd)
+    client = self._connect(host, user, password, key_file, port, timeout)
+    stdin, stdout, stderr = client.exec_command(cmd, timeout=timeout)
 
     self.output = {
-        'stdout': stdout.read(),
-        'stderr': stderr.read(),
-        'returncode': stdout.channel.recv_exit_status(),
+        'stdout': stdout.read().decode(decoding) if decoding else stdout.read(),
+        'stderr': stderr.read().decode(decoding) if decoding else stderr.read(),
+        'returncode': stdout.channel.recv_exit_status() if stdout.channel.exit_status_ready() else 1,
         }
 
