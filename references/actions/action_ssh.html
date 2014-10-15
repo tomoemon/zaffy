@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ssh &mdash; zaffy 1.0.2014-10-14 ドキュメント</title>
+    <title>ssh &mdash; zaffy 1.0.2014-10-15 ドキュメント</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0.2014-10-14',
+        VERSION:     '1.0.2014-10-15',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/translations.js"></script>
-    <link rel="top" title="zaffy 1.0.2014-10-14 ドキュメント" href="../../index.html" />
+    <link rel="top" title="zaffy 1.0.2014-10-15 ドキュメント" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
     <link rel="next" title="time" href="action_time.html" />
     <link rel="prev" title="sql" href="action_sql.html" /> 
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="action_sql.html" title="sql"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../../index.html">zaffy 1.0.2014-10-14 ドキュメント</a> &raquo;</li>
+        <li><a href="../../index.html">zaffy 1.0.2014-10-15 ドキュメント</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
       </ul>
     </div>
@@ -91,12 +91,12 @@
 <dd><p>Ssh アクション</p>
 <p>SSH接続を通してプロセスの実行などを行なう</p>
 <div class="admonition note">
-<p class="first admonition-title">ノート</p>
+<p class="first admonition-title">注釈</p>
 <p class="last">接続先パスワードなどは <a class="reference internal" href="action_preset.html#references-actions-preset-label"><em>preset</em></a> で定義しておくと、毎回記述する必要がなくなります。</p>
 </div>
 <dl class="method">
 <dt id="actions._ssh.Ssh.do_get">
-<tt class="descname">do_get</tt><big>(</big><em>host</em>, <em>user</em>, <em>local</em>, <em>remote</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_get" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_get</tt><big>(</big><em>host</em>, <em>user</em>, <em>local</em>, <em>remote</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_get" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>scp でファイルを取得する</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
@@ -120,6 +120,7 @@
 <li><strong>port</strong> (<em>int</em>) &#8211; 接続先ポート番号</li>
 <li><strong>password</strong> (<em>string</em>) &#8211; パスワード認証を行う場合のユーザのログインパスワード</li>
 <li><strong>key_file</strong> (<em>string</em>) &#8211; 公開鍵認証を行う場合の公開鍵ファイル</li>
+<li><strong>timeout</strong> (<em>int</em>) &#8211; タイムアウト時間（秒）</li>
 </ul>
 </td>
 </tr>
@@ -129,7 +130,7 @@
 
 <dl class="method">
 <dt id="actions._ssh.Ssh.do_put">
-<tt class="descname">do_put</tt><big>(</big><em>host</em>, <em>user</em>, <em>local</em>, <em>remote</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_put" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_put</tt><big>(</big><em>host</em>, <em>user</em>, <em>local</em>, <em>remote</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_put" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>scp でファイルを送信する</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
@@ -153,6 +154,7 @@
 <li><strong>port</strong> (<em>int</em>) &#8211; 接続先ポート番号</li>
 <li><strong>password</strong> (<em>string</em>) &#8211; パスワード認証を行う場合のユーザのログインパスワード</li>
 <li><strong>key_file</strong> (<em>string</em>) &#8211; 公開鍵認証を行う場合の公開鍵ファイル</li>
+<li><strong>timeout</strong> (<em>int</em>) &#8211; タイムアウト時間（秒）</li>
 </ul>
 </td>
 </tr>
@@ -162,7 +164,7 @@
 
 <dl class="method">
 <dt id="actions._ssh.Ssh.do_run">
-<tt class="descname">do_run</tt><big>(</big><em>host</em>, <em>user</em>, <em>cmd</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_run" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_run</tt><big>(</big><em>host</em>, <em>user</em>, <em>cmd</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em>, <em>timeout=None</em>, <em>decoding='utf-8'</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_run" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ssh 接続してコマンドを実行する</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
 
@@ -186,6 +188,8 @@
 <li><strong>port</strong> (<em>int</em>) &#8211; 接続先ポート番号</li>
 <li><strong>password</strong> (<em>string</em>) &#8211; パスワード認証を行う場合のユーザのログインパスワード</li>
 <li><strong>key_file</strong> (<em>string</em>) &#8211; 公開鍵認証を行う場合の公開鍵ファイル</li>
+<li><strong>decoding</strong> (<em>string</em>) &#8211; 実行結果をデコードする際に用いるエンコード方式</li>
+<li><strong>timeout</strong> (<em>int</em>) &#8211; タイムアウト時間（秒）</li>
 </ul>
 </td>
 </tr>
@@ -203,7 +207,7 @@
 
 <dl class="method">
 <dt id="actions._ssh.Ssh.do_ssh">
-<tt class="descname">do_ssh</tt><big>(</big><em>host</em>, <em>user</em>, <em>cmd</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_ssh" title="この定義へのパーマリンク">¶</a></dt>
+<tt class="descname">do_ssh</tt><big>(</big><em>host</em>, <em>user</em>, <em>cmd</em>, <em>port=22</em>, <em>password=None</em>, <em>key_file=None</em>, <em>timeout=None</em>, <em>decoding='utf-8'</em><big>)</big><a class="headerlink" href="#actions._ssh.Ssh.do_ssh" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>do_run の省略呼び出し</p>
 </dd></dl>
 
@@ -232,13 +236,13 @@
         <li class="right" >
           <a href="action_sql.html" title="sql"
              >前へ</a> |</li>
-        <li><a href="../../index.html">zaffy 1.0.2014-10-14 ドキュメント</a> &raquo;</li>
+        <li><a href="../../index.html">zaffy 1.0.2014-10-15 ドキュメント</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2013-2014, tomoemon.
-      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2 で生成しました。
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3 で生成しました。
     </div>
   </body>
 </html>
