@@ -13,6 +13,7 @@ filesystem_encoding = sys.getfilesystemencoding()
 
 if sys.version[:1] == '2':
   basestring = basestring
+  bytes = str
   _unicode = unicode
   _unichr = unichr
 
@@ -21,6 +22,7 @@ if sys.version[:1] == '2':
     return value.encode(encoding, 'replace')
 else:
   basestring = str
+  bytes = bytes
   _unicode = str
   _unichr = chr
 

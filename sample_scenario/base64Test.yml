@@ -1,0 +1,5 @@
+- base64 テスト
+
+- action: debug
+  a: <<'hoge'|base64>>
+  b: <<'hoge'|base64|asbase64>>
