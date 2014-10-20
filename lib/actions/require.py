@@ -58,7 +58,7 @@ class Require(BaseAction):
       - サンプルシナリオ
 
       - action: require
-        path: B.yml
+        path: D.yml
         params:
           x: 100
           y: 200
