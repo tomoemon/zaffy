@@ -3,7 +3,9 @@
 - action: debug
   dir: <<scenario.dir>>
   filename: <<scenario.filename>>
-  doc: <<scenario.doc>>
+  header: <<scenario.header>>
+  doc: <<scenario.header.doc>>
+  tags: <<scenario.header.tags>>
   parent_scenario: <<scenario.parent>>
 
 

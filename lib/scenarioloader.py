@@ -1,6 +1,6 @@
 # -*- coding: utf-8
 import yaml
-from scenario import Scenario, ScenarioDoc
+from scenario import Scenario, ScenarioHeader
 from actionloader import action_loader
 from yaml.composer import Composer
 from yaml.constructor import Constructor
@@ -33,12 +33,12 @@ class ScenarioLoader(object):
       self._assert_no_circular_reference(setting.filename, parent)
 
     try:
-      doc, raw_actions = self.parse(setting.read())
+      header, raw_actions = self.parse(setting.read())
     except Exception as e:
       raise ScenarioLoadError(setting.filename, e.__class__.__name__, util.unicode(e))
     return Scenario(
         setting,
-        doc,
+        header,
         self.create_actions(raw_actions),
         parent)
 
@@ -75,12 +75,12 @@ class ScenarioLoader(object):
     loader.load_all = load_all
     content = list(loader.load_all())
 
-    raw_doc, raw_actions = self._filter(content)
+    raw_header, raw_actions = self._filter(content)
     try:
-      doc = ScenarioDoc(raw_doc)
+      header = ScenarioHeader(raw_header)
     except:
       raise Exception("scenario should have a description at first element/document: " + str(content))
-    return doc, raw_actions
+    return header, raw_actions
 
   def create_actions(self, actions):
     result = []

@@ -4,7 +4,7 @@ import six
 from debugprinter import DebugPrinter
 
 
-class ScenarioDoc(object):
+class ScenarioHeader(object):
   def __init__(self, raw_doc):
     if isinstance(raw_doc, six.string_types):
       self.doc = raw_doc
@@ -18,9 +18,9 @@ class ScenarioDoc(object):
 
 
 class Scenario(object):
-  def __init__(self, setting, doc, actions, parent=None):
+  def __init__(self, setting, header, actions, parent=None):
     self.setting = setting
-    self.doc = doc
+    self.header = header
     self.parent = parent
     self.localvar = {}
 
