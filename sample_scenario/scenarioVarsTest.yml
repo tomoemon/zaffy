@@ -1,0 +1,9 @@
+- シナリオ変数の取得テスト
+
+- action: debug
+  dir: <<scenario.dir>>
+  filename: <<scenario.filename>>
+  doc: <<scenario.doc>>
+  parent_scenario: <<scenario.parent>>
+
+
