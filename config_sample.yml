@@ -1,0 +1,43 @@
+#
+# zaffy 用の設定ファイル
+#
+# 下記のように設定ファイルを指定して実行するか
+# python zaffy.py -c config_sample.yml
+#
+# デフォルトの設定ファイル (config.yml) として配置すると読み込まれる
+# mv zaffy_sample.yml config.yml
+
+actions:
+  const:
+    # 任意の定数を定義する
+    # シナリオ内で const アクションを使用するのと同様
+    MYSQL_HOST: localhost
+    MYSQL_DB: zaffytest
+    MYSQL_USER: testuser
+    MYSQL_PASSWORD: testpass
+
+  preset:
+    # アクションごとのパラメータプリセットを定義する
+    # シナリオ内で preset アクションを使用するのと同様
+    http:
+      hoge:
+        url: "http://yahoo.co.jp"
+        params: {}
+    sql:
+      default:
+        driver: mysql
+        host: <<const.MYSQL_HOST>>
+        db: <<const.MYSQL_DB>>
+        user: <<const.MYSQL_USER>>
+        password: <<const.MYSQL_PASSWORD>>
+
+  require:
+    # require するときの基準になるパス
+    # 例えば下記のような構成のときに root_path: a/lib/ と設定しておけば、
+    # test1.yml から require する際に、path: util1.yml と記述できる
+    #   a/lib/
+    #   a/lib/util1.yml
+    #   a/lib/util2.yml
+    #   a/test/test1.yml
+    root_path: null
+

@@ -28,8 +28,8 @@ if __result.cleanup_scenario:
     targets.append(__result.cleanup_scenario)
 
 config_file = __result.config_file
-if config_file is None and os.access('zaffy.yml', os.R_OK):
-  config_file = 'zaffy.yml'
+if config_file is None and os.access('config.yml', os.R_OK):
+  config_file = 'config.yml'
 
 interactive = __result.interactive
 tags = __result.tag
