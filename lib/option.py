@@ -6,6 +6,10 @@ import argparse
 def _parser():
   parser = argparse.ArgumentParser()
   parser.add_argument('-c', '--config', action='store', dest='config_file', default=None)
+  parser.add_argument('--setup', action='store', dest='setup_scenario', default=None,
+          help='scenario to run first')
+  parser.add_argument('--cleanup', action='store', dest='cleanup_scenario', default=None,
+          help='scenario to run last')
   parser.add_argument('--nocolor', action='store_true', dest='without_color', default=False)
   parser.add_argument('--nodebug', action='store_true', dest='without_debug', default=False)
   parser.add_argument('-t', '--tag', nargs='+', action='store', dest='tag', default=())
@@ -18,6 +22,11 @@ __result = __parser.parse_args()
 print_help = __parser.print_help
 
 targets = __result.scenario
+if __result.setup_scenario:
+    targets.insert(0, __result.setup_scenario)
+if __result.cleanup_scenario:
+    targets.append(__result.cleanup_scenario)
+
 config_file = __result.config_file
 if config_file is None and os.access('zaffy.yml', os.R_OK):
   config_file = 'zaffy.yml'
