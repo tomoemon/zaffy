@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>チュートリアル &mdash; zaffy 1.0.2014-10-20 ドキュメント</title>
+    <title>チュートリアル &mdash; zaffy 1.0.2014-11-10 ドキュメント</title>
     
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0.2014-10-20',
+        VERSION:     '1.0.2014-11-10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
-    <link rel="top" title="zaffy 1.0.2014-10-20 ドキュメント" href="../index.html" />
+    <link rel="top" title="zaffy 1.0.2014-11-10 ドキュメント" href="../index.html" />
     <link rel="next" title="Action リファレンス" href="../references/actions/index.html" />
     <link rel="prev" title="インストール" href="../install/index.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../install/index.html" title="インストール"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../index.html">zaffy 1.0.2014-10-20 ドキュメント</a> &raquo;</li> 
+        <li><a href="../index.html">zaffy 1.0.2014-11-10 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -53,6 +53,7 @@
   <ul>
 <li><a class="reference internal" href="#">チュートリアル</a><ul>
 <li><a class="reference internal" href="#zaffy">はじめてのzaffy</a></li>
+<li><a class="reference internal" href="#id2">定義済み変数</a></li>
 </ul>
 </li>
 </ul>
@@ -94,6 +95,137 @@
 <div class="section" id="zaffy">
 <h2>はじめてのzaffy<a class="headerlink" href="#zaffy" title="このヘッドラインへのパーマリンク">¶</a></h2>
 </div>
+<div class="section" id="id2">
+<h2>定義済み変数<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul>
+<li><p class="first">シナリオファイル内の任意の箇所で使用可能な変数</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="13%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">変数名</th>
+<th class="head">型</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>scenario</td>
+<td>Scenario</td>
+<td>実行中のシナリオを表すオブジェクト</td>
+</tr>
+<tr class="row-odd"><td>actions</td>
+<td>list&lt;Action&gt;</td>
+<td>シナリオファイル内のこれまでに実行したアクションオブジェクトのリスト</td>
+</tr>
+<tr class="row-even"><td>action_index</td>
+<td>int</td>
+<td>シナリオファイル内における実行中のアクションのインデックス</td>
+</tr>
+<tr class="row-odd"><td>this</td>
+<td>Action</td>
+<td>実行中のアクションを表すオブジェクト</td>
+</tr>
+<tr class="row-even"><td>last</td>
+<td>Action</td>
+<td>直前に実行したアクションを表すオブジェクト (actions[-1] の省略形)</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Scenario 型が持つメンバ</li>
+</ul>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="20%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">変数名</th>
+<th class="head">型</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>filename</td>
+<td>string</td>
+<td>実行中のシナリオファイルのフルパス名</td>
+</tr>
+<tr class="row-odd"><td>dir</td>
+<td>string</td>
+<td>実行中のシナリオファイルが存在するディレクトリ名</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<ul class="simple">
+<li>Action 型が持つメンバ</li>
+</ul>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="19%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">変数名</th>
+<th class="head">型</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>in</td>
+<td>dict</td>
+<td>アクションの入力</td>
+</tr>
+<tr class="row-odd"><td>out</td>
+<td>dict</td>
+<td>アクションの出力</td>
+</tr>
+<tr class="row-even"><td>out.execution_time</td>
+<td>float</td>
+<td>アクションの実行に要した時間（秒）</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div></blockquote>
+<ul>
+<li><p class="first">シナリオファイル内の assert, outfilter でのみ使用可能な変数</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="19%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">変数名</th>
+<th class="head">型</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>in</td>
+<td>dict</td>
+<td>実行中のアクションの入力 (this.in の省略形)</td>
+</tr>
+<tr class="row-odd"><td>out</td>
+<td>dict</td>
+<td>実行中のアクションの出力 (this.out の省略形)</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
 </div>
 
 
@@ -117,7 +249,7 @@
         <li class="right" >
           <a href="../install/index.html" title="インストール"
              >前へ</a> |</li>
-        <li><a href="../index.html">zaffy 1.0.2014-10-20 ドキュメント</a> &raquo;</li> 
+        <li><a href="../index.html">zaffy 1.0.2014-11-10 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
