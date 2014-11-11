@@ -7,4 +7,5 @@ certifi
 python-dateutil
 chardet
 colorama
+bottle
 
