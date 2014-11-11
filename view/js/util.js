@@ -24,7 +24,7 @@ $(function () {
 function addTags(tags) {
     var appendTo = $('<div class="tags"></div>');
     _.forEach(tags, function (value) {
-        appendTo.append('<span class="badge badge-info"><a href="scenario_list.html?tag=' + encodeURIComponent(value) + '">' + _.escape(value) + '</a></span>');
+        appendTo.append('<span class="label label-default"><a href="scenario_list.html?tag=' + encodeURIComponent(value) + '">' + _.escape(value) + '</a></span>');
     });
     return appendTo;
 }

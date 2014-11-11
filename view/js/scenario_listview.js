@@ -28,7 +28,7 @@ $(function () {
             );
             tr.children('td:eq(1)').append(addTags(value.tags.split("\t")));
 
-            $('#scenario_list tbody').append(tr );
+            $('#scenario_list tbody').append(tr);
         });
         if (!list.length) {
             $('#scenario_list tbody').append($('<tr><td colspan="2">no tags matched</td></tr>'));

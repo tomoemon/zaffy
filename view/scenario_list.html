@@ -4,39 +4,29 @@
     <meta charset="UTF-8">
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="css/view.css" rel="stylesheet">
-    <style type="text/css">
-        body {
-            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-        }
-    </style>
     <title>Scenario List - Zaffy</title>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="brand">Zaffy Scenario Viewer</a>
-
-            <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <li><a href="index.html">Tag</a></li>
-                    <li class="active"><a href="#">Scenario</a></li>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
+<nav class="navbar navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+          Zaffy Viewer
+      </a>
     </div>
-</div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Tag</a></li>
+        <li class="active"><a href="#">Scenario</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <div class="container">
     <div class="row">
         <div class="span10">
-            <h2 id='tag'>tag: </h2>
+            <h3 id='tag'>tag: </h2>
             <div class="alert alert-info">
                 <strong>related tags</strong>
                 <div id='cooccurrence' class='tags'></div>

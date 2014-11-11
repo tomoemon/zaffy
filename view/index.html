@@ -7,26 +7,22 @@
     <title>Zaffy Viewer</title>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="brand">Zaffy Scenario Viewer</a>
 
-            <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <li class="active"><a href="#">Tag</a></li>
-                    <li><a href="scenario_list.html">Scenario</a></li>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
+<nav class="navbar navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+          Zaffy Viewer
+      </a>
     </div>
-</div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Tag</a></li>
+        <li><a href="scenario_list.html">Scenario</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <div class="container">
     <div class="row">
@@ -34,8 +30,12 @@
             <form id='tagPrefix'>
                 <fieldset>
                     <legend>Tag Prefix Search</legend>
-                    <input type="text" class="input-medium search-query" placeholder="input tag prefix">
-                    <a href='?prefix='>link</a>
+                    <div class="input-group">
+                    <input type="text" class="form-control" placeholder="input tag prefix">
+                    <span class="input-group-addon">
+                        <a href='?prefix='>link</a>
+                    </span>
+                    </div>
                 </fieldset>
             </form>
 
