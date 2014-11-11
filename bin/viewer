@@ -88,7 +88,7 @@ def get(sql, params=[]):
   conn.row_factory = sqlite3.Row
   c = conn.cursor()
   c.execute(sql, params)
-  result = map(dict, c)
+  result = list(map(dict, c))
   c.close()
   conn.close()
   return result

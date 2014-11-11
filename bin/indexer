@@ -67,7 +67,7 @@ def parse_scenario(yaml_path):
     doc.tags.append('__EMPTY_TAG__')
   if not raw_actions:
     doc.tags.append('__NOT_IMPLEMENTED__')
-  s_id = hashlib.sha256(yaml_path + raw_yaml).hexdigest()[:10]
+  s_id = hashlib.sha256(yaml_path.encode('utf-8') + raw_yaml.encode('utf-8')).hexdigest()[:10]
   return s_id, doc, yaml_path, raw_yaml, raw_actions
 
 def add_scenario(conn, yaml_path_list):
