@@ -8,4 +8,4 @@ python-dateutil
 chardet
 colorama
 bottle
-
+pymemcache

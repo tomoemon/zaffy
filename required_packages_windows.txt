@@ -9,4 +9,4 @@ chardet
 pyreadline
 colorama
 bottle
-
+pymemcache
