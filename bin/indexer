@@ -16,7 +16,9 @@ import argparse
 import sqlite3
 import codecs
 import hashlib
+import datetime
 from scenarioloader import scenario_loader
+
 
 CREATE_SCENARIO = """
 CREATE  TABLE IF NOT EXISTS `scenario` (
@@ -27,6 +29,7 @@ CREATE  TABLE IF NOT EXISTS `scenario` (
   `action_count` INTEGER NOT NULL,
   PRIMARY KEY (`id`) )
 """
+
 CREATE_TAG = """
 CREATE  TABLE IF NOT EXISTS `tag` (
   `scenario_id` TEXT NOT NULL ,
@@ -34,12 +37,23 @@ CREATE  TABLE IF NOT EXISTS `tag` (
   PRIMARY KEY (`scenario_id`, `tag`) )
 """
 
+CREATE_INDEXING_OPTION = """
+CREATE  TABLE IF NOT EXISTS `indexing_option` (
+  `target_dirs` TEXT NOT NULL ,
+  `database_name` TEXT NOT NULL ,
+  `scenario_suffix` TEXT NOT NULL,
+  `indexed_at` TEXT NOT NULL
+)
+"""
+
+
 def _parse():
   parser = argparse.ArgumentParser()
-  parser.add_argument('target_dirs', nargs='*', help="indexing directories", default=["."])
+  parser.add_argument('target_dirs', nargs='*', help="directories including scenarios to be indexed ", default=["."])
   parser.add_argument('-d', '--database', action='store', dest='database', default="index.sqlite", help="database file")
   parser.add_argument('-s', '--suffix', action='store', dest='suffix', default='.yml', help="filename suffix for indexing")
   return parser.parse_args()
+
 
 def main():
   p = _parse()
@@ -53,6 +67,9 @@ def main():
 
   conn = create_db(p.database)
 
+  save_indexing_option(conn, p)
+  conn.commit()
+
   while yaml_list:
     add_scenario(conn, yaml_list[:100])
     yaml_list = yaml_list[100:]
@@ -60,22 +77,32 @@ def main():
   conn.commit()
   conn.close()
 
+
+def save_indexing_option(conn, option):
+    conn.execute("INSERT INTO indexing_option VALUES (?, ?, ?, ?)",
+            ("\t".join([path.abspath(e) for e in option.target_dirs]), option.database, option.suffix, datetime.datetime.now())
+            )
+    conn.commit()
+
+
 def parse_scenario(yaml_path):
   raw_yaml = codecs.open(yaml_path, encoding='utf-8').read()
   doc, raw_actions = scenario_loader.parse(raw_yaml)
   if not doc.tags:
-    doc.tags.append('__EMPTY_TAG__')
+    doc.tags.append('EMPTY')
   if not raw_actions:
-    doc.tags.append('__NOT_IMPLEMENTED__')
+    doc.tags.append('NOT_IMPLEMENTED')
   s_id = hashlib.sha256(yaml_path.encode('utf-8') + raw_yaml.encode('utf-8')).hexdigest()[:10]
   return s_id, doc, yaml_path, raw_yaml, raw_actions
+
 
 def add_scenario(conn, yaml_path_list):
   scenario_list = []
   for yaml_path in yaml_path_list:
+    full_path = path.abspath(yaml_path)
     try:
       print("indexing... {0}".format(yaml_path.encode(sys.getfilesystemencoding())))
-      scenario_list.append(parse_scenario(yaml_path))
+      scenario_list.append(parse_scenario(full_path))
     except Exception as e:
       sys.stderr.write("WARNING: ignored invalid scenario\n")
       sys.stderr.write("  " + str(e) + "\n")
@@ -88,6 +115,7 @@ def add_scenario(conn, yaml_path_list):
     tags.extend([(s[0], t) for t in s[1].tags])
   conn.executemany('insert into tag values(?, ?)', tags)
 
+
 def create_db(db_name):
   try:
     os.unlink(db_name)
@@ -96,13 +124,16 @@ def create_db(db_name):
   conn = sqlite3.connect(db_name)
   conn.execute(CREATE_SCENARIO)
   conn.execute(CREATE_TAG)
+  conn.execute(CREATE_INDEXING_OPTION)
   return conn
+
 
 def search_yaml(target_dir, suffix):
   matches = []
   for root, dirnames, filenames in os.walk(target_dir):
     matches.extend([util.unicode(os.path.join(root, f), sys.getfilesystemencoding()) for f in filenames if f.endswith(suffix)])
   return matches
+
 
 if __name__ == '__main__':
   main()
