@@ -1,14 +1,15 @@
 - 時刻処理テスト
 
 - action: debug
-  t0: <<time.now()>>
-  t1: <<time.now(sec=100)>>
-  t2: <<time.now()|dateadd(day=10)>>
-  t3: <<time.timestamp()>>
-  t4: <<time.format('%Y-%m-%dT%H:%M:%S')>>
-  t5: <<"2012-10-23"|dateadd(day=10)>>
-  t6: <<"2012-10-23"|timestamp>>
-  t7: <<time.now()|dateformat('%Y-%m-%d')>>
-  t8: <<"2012-10-30"|todate>>
-  t9: <<1200000000|todate>>
+  t00: <<time.now()>>
+  t01: <<time.now(sec=100)>>
+  t02: <<time.now()|dateadd(day=10)>>
+  t03: <<time.timestamp()>>
+  t04: <<time.format('%Y-%m-%dT%H:%M:%S')>>
+  t05: <<"2012-10-23"|dateadd(day=10)>>
+  t06: <<"2012-10-23"|timestamp>>
+  t07: <<time.now()|dateformat('%Y-%m-%d')>>
+  t08: <<"2012-10-30"|todate>>
+  t09: <<"2012-10-30"|todate('%Y-%m-%d')>> # equal to t08
+  t10: <<1200000000|todate>>
 
