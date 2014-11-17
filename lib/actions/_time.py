@@ -19,7 +19,7 @@ class Time(BaseAction):
 
      - action: debug
        t1: <<time.now()>> #=> '2013-02-22 01:35:42.100000'
-       t2: <<time.now(days=2,hours=3)>> #=> '2013-02-24 04:35:42.100000'
+       t2: <<time.now(day=2,hour=3)>> #=> '2013-02-24 04:35:42.100000'
        t3: <<time.timestamp()>> #=> 1361464681
        t4: <<time.format('%Y-%m-%d %H:%M:%S')>> #=> '2013-02-22 01:38:01'
   """
