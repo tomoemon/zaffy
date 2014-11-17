@@ -13,8 +13,8 @@ def is_json_equal(left_value, right_value):
      - サンプルシナリオ
 
      - action: local
-       x: {"x":100,"y":200}
-       y: {"y":200,"x":100}
+       x: '{"x":100,"y":200}'
+       y: '{"y":200,"x":100}'
        assert:
          - local.x is json_equal local.y
   """
