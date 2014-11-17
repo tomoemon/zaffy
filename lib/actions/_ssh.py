@@ -20,7 +20,7 @@ class Ssh(BaseAction):
     return client
 
   def do_put(self, host, user, local, remote, port=22, password=None, key_file=None, timeout=None):
-    """ scp でファイルを送信する
+    """ sftp でファイルを送信する
 
     .. code-block:: yaml
 
@@ -48,8 +48,62 @@ class Ssh(BaseAction):
     sftp.put(local, remote)
     sftp.close()
 
+  def do_remove(self, host, user, remote, port=22, password=None, key_file=None, timeout=None):
+    """ sftp でファイルを削除する（ディレクトリ削除は rmdir）
+
+    .. code-block:: yaml
+
+       - サンプルシナリオ
+
+       - action: ssh.remove
+         host: localhost
+         user: testuser
+         password: hogehoge
+         remote: /tmp/zaffy.py
+
+    :param string host: 接続先ホスト名、またはIPアドレス
+    :param string user: 接続先ホストにおけるユーザ名
+    :param string remote: 削除対象のリモートファイル
+    :param int port: 接続先ポート番号
+    :param string password: パスワード認証を行う場合のユーザのログインパスワード
+    :param string key_file: 公開鍵認証を行う場合の公開鍵ファイル
+    :param int timeout: タイムアウト時間（秒）
+    """
+    client = self._connect(host, user, password, key_file, port, timeout)
+
+    sftp = client.open_sftp()
+    sftp.remove(remote)
+    sftp.close()
+
+  def do_rmdir(self, host, user, remote, port=22, password=None, key_file=None, timeout=None):
+    """ sftp でディレクトリを削除する（ファイル削除は remove）
+
+    .. code-block:: yaml
+
+       - サンプルシナリオ
+
+       - action: ssh.rmdir
+         host: localhost
+         user: testuser
+         password: hogehoge
+         remote: /tmp/zaffy
+
+    :param string host: 接続先ホスト名、またはIPアドレス
+    :param string user: 接続先ホストにおけるユーザ名
+    :param string remote: 削除対象のリモートディレクトリ
+    :param int port: 接続先ポート番号
+    :param string password: パスワード認証を行う場合のユーザのログインパスワード
+    :param string key_file: 公開鍵認証を行う場合の公開鍵ファイル
+    :param int timeout: タイムアウト時間（秒）
+    """
+    client = self._connect(host, user, password, key_file, port, timeout)
+
+    sftp = client.open_sftp()
+    sftp.rmdir(remote)
+    sftp.close()
+
   def do_get(self, host, user, local, remote, port=22, password=None, key_file=None, timeout=None):
-    """ scp でファイルを取得する
+    """ sftp でファイルを取得する
 
     .. code-block:: yaml
 
