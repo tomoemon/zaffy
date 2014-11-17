@@ -85,6 +85,34 @@
             
   <div class="section" id="module-customtests.in">
 <span id="in"></span><span id="references-customtests-in-label"></span><h1>in<a class="headerlink" href="#module-customtests.in" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="function">
+<dt id="customtests.in.is_in">
+<tt class="descclassname">customtests.in.</tt><tt class="descname">is_in</tt><big>(</big><em>left_value</em>, <em>right_value</em><big>)</big><a class="headerlink" href="#customtests.in.is_in" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>test <cite>left_value</cite> is in <cite>right_value</cite>
+<cite>left_value</cite> が <cite>right_value</cite> に含まれることをテストする</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><ul class="first last simple">
+<li><strong>left_value</strong> (<em>object</em>) &#8211; 任意の値</li>
+<li><strong>right_value</strong> (<em>list|dict|...</em>) &#8211; <tt class="docutils literal"><span class="pre">__contains__</span></tt> メソッドを持つ、list, dict 等のコレクション型</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">local</span>
+  <span class="l-Scalar-Plain">x</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">200</span>
+  <span class="l-Scalar-Plain">y</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">100</span><span class="p-Indicator">,</span> <span class="nv">200</span><span class="p-Indicator">,</span> <span class="nv">300</span><span class="p-Indicator">]</span>
+  <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">local.x is in local.y</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 
