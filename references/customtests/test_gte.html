@@ -85,6 +85,22 @@
             
   <div class="section" id="module-customtests.gte">
 <span id="gte"></span><span id="references-customtests-gte-label"></span><h1>gte<a class="headerlink" href="#module-customtests.gte" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="function">
+<dt id="customtests.gte.is_gte">
+<tt class="descclassname">customtests.gte.</tt><tt class="descname">is_gte</tt><big>(</big><em>left_value</em>, <em>right_value</em><big>)</big><a class="headerlink" href="#customtests.gte.is_gte" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>test <cite>left_value</cite> is gte (geater than equal) <cite>right_value</cite></p>
+<p><cite>left_value</cite> が <cite>right_value</cite> より大きいか等しいことをテストする (<a class="reference internal" href="test_ge.html#references-customtests-ge-label"><em>ge</em></a> のエイリアス)</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">local</span>
+  <span class="l-Scalar-Plain">x</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">200</span>
+  <span class="l-Scalar-Plain">y</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">100</span>
+  <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">local.x is gte local.y</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 

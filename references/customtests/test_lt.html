@@ -85,6 +85,22 @@
             
   <div class="section" id="module-customtests.lt">
 <span id="lt"></span><span id="references-customtests-lt-label"></span><h1>lt<a class="headerlink" href="#module-customtests.lt" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="function">
+<dt id="customtests.lt.is_lt">
+<tt class="descclassname">customtests.lt.</tt><tt class="descname">is_lt</tt><big>(</big><em>left_value</em>, <em>right_value</em><big>)</big><a class="headerlink" href="#customtests.lt.is_lt" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>test <cite>left_value</cite> is le (less than) <cite>right_value</cite></p>
+<p><cite>left_value</cite> が <cite>right_value</cite> より小さいことをテストする</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">local</span>
+  <span class="l-Scalar-Plain">x</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">100</span>
+  <span class="l-Scalar-Plain">y</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">200</span>
+  <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">local.x is lt local.y</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 

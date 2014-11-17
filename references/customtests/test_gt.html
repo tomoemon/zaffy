@@ -85,6 +85,22 @@
             
   <div class="section" id="module-customtests.gt">
 <span id="gt"></span><span id="references-customtests-gt-label"></span><h1>gt<a class="headerlink" href="#module-customtests.gt" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="function">
+<dt id="customtests.gt.is_gt">
+<tt class="descclassname">customtests.gt.</tt><tt class="descname">is_gt</tt><big>(</big><em>left_value</em>, <em>right_value</em><big>)</big><a class="headerlink" href="#customtests.gt.is_gt" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>test <cite>left_value</cite> is gt (geater than) <cite>right_value</cite></p>
+<p><cite>left_value</cite> が <cite>right_value</cite> より大きいことをテストする</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
+
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">local</span>
+  <span class="l-Scalar-Plain">x</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">200</span>
+  <span class="l-Scalar-Plain">y</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">100</span>
+  <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">local.x is gt local.y</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 
