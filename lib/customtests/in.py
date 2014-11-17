@@ -3,6 +3,7 @@
 
 def is_in(left_value, right_value):
   """ test `left_value` is in `right_value`
+
   `left_value` が `right_value` に含まれることをテストする
 
   :param object left_value: 任意の値
