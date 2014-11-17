@@ -15,8 +15,12 @@ def is_in(left_value, right_value):
      - action: local
        x: 200
        y: [100, 200, 300]
+       z:
+         a: 20
+         b: 30
        assert:
          - local.x is in local.y
+         - "a" is in local.z
   """
   return left_value in right_value
 
