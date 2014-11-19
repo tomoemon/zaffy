@@ -65,15 +65,11 @@ def assert_test(assertion, variable_map):
   >>> assert_test('hoge == "fuga"', {"hoge": "piyo"})
   False
   """
-  assertion = util.unicode(assertion)
-  # TODO: safe assertion escaping
-
   CustomTest.failed = []
 
-  assert_template = '<% if ' + assertion + ' %>1<% else %>0<% endif %>'
   try:
-    result = run_raw_template(assert_template, variable_map)
-    if result != '1':
+    result = _env.compile_expression(assertion)(**variable_map)
+    if result != True:
       raise AssertionFailed(assertion, CustomTest.failed)
   except jinja2.TemplateSyntaxError as e:
     raise TemplateFormatException(e, assertion)
@@ -100,18 +96,15 @@ def expand(template_str, variable_map):
 
 
 def expand_param(filter_dict, variable_map):
-  variable_map['__target__'] = {}
-  for key, value in filter_dict.items():
-    # TODO: safe value escaping
-    key = key.replace("'", "")
-    template = "<<__target__.update({{'{0}': {1}}})>>".format(key, value)
+  result = {}
+  for key, expression in filter_dict.items():
     try:
-      run_raw_template(template, variable_map)
+      result[key] = _env.compile_expression(expression)(**variable_map)
     except jinja2.TemplateSyntaxError as e:
-      raise TemplateFormatException(e, "{0}: {1}".format(key, value))
+      raise TemplateFormatException(e, "{0}: {1}".format(key, expression))
     except jinja2.UndefinedError as e:
-      raise TemplateFormatException(e, "{0}: {1}".format(key, value))
-  return variable_map['__target__']
+      raise TemplateFormatException(e, "{0}: {1}".format(key, expression))
+  return result
 
 if __name__ == "__main__":
   import doctest
