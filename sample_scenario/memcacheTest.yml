@@ -1,0 +1,105 @@
+doc: memcache テスト
+tag: [memcache]
+
+---
+
+- action: preset
+  memcache:
+    default:
+      host: 192.168.58.111
+      port: 11211
+
+- action: memcache.set
+  key: puyo
+  value: "ぷよぷよ"
+
+- action: memcache.setmany
+  data:
+      hoge: fugafuga
+      bar: 100
+
+- action: memcache.get
+  key:
+      - hoge
+      - bar
+      - puyo
+  assert:
+   - out.hoge is eq "fugafuga"
+   - out.bar is eq "100"
+   - out.puyo is eq "ぷよぷよ"
+
+- action: memcache.replace
+  key: hoge
+  value: hogehoge
+
+- action: memcache.get
+  key:
+      - hoge
+      - bar
+      - puyo
+  assert:
+   - out.hoge is eq "hogehoge"
+   - out.bar is eq "100"
+   - out.puyo is eq "ぷよぷよ"
+
+- action: memcache.add
+  key: hoge
+  value: hoge2 # 上書きされない
+
+- action: memcache.get
+  key: hoge
+  assert:
+      - out.hoge is eq "hogehoge"
+
+- action: memcache.append
+  key: hoge
+  value: ZZZ
+
+- action: memcache.get
+  key: hoge
+  assert:
+      - out.hoge is eq "hogehogeZZZ"
+
+- action: memcache.prepend
+  key: hoge
+  value: AAA
+
+- action: memcache.get
+  key: hoge
+  assert:
+      - out.hoge is eq "AAAhogehogeZZZ"
+
+- action: memcache.delete
+  key: hoge
+
+- action: memcache.get
+  key: hoge
+  assert:
+      - not ('hoge' is in out)
+
+- action: memcache.incr
+  key: bar
+  value: 50
+
+- action: memcache.get
+  key: bar
+  assert:
+      - out.bar is eq '150'
+
+- action: memcache.decr
+  key: bar
+  value: 100
+
+- action: memcache.get
+  key: bar
+  assert:
+      - out.bar is eq '50 ' # なぜか後ろにスペースが入る
+
+- action: memcache.decr
+  key: bar
+  value: 100
+
+- action: memcache.get
+  key: bar
+  assert:
+      - out.bar is eq '0  ' # 0未満にはならない。そしてなぜか（ｒｙ
