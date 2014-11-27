@@ -10,3 +10,5 @@ pyreadline
 colorama
 bottle
 pymemcache
+PyMySQL
+paramiko
