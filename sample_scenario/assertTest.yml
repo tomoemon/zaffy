@@ -1,0 +1,29 @@
+- assert テスト
+
+- action: local
+  number_true: 100
+  number_false: 0
+  string_true: "hoge"
+  string_false: ""
+  null_false: null
+  bool_true: true
+  bool_false: false
+  list_true: [1, 2, 3]
+  list_false: []
+  dict_true: {x: 20}
+  dict_false: {}
+  assert:
+    - local.number_true
+    - local.number_true is eq 100
+    - not (local.number_true is not eq 100)
+    - not local.number_false
+    - local.string_true
+    - not local.string_false
+    - not local.null_false
+    - local.bool_true
+    - not local.bool_false
+    - local.list_true
+    - not local.list_false
+    - local.dict_true
+    - not local.dict_false
+

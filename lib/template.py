@@ -69,7 +69,7 @@ def assert_test(assertion, variable_map):
 
   try:
     result = _env.compile_expression(assertion)(**variable_map)
-    if result != True:
+    if not result:
       raise AssertionFailed(assertion, CustomTest.failed)
   except jinja2.TemplateSyntaxError as e:
     raise TemplateFormatException(e, assertion)
