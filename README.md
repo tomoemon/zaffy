@@ -39,7 +39,7 @@ Setup
  * if you'd like to connect with SSH (used by `ssh` action)
 
             #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
-            sudo pip install ssh
+            sudo pip install paramiko
 
 
 Usage
