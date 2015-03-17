@@ -182,5 +182,5 @@ class Ssh(BaseAction):
       else:
         time.sleep(1)
     else:
-      return 1 # error
+      return -1 # error
 
