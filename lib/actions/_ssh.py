@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import time
 import paramiko as ssh
 from baseaction import BaseAction
 
@@ -170,6 +171,16 @@ class Ssh(BaseAction):
     self.output = {
         'stdout': stdout.read().decode(decoding) if decoding else stdout.read(),
         'stderr': stderr.read().decode(decoding) if decoding else stderr.read(),
-        'returncode': stdout.channel.recv_exit_status() if stdout.channel.exit_status_ready() else 1,
+        'returncode': self.__get_exit_status(stdout),
         }
+
+  @classmethod
+  def __get_exit_status(cls, output):
+    for i in range(3):
+      if output.channel.exit_status_ready():
+        return output.channel.recv_exit_status()
+      else:
+        time.sleep(1)
+    else:
+      return 1 # error
 
