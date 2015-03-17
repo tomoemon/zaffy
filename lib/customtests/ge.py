@@ -2,7 +2,7 @@
 
 
 def is_ge(left_value, right_value):
-  """ test `left_value` is ge (geater than equal) `right_value`
+  """ test `left_value` is ge (greater than equal) `right_value`
 
   `left_value` が `right_value` より大きいか等しいことをテストする
 

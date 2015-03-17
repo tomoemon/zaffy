@@ -2,7 +2,7 @@
 
 
 def is_gt(left_value, right_value):
-  """ test `left_value` is gt (geater than) `right_value`
+  """ test `left_value` is gt (greater than) `right_value`
 
   `left_value` が `right_value` より大きいことをテストする
 

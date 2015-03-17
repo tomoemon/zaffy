@@ -2,7 +2,7 @@
 
 
 def is_gte(left_value, right_value):
-  """ test `left_value` is gte (geater than equal) `right_value`
+  """ test `left_value` is gte (greater than equal) `right_value`
 
   `left_value` が `right_value` より大きいか等しいことをテストする (:ref:`references-customtests-ge-label` のエイリアス)
 
