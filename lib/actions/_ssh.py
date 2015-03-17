@@ -179,8 +179,7 @@ class Ssh(BaseAction):
     for i in range(3):
       if output.channel.exit_status_ready():
         return output.channel.recv_exit_status()
-      else:
-        time.sleep(1)
-    else:
-      return -1 # error
+      time.sleep(1)
+
+    return -1 # error
 
