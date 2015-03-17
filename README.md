@@ -38,6 +38,9 @@ Setup
 
  * if you'd like to connect with SSH (used by `ssh` action)
 
+            #   on linux
+            #     (ubuntu) sudo apt-get install python-dev
+            #     (centos) sudo yum install python-devel
             #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
             sudo pip install paramiko
 
