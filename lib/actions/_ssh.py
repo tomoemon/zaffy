@@ -163,7 +163,7 @@ class Ssh(BaseAction):
     :param int timeout: タイムアウト時間（秒）
     :return: - **stdout** (*string*) - 実行したコマンドの標準出力
              - **stderr** (*string*) - 実行したコマンドの標準エラー
-             - **returncode** (*int*) - 実行したコマンドの終了ステータス
+             - **returncode** (*int*) - 実行したコマンドの終了ステータス（ステータスを取得できなかった場合は -1）
     """
     client = self._connect(host, user, password, key_file, port, timeout)
     stdin, stdout, stderr = client.exec_command(cmd, timeout=timeout)
