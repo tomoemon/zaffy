@@ -18,7 +18,7 @@ class ActionLoader(object):
     try:
       setting = ActionSetting(raw_obj)
       preset = self.get_action_klass('preset').get_applier(
-        setting.action_name, setting.preset_name, False
+        setting.action_name, setting.preset_name, setting.is_merge_preset
       )
       action_klass = self.get_action_klass(setting.action_name)
       param_obj = ActionParams(
