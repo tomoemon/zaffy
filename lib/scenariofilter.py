@@ -14,7 +14,7 @@ class TagFilter(object):
     if not self.include:
       return True
 
-    if set(scenario_object.doc.tags) & set(self.include):
+    if set(scenario_object.header.tags) & set(self.include):
       return True
 
     return False
