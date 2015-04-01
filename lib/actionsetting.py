@@ -4,7 +4,6 @@ import re
 
 class ActionSetting(object):
 
-  #ACTION_REGEX = re.compile(r'^(?P<actionName>\w+)(?:\.(?P<methodName>\w+))?(?:\s*\<\s*(?P<presetName>\w+))?$')
   ACTION_REGEX = re.compile(r'^(?P<actionName>\w+)(?:\.(?P<methodName>\w+))?(?:\s*(?P<presetMode>\<\<?)\s*(?P<presetName>\w+))?$')
 
   def __init__(self, raw_obj):
