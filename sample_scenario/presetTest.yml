@@ -1,0 +1,44 @@
+- preset テスト
+
+- action: preset
+  local:
+    set_x:
+      x:
+        - 100
+    set_y:
+      y:
+        hoge: 100
+
+# set_x とマージされる（リスト）
+- action: local << set_x
+  x:
+    - 200
+  assert:
+    - out.x is eq [100, 200]
+
+# set_x の内容が新しいパラメータで上書きされる（リスト）
+- action: local < set_x
+  x:
+    - 300
+  assert:
+    - out.x is eq [300]
+
+# set_y とマージされる（辞書）
+- action: local << set_y
+  y:
+    fuga: 200
+  assert:
+    - out.y is eq {"hoge":100,"fuga":200}
+
+- action: local << set_y
+  y:
+    bar: 200
+  assert:
+    - out.y is eq {"hoge":100,"bar":200}
+
+# assert200 の内容が新しいパラメータで上書きされる（辞書）
+- action: local < set_y
+  y:
+    fuga: 300
+  assert:
+    - out.y is eq {"fuga":300}
