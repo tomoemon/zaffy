@@ -27,7 +27,7 @@
     <link rel="top" title="zaffy 1.0 ドキュメント" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
     <link rel="next" title="python" href="action_python.html" />
-    <link rel="prev" title="local" href="action_local.html" /> 
+    <link rel="prev" title="memcache" href="action_memcache.html" /> 
   </head>
   <body>
     <div class="related">
@@ -43,7 +43,7 @@
           <a href="action_python.html" title="python"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_local.html" title="local"
+          <a href="action_memcache.html" title="memcache"
              accesskey="P">前へ</a> |</li>
         <li><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -52,8 +52,8 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
-  <p class="topless"><a href="action_local.html"
-                        title="前の章へ">local</a></p>
+  <p class="topless"><a href="action_memcache.html"
+                        title="前の章へ">memcache</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_python.html"
                         title="次の章へ">python</a></p>
@@ -89,10 +89,28 @@
 <dt id="actions.preset.Preset">
 <em class="property">class </em><tt class="descclassname">actions.preset.</tt><tt class="descname">Preset</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.preset.Preset" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Preset アクション</p>
-<p>任意のアクションに対する実行時のパラメータプリセットを定義する。アクションに対して多数のパラメータを繰り返し適用する場合、事前にプリセットを定義しておくことでシナリオをシンプルにできる。<a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> アクションと同様にシナリオ実行単位でグローバルに参照可能。</p>
+<p>http や ssh 等の任意のアクションに対するパラメータプリセットを定義する。認証等のためにアクション作成時に多数のパラメータを繰り返し適用しなければならない場合、事前にプリセットを定義しておくことでシナリオをシンプルにできる。<a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> アクションと同様にシナリオ実行単位でグローバルに参照可能。</p>
 <dl class="docutils">
-<dt>定義の上書き</dt>
-<dd>すでに定義済みのプリセット名と同じ名前で定義した場合、後から定義したパラメータセットで完全に上書きされる。異なるアクション間で同名のプリセット名を持つことは可能。</dd>
+<dt>プリセットの作成</dt>
+<dd><p class="first">プリセットを作成するには「対象アクション」「プリセット名」「パラメータセット」を下記のように指定する必要がある。プリセット名を <tt class="docutils literal"><span class="pre">default</span></tt> にした場合、対象アクションを実行する際に暗黙的に該当のプリセットパラメータが適用される。</p>
+<div class="last highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">preset</span>
+  <span class="l-Scalar-Plain">http</span><span class="p-Indicator">:</span>                         <span class="c1"># 対象アクション</span>
+    <span class="l-Scalar-Plain">assert200</span><span class="p-Indicator">:</span>                  <span class="c1"># プリセット名</span>
+      <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://yahoo.co.jp/</span>  <span class="c1"># パラメータセット: 対象アクションで使用可能なパラメータを任意の数セットする</span>
+      <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>                   <span class="c1"># assert もセットできる</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">out.status is eq 200</span>
+</pre></div>
+</div>
+</dd>
+<dt>プリセットの使用</dt>
+<dd><p class="first">上記のプリセットが作成された後、アクションを作成する際にアクション名の後ろに <tt class="docutils literal"><span class="pre">&lt;</span></tt> とプリセット名を記述することでプリセットパラメータを使用することができる。下記の例では google.com にアクセスした上で、ステータスコードが 200 であることを検証する。プリセットのパラメータと同一のキーをアクション作成時にセットした場合は、アクション側のパラメータで上書きされる。ただし、<tt class="docutils literal"><span class="pre">&lt;&lt;</span></tt> を使ってプリセットを適用した場合でかつパラメータがリストか辞書の場合は、マージされる。</p>
+<div class="last highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http.get &lt; assert200</span>
+  <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://google.com/</span>
+</pre></div>
+</div>
+</dd>
+<dt>プリセットの上書き</dt>
+<dd>すでに作成済みのプリセット名と同じ名前でプリセットを作成した場合、後から作成したパラメータセットで完全に上書きされる。異なるアクションを対象にした同名のプリセットを持つことは可能。</dd>
 <dt>評価のタイミング</dt>
 <dd><p class="first">preset アクションで定義したパラメータセットは、preset アクションが実行されたタイミングで評価される。パラメータセットの中で <a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> 定数や <a class="reference internal" href="action_local.html#references-actions-local-label"><em>local</em></a> 変数の使用、または関数呼び出しを記述していた場合、その時点での値でパラメータセットが確定する。評価を遅延させたい場合は</p>
 <p><tt class="docutils literal"><span class="pre">&lt;&lt;&quot;&lt;&lt;const.param1&gt;&gt;&quot;&gt;&gt;</span></tt></p>
@@ -110,6 +128,10 @@
   <span class="l-Scalar-Plain">http</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span>
       <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://yahoo.co.jp/</span>
+  <span class="l-Scalar-Plain">local</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">set_list</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">x</span><span class="p-Indicator">:</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">100</span>
 
 <span class="c1"># default preset の適用</span>
 <span class="c1">#   アクションに対して何も渡していないが default プリセットがあるので</span>
@@ -122,10 +144,18 @@
       <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
         <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">out.status is 404</span>
 
-<span class="c1"># named preset の適用</span>
+<span class="c1"># named preset の適用（同一キーのパラメータは上書き）</span>
 <span class="c1">#   assert を定義していないが status が 404 であることをテストしている</span>
 <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http.get &lt; assert404</span>
   <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://yahoo.co.jp/hogehoge</span>
+
+<span class="c1"># named preset の適用（同一キーのパラメータはできるだけマージする）</span>
+<span class="c1">#   action 定義の x と preset の x がマージされる</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http.get &lt;&lt; set_list</span>
+  <span class="l-Scalar-Plain">x</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">200</span>
+  <span class="l-Scalar-Plain">assert</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">out.x is eq [100,200]</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -167,7 +197,7 @@
           <a href="action_python.html" title="python"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_local.html" title="local"
+          <a href="action_memcache.html" title="memcache"
              >前へ</a> |</li>
         <li><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
           <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 

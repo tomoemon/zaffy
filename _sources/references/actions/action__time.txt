@@ -1,8 +1,0 @@
-
-.. _references-actions-time-label:
-
-====================
-time アクション
-====================
-
-.. automodule:: actions._time
