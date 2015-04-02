@@ -20,24 +20,26 @@ class _PresetApplier(object):
     elif self.preset_name not in presets:
       raise Exception("preset '" + self.action_name + "." + self.preset_name + "' is not defined")
 
-    preset_params = dict(presets[self.preset_name])
-    self.apply_params(preset_params, action_params, self.is_merge)
-    return preset_params
+    # preset_params は変更禁止
+    preset_params = presets[self.preset_name]
+    return self.apply_params(preset_params, action_params, self.is_merge)
 
   @staticmethod
   def apply_params(before, after, is_merge):
-    for key, value in after.items():
-      if key not in before or type(before[key]) is not type(value) or not is_merge:
-        # preset に存在しないキー、または型が違う、または上書きモードの場合は上書き
-        before[key] = value
-      else:
+    after = dict(after)
+    for key, value in before.items():
+      if key not in after or type(after[key]) is not type(value):
+        # action 作成時にセットされていないキー、または型が違う、または上書きモードの場合は上書き
+        after[key] = value
+      elif is_merge:
         if isinstance(value, list):
-          before[key].extend(value)
+          after[key] = value + after[key]
         elif isinstance(value, dict):
-          before[key].update(value)
+          after[key].update(value)
         else:
           # 数値・文字列の場合は上書き
-          before[key] = value
+          after[key] = value
+    return after
 
 
 class Preset(BaseAction):
