@@ -28,17 +28,16 @@ class _PresetApplier(object):
   def apply_params(before, after, is_merge):
     after = dict(after)
     for key, value in before.items():
-      if key not in after or type(after[key]) is not type(value):
-        # action 作成時にセットされていないキー、または型が違う、または上書きモードの場合は上書き
+      if key not in after:
+        # action 作成時にセットされていないキーの場合は preset の値をそのまま使う
         after[key] = value
       elif is_merge:
-        if isinstance(value, list):
+        if type(value) is not type(after[key]):
+          raise Exception("merging preset parameter failed: types of '{0}' are different".format(key))
+        elif isinstance(value, list):
           after[key] = value + after[key]
         elif isinstance(value, dict):
           after[key].update(value)
-        else:
-          # 数値・文字列の場合は上書き
-          after[key] = value
     return after
 
 
