@@ -30,6 +30,12 @@
   assert:
     - out.y is eq {"hoge":100,"fuga":200}
 
+- action: local << set_y
+  y:
+    bar: 200
+  assert:
+    - out.y is eq {"hoge":100,"bar":200}
+
 # assert200 の内容が新しいパラメータで上書きされる（辞書）
 - action: local < set_y
   y:
