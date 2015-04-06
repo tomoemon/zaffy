@@ -4,14 +4,17 @@
   x: 100
   y: 200
 
+- action: const
+  A: 500
+
 - action: python
   code: |
     import re
     a = 10
     b = 20
     c = a + b
-    d = local['x'] + local['y']
-    local['z'] = d * 20
+    d = local.x + local.y
+    local.z = d * 20 + const.A
 
 - action: debug
   result: <<last.out>>
@@ -20,5 +23,5 @@
     - last.out.a is eq 10
     - last.out.c is eq 30
     - last.out.d is eq 300
-    - local.z is eq 6000
+    - local.z is eq 6500
 

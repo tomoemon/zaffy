@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from baseaction import ActionException
 import six
+from baseaction import ActionException
+from util import AttrDict
 from debugprinter import DebugPrinter
 
 
@@ -22,7 +23,7 @@ class Scenario(object):
     self.setting = setting
     self.header = header
     self.parent = parent
-    self.localvar = {}
+    self.localvar = AttrDict()
 
     self._action_queue = actions
     self._finished_actions = []

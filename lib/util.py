@@ -109,3 +109,9 @@ def unescape_unicode(obj):
   # 'row1': u'\u6570\u5b66\u30ac\u30fc\u30eb'
   return _UNICODE_REGEXP.sub(lambda x: _unichr(int("0x" + x.group(1), 16)), obj)
 
+
+class AttrDict(dict):
+  def __init__(self, *args, **kwargs):
+    super(AttrDict, self).__init__(*args, **kwargs)
+    self.__dict__ = self
+
