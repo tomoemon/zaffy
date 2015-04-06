@@ -29,8 +29,8 @@
     <link rel="next" title="python" href="action_python.html" />
     <link rel="prev" title="memcache" href="action_memcache.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -45,11 +45,11 @@
         <li class="right" >
           <a href="action_memcache.html" title="memcache"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
       </ul>
     </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_memcache.html"
@@ -57,12 +57,14 @@
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_python.html"
                         title="次の章へ">python</a></p>
-  <h3>このページ</h3>
-  <ul class="this-page-menu">
-    <li><a href="../../_sources/references/actions/action_preset.txt"
-           rel="nofollow">ソースコードを表示</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/references/actions/action_preset.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -81,18 +83,18 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="module-actions.preset">
 <span id="preset"></span><span id="references-actions-preset-label"></span><h1>preset<a class="headerlink" href="#module-actions.preset" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.preset.Preset">
-<em class="property">class </em><tt class="descclassname">actions.preset.</tt><tt class="descname">Preset</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.preset.Preset" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">class </em><code class="descclassname">actions.preset.</code><code class="descname">Preset</code><span class="sig-paren">(</span><em>setting</em>, <em>params_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.preset.Preset" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Preset アクション</p>
-<p>http や ssh 等の任意のアクションに対するパラメータプリセットを定義する。認証等のためにアクション作成時に多数のパラメータを繰り返し適用しなければならない場合、事前にプリセットを定義しておくことでシナリオをシンプルにできる。<a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> アクションと同様にシナリオ実行単位でグローバルに参照可能。</p>
+<p>http や ssh 等の任意のアクションに対するパラメータプリセットを定義する。認証等のためにアクション作成時に多数のパラメータを繰り返し適用しなければならない場合、事前にプリセットを定義しておくことでシナリオをシンプルにできる。<a class="reference internal" href="action_const.html#references-actions-const-label"><span>const</span></a> アクションと同様にシナリオ実行単位でグローバルに参照可能。</p>
 <dl class="docutils">
 <dt>プリセットの作成</dt>
-<dd><p class="first">プリセットを作成するには「対象アクション」「プリセット名」「パラメータセット」を下記のように指定する必要がある。プリセット名を <tt class="docutils literal"><span class="pre">default</span></tt> にした場合、対象アクションを実行する際に暗黙的に該当のプリセットパラメータが適用される。</p>
+<dd><p class="first">プリセットを作成するには「対象アクション」「プリセット名」「パラメータセット」を下記のように指定する必要がある。プリセット名を <code class="docutils literal"><span class="pre">default</span></code> にした場合、対象アクションを実行する際に暗黙的に該当のプリセットパラメータが適用される。</p>
 <div class="last highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">preset</span>
   <span class="l-Scalar-Plain">http</span><span class="p-Indicator">:</span>                         <span class="c1"># 対象アクション</span>
     <span class="l-Scalar-Plain">assert200</span><span class="p-Indicator">:</span>                  <span class="c1"># プリセット名</span>
@@ -103,7 +105,7 @@
 </div>
 </dd>
 <dt>プリセットの使用</dt>
-<dd><p class="first">上記のプリセットが作成された後、アクションを作成する際にアクション名の後ろに <tt class="docutils literal"><span class="pre">&lt;</span></tt> とプリセット名を記述することでプリセットパラメータを使用することができる。下記の例では google.com にアクセスした上で、ステータスコードが 200 であることを検証する。プリセットのパラメータと同一のキーをアクション作成時にセットした場合は、アクション側のパラメータで上書きされる。ただし、<tt class="docutils literal"><span class="pre">&lt;&lt;</span></tt> を使ってプリセットを適用した場合でかつパラメータがリストか辞書の場合は、マージされる。</p>
+<dd><p class="first">上記のプリセットが作成された後、アクションを作成する際にアクション名の後ろに <code class="docutils literal"><span class="pre">&lt;</span></code> とプリセット名を記述することでプリセットパラメータを使用することができる。下記の例では google.com にアクセスした上で、ステータスコードが 200 であることを検証する。プリセットのパラメータと同一のキーをアクション作成時にセットした場合は、アクション側のパラメータで上書きされる。ただし、<code class="docutils literal"><span class="pre">&lt;&lt;</span></code> を使ってプリセットを適用した場合でかつパラメータがリストか辞書の場合は、マージされる。</p>
 <div class="last highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http.get &lt; assert200</span>
   <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://google.com/</span>
 </pre></div>
@@ -112,8 +114,8 @@
 <dt>プリセットの上書き</dt>
 <dd>すでに作成済みのプリセット名と同じ名前でプリセットを作成した場合、後から作成したパラメータセットで完全に上書きされる。異なるアクションを対象にした同名のプリセットを持つことは可能。</dd>
 <dt>評価のタイミング</dt>
-<dd><p class="first">preset アクションで定義したパラメータセットは、preset アクションが実行されたタイミングで評価される。パラメータセットの中で <a class="reference internal" href="action_const.html#references-actions-const-label"><em>const</em></a> 定数や <a class="reference internal" href="action_local.html#references-actions-local-label"><em>local</em></a> 変数の使用、または関数呼び出しを記述していた場合、その時点での値でパラメータセットが確定する。評価を遅延させたい場合は</p>
-<p><tt class="docutils literal"><span class="pre">&lt;&lt;&quot;&lt;&lt;const.param1&gt;&gt;&quot;&gt;&gt;</span></tt></p>
+<dd><p class="first">preset アクションで定義したパラメータセットは、preset アクションが実行されたタイミングで評価される。パラメータセットの中で <a class="reference internal" href="action_const.html#references-actions-const-label"><span>const</span></a> 定数や <a class="reference internal" href="action_local.html#references-actions-local-label"><span>local</span></a> 変数の使用、または関数呼び出しを記述していた場合、その時点での値でパラメータセットが確定する。評価を遅延させたい場合は</p>
+<p><code class="docutils literal"><span class="pre">&lt;&lt;&quot;&lt;&lt;const.param1&gt;&gt;&quot;&gt;&gt;</span></code></p>
 <p class="last">のように preset アクション実行時は後から展開可能な文字列として定義する。</p>
 </dd>
 </dl>
@@ -160,7 +162,7 @@
 </div>
 <dl class="method">
 <dt id="actions.preset.Preset.do_preset">
-<tt class="descname">do_preset</tt><big>(</big><em>**params</em><big>)</big><a class="headerlink" href="#actions.preset.Preset.do_preset" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">do_preset</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.preset.Preset.do_preset" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>preset を定義する</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -184,7 +186,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -199,13 +201,13 @@
         <li class="right" >
           <a href="action_memcache.html" title="memcache"
              >前へ</a> |</li>
-        <li><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
-          <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Action リファレンス</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013-2014, tomoemon.
-      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3 で生成しました。
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1 で生成しました。
     </div>
   </body>
 </html>

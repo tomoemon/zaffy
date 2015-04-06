@@ -29,8 +29,8 @@
     <link rel="next" title="http" href="action_http.html" />
     <link rel="prev" title="env" href="action_env.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -45,11 +45,11 @@
         <li class="right" >
           <a href="action_env.html" title="env"
              accesskey="P">前へ</a> |</li>
-        <li><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
       </ul>
     </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="action_env.html"
@@ -57,12 +57,14 @@
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="action_http.html"
                         title="次の章へ">http</a></p>
-  <h3>このページ</h3>
-  <ul class="this-page-menu">
-    <li><a href="../../_sources/references/actions/action_file.txt"
-           rel="nofollow">ソースコードを表示</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/references/actions/action_file.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>クイック検索</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -81,18 +83,18 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="module-actions.file">
 <span id="file"></span><span id="references-actions-file-label"></span><h1>file<a class="headerlink" href="#module-actions.file" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
 <dt id="actions.file.File">
-<em class="property">class </em><tt class="descclassname">actions.file.</tt><tt class="descname">File</tt><big>(</big><em>setting</em>, <em>params_obj</em><big>)</big><a class="headerlink" href="#actions.file.File" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">class </em><code class="descclassname">actions.file.</code><code class="descname">File</code><span class="sig-paren">(</span><em>setting</em>, <em>params_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>File アクション</p>
 <p>ファイル操作やファイルに関する情報の取得を行なう</p>
 <dl class="classmethod">
 <dt id="actions.file.File.access_time">
-<em class="property">classmethod </em><tt class="descname">access_time</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.access_time" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">access_time</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.access_time" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルの最終アクセス日時を取得</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -108,7 +110,7 @@
 
 <dl class="classmethod">
 <dt id="actions.file.File.create_time">
-<em class="property">classmethod </em><tt class="descname">create_time</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.create_time" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">create_time</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.create_time" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルの作成日時を取得</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -124,7 +126,7 @@
 
 <dl class="method">
 <dt id="actions.file.File.do_copy">
-<tt class="descname">do_copy</tt><big>(</big><em>path</em>, <em>to</em><big>)</big><a class="headerlink" href="#actions.file.File.do_copy" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">do_copy</code><span class="sig-paren">(</span><em>path</em>, <em>to</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.do_copy" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルをコピーする</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -145,7 +147,7 @@
 
 <dl class="method">
 <dt id="actions.file.File.do_delete">
-<tt class="descname">do_delete</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#actions.file.File.do_delete" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">do_delete</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.do_delete" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルまたはディレクトリを削除する</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -161,7 +163,7 @@
 
 <dl class="method">
 <dt id="actions.file.File.do_rename">
-<tt class="descname">do_rename</tt><big>(</big><em>path</em>, <em>to</em><big>)</big><a class="headerlink" href="#actions.file.File.do_rename" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">do_rename</code><span class="sig-paren">(</span><em>path</em>, <em>to</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.do_rename" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルをリネーム（移動）する</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -182,7 +184,7 @@
 
 <dl class="method">
 <dt id="actions.file.File.do_write">
-<tt class="descname">do_write</tt><big>(</big><em>path</em>, <em>data</em>, <em>mode='wb'</em><big>)</big><a class="headerlink" href="#actions.file.File.do_write" title="この定義へのパーマリンク">¶</a></dt>
+<code class="descname">do_write</code><span class="sig-paren">(</span><em>path</em>, <em>data</em>, <em>mode='wb'</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.do_write" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルの書き込み</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -204,7 +206,7 @@
 
 <dl class="classmethod">
 <dt id="actions.file.File.executable">
-<em class="property">classmethod </em><tt class="descname">executable</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.executable" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">executable</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.executable" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルの実行権限チェック</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -220,7 +222,7 @@
 
 <dl class="classmethod">
 <dt id="actions.file.File.exists">
-<em class="property">classmethod </em><tt class="descname">exists</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.exists" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">exists</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.exists" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルの存在チェック</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -236,7 +238,7 @@
 
 <dl class="classmethod">
 <dt id="actions.file.File.read">
-<em class="property">classmethod </em><tt class="descname">read</tt><big>(</big><em>filepath</em>, <em>size=-1</em>, <em>offset=0</em>, <em>encoding=None</em><big>)</big><a class="headerlink" href="#actions.file.File.read" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">read</code><span class="sig-paren">(</span><em>filepath</em>, <em>size=-1</em>, <em>offset=0</em>, <em>encoding=None</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.read" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルの読み込み</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -259,7 +261,7 @@
 
 <dl class="classmethod">
 <dt id="actions.file.File.readable">
-<em class="property">classmethod </em><tt class="descname">readable</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.readable" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">readable</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.readable" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルの読み込み権限チェック</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -275,7 +277,7 @@
 
 <dl class="classmethod">
 <dt id="actions.file.File.size">
-<em class="property">classmethod </em><tt class="descname">size</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.size" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">size</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.size" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルサイズ取得</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -291,7 +293,7 @@
 
 <dl class="classmethod">
 <dt id="actions.file.File.update_time">
-<em class="property">classmethod </em><tt class="descname">update_time</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.update_time" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">update_time</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.update_time" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルの最終更新日時を取得</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -307,7 +309,7 @@
 
 <dl class="classmethod">
 <dt id="actions.file.File.writable">
-<em class="property">classmethod </em><tt class="descname">writable</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#actions.file.File.writable" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">writable</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.file.File.writable" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ファイルの書き込み権限チェック</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -331,7 +333,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -346,13 +348,13 @@
         <li class="right" >
           <a href="action_env.html" title="env"
              >前へ</a> |</li>
-        <li><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
-          <li><a href="index.html" >Action リファレンス</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Action リファレンス</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013-2014, tomoemon.
-      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3 で生成しました。
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1 で生成しました。
     </div>
   </body>
 </html>

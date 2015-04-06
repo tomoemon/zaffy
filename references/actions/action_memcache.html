@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>sleep &mdash; zaffy 1.0 ドキュメント</title>
+    <title>memcache &mdash; zaffy 1.0 ドキュメント</title>
     
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="../../_static/translations.js"></script>
     <link rel="top" title="zaffy 1.0 ドキュメント" href="../../index.html" />
     <link rel="up" title="Action リファレンス" href="index.html" />
-    <link rel="next" title="sql" href="action_sql.html" />
-    <link rel="prev" title="shell" href="action_shell.html" /> 
+    <link rel="next" title="preset" href="action_preset.html" />
+    <link rel="prev" title="local" href="action_local.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -40,10 +40,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_sql.html" title="sql"
+          <a href="action_preset.html" title="preset"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="action_shell.html" title="shell"
+          <a href="action_local.html" title="local"
              accesskey="P">前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Action リファレンス</a> &raquo;</li> 
@@ -52,15 +52,15 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>前のトピックへ</h4>
-  <p class="topless"><a href="action_shell.html"
-                        title="前の章へ">shell</a></p>
+  <p class="topless"><a href="action_local.html"
+                        title="前の章へ">local</a></p>
   <h4>次のトピックへ</h4>
-  <p class="topless"><a href="action_sql.html"
-                        title="次の章へ">sql</a></p>
+  <p class="topless"><a href="action_preset.html"
+                        title="次の章へ">preset</a></p>
   <div role="note" aria-label="source link">
     <h3>このページ</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/references/actions/action_sleep.txt"
+      <li><a href="../../_sources/references/actions/action_memcache.txt"
             rel="nofollow">ソースコードを表示</a></li>
     </ul>
    </div>
@@ -85,39 +85,40 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-actions.sleep">
-<span id="sleep"></span><span id="references-actions-sleep-label"></span><h1>sleep<a class="headerlink" href="#module-actions.sleep" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="module-actions._memcache">
+<span id="memcache"></span><span id="references-actions-memcache-label"></span><h1>memcache<a class="headerlink" href="#module-actions._memcache" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="class">
-<dt id="actions.sleep.Sleep">
-<em class="property">class </em><code class="descclassname">actions.sleep.</code><code class="descname">Sleep</code><span class="sig-paren">(</span><em>setting</em>, <em>params_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.sleep.Sleep" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Sleep アクション</p>
-<p>指定した時間、処理を停止する</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">サンプルシナリオ</span>
-
-<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
-  <span class="l-Scalar-Plain">t1</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">start</span>
-
-<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sleep</span>
-  <span class="l-Scalar-Plain">time</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">3000</span> <span class="c1"># =&gt; 3秒間停止する</span>
-
-<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
-  <span class="l-Scalar-Plain">t2</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">end</span>
-</pre></div>
-</div>
+<dt id="actions._memcache.Memcache">
+<em class="property">class </em><code class="descclassname">actions._memcache.</code><code class="descname">Memcache</code><span class="sig-paren">(</span><em>setting</em>, <em>params_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#actions._memcache.Memcache" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Memcache アクション</p>
 <dl class="method">
-<dt id="actions.sleep.Sleep.do_sleep">
-<code class="descname">do_sleep</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#actions.sleep.Sleep.do_sleep" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>指定した時間、処理を停止する</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">パラメタ:</th><td class="field-body"><strong>time</strong> (<em>int</em>) &#8211; 停止する秒数(ミリ秒)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body">None</td>
-</tr>
-</tbody>
-</table>
+<dt id="actions._memcache.Memcache.do_delete">
+<code class="descname">do_delete</code><span class="sig-paren">(</span><em>key</em>, <em>noreply=True</em>, <em>host=None</em>, <em>port=11211</em><span class="sig-paren">)</span><a class="headerlink" href="#actions._memcache.Memcache.do_delete" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>many ver exists</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions._memcache.Memcache.do_get">
+<code class="descname">do_get</code><span class="sig-paren">(</span><em>key</em>, <em>host=None</em>, <em>port=11211</em><span class="sig-paren">)</span><a class="headerlink" href="#actions._memcache.Memcache.do_get" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>return dict</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions._memcache.Memcache.do_gets">
+<code class="descname">do_gets</code><span class="sig-paren">(</span><em>key</em>, <em>host=None</em>, <em>port=11211</em><span class="sig-paren">)</span><a class="headerlink" href="#actions._memcache.Memcache.do_gets" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>return dict</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions._memcache.Memcache.do_set">
+<code class="descname">do_set</code><span class="sig-paren">(</span><em>key</em>, <em>value</em>, <em>expire=0</em>, <em>noreply=True</em>, <em>host=None</em>, <em>port=11211</em><span class="sig-paren">)</span><a class="headerlink" href="#actions._memcache.Memcache.do_set" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>many ver exists</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="actions._memcache.Memcache.do_setmany">
+<code class="descname">do_setmany</code><span class="sig-paren">(</span><em>data</em>, <em>expire=0</em>, <em>noreply=True</em>, <em>host=None</em>, <em>port=11211</em><span class="sig-paren">)</span><a class="headerlink" href="#actions._memcache.Memcache.do_setmany" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>many ver exists</p>
 </dd></dl>
 
 </dd></dl>
@@ -140,10 +141,10 @@
           <a href="../../py-modindex.html" title="Pythonモジュール索引"
              >モジュール</a> |</li>
         <li class="right" >
-          <a href="action_sql.html" title="sql"
+          <a href="action_preset.html" title="preset"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="action_shell.html" title="shell"
+          <a href="action_local.html" title="local"
              >前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">zaffy 1.0 ドキュメント</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Action リファレンス</a> &raquo;</li> 
