@@ -1,20 +1,10 @@
 - JSON テスト
 
 - action: http.get
-  url: http://b.hatena.ne.jp/entry/json/?url=http%3A%2F%2Fwww.hatena.ne.jp%2F
+  url: http://headers.jsontest.com/
   outfilter:
-    - related: (out.content|asjson).related
-    - e0: out.related[0].entry_url
+    - json: out.content|asjson
   assert:
-   - out.e0 is eq 'http://b.hatena.ne.jp/entry/ugomemo.hatena.ne.jp/letters'
-   - out.e0 is ne out.related[1].entry_url
-  _debug: [in, out.status]
-
-- action: const
-  params:
-    x: 100
-    y: 200
-    hoge: true
-    fuga: "false"
-  _debug: true # setting 'true' is equal to '[in, out]'
+   - out.json.Host is eq 'headers.jsontest.com'
+  _debug: [out]
 
