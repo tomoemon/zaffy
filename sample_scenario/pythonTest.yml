@@ -10,8 +10,8 @@
     a = 10
     b = 20
     c = a + b
-    d = local['x'] + local['y']
-    local['z'] = d * 20
+    d = local.x + local.y
+    local.z = d * 20
 
 - action: debug
   result: <<last.out>>
