@@ -1,7 +1,9 @@
 - shell test
 
 - action: shell
-  cmd: "gzip hoge"
-  curdir: 'c:\'
+  cmd: "echo hoge"
   _debug: out
+  assert:
+    - out.returncode is eq 0
+    - out.stdout.strip() is eq 'hoge'
 
