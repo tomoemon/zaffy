@@ -1,7 +1,9 @@
 Zaffy
 =====
 
-Zaffy は yaml フォーマットでテストシナリオを記述できる機能テストツールです。Web や Database、ファイルシステムなどの外部システムに対する入力とその応答検証を共通の形式で記述することができます。種々の機能を組み合わせた自動化ツールとして使うことも可能です。
+Zaffy は yaml フォーマットでテストシナリオを記述できる機能テストツールです。
+Web や Database、ファイルシステムなどの外部システムに対する入力とその応答検証を共通の形式で記述することができます。
+種々の機能を組み合わせた自動化ツールとして使うことも可能です。
 
 詳しくはこちら
 http://tomoemon.github.com/zaffy/
@@ -11,43 +13,18 @@ Setup
 
 ### Requirements
 
-* python 2.6 or later
-* setuptools (package management tool for python)
+* python 2.7, 3.4, 3.5 (highly recommend to use miniconda)
+* http://conda.pydata.org/miniconda.html
 
-        # on python 2.x
-        wget http://peak.telecommunity.com/dist/ez_setup.py
-        sudo python ez_setup.py
-        sudo easy_install pip
-
-* required packages
-
-        sudo pip install -r required_packages_linux.txt
-
-* optional packages
- * if you'd like to parse XML/HTML (used by `asxml`, `ashtml`, `xpath` filter)
-
-            #   on linux
-            #     (ubuntu) sudo apt-get install python-dev libxslt-dev
-            #     (centos) sudo yum install python-devel libxslt-devel
-            #   on windows http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml
-            sudo pip instal lxml
-
- * if you'd like to query SQL (used by `sql` action)
-
-            sudo pip install PyMySQL
-
- * if you'd like to connect with SSH (used by `ssh` action)
-
-            #   on linux
-            #     (ubuntu) sudo apt-get install python-dev
-            #     (centos) sudo yum install python-devel
-            #   on windows http://www.voidspace.org.uk/python/modules.shtml#pycrypto
-            sudo pip install paramiko
-
+        # install miniconda before
+        git clone git@github.com:tomoemon/zaffy.git
+        cd zaffy 
+        conda env create -f environment.yml
+        activate zaffy
 
 Usage
 --------------
-    $ python lib/zaffy.py sample_scenario/httpTest.yml
+    $ bin/zaffy docs/sample_scenario/httpTest.yml
       # using config file: zaffy.yml
     1..1
     ok 1 - HTTP テスト
