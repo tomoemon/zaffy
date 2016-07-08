@@ -14,27 +14,30 @@ Setup
 ### Requirements
 
 * python 2.7, 3.4, 3.5 (highly recommend to use miniconda)
-* http://conda.pydata.org/miniconda.html
+  miniconda http://conda.pydata.org/miniconda.html
 
         # install miniconda before
         git clone git@github.com:tomoemon/zaffy.git
         cd zaffy 
         conda env create -f environment.yml
-        activate zaffy
 
 Usage
 --------------
-    $ bin/zaffy docs/sample_scenario/httpTest.yml
+
+    $ source activate zaffy
+    $ (zaffy) bin/zaffy docs/sample_scenario/httpTest.yml
       # using config file: zaffy.yml
     1..1
     ok 1 - HTTP テスト
 
     1 test succeeded (1.00 sec elapsed)
 
-標準でTAP(Test Anything Protocol)形式による出力を行います
+Zaffy normally outputs TAP (Test Anything Protocol) format results.
+If you don't want to run zaffy on your shell, you can directly run the python.
 
+    $ {MINICONDA_INSTALL_PATH}/envs/zaffy/python lib/zaffy.py docs/sample_scenario/httpTest.yml 
 
-Example
+Scenario Example
 --------------
 # http test
     - HTTP テスト
