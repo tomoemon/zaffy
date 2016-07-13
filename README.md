@@ -17,7 +17,7 @@ Setup
   miniconda http://conda.pydata.org/miniconda.html
 
         # install miniconda before
-        git clone git@github.com:tomoemon/zaffy.git
+        git clone https://github.com/tomoemon/zaffy.git
         cd zaffy 
         conda env create -f environment.yml
 
